@@ -3,16 +3,46 @@ import Link from "next/link";
 import check2 from "@/public/check-02.svg";
 
 function ProductCard({ item }) {
-  const isOutlet = item.status === "outlet";
+  // Flatten all plans with their discount logic
+  let allPlans =
+    item.product_entry?.flatMap(
+      (entry) =>
+        entry.product_plans?.map((plan) => {
+          let discounted = plan.state === "outlet" && plan.discount_price;
+          return {
+            ...plan,
+            model: entry.model,
+            displayPrice: discounted
+              ? plan.price - plan.discount_price
+              : plan.price,
+            oldPrice: discounted ? plan.price : null,
+            isOutlet: discounted,
+          };
+        }) || []
+    ) || [];
+
+  // Find the plan with the lowest display price
+  let lowestPlan =
+    allPlans.length > 0
+      ? allPlans.reduce(
+          (min, plan) => (plan.displayPrice < min.displayPrice ? plan : min),
+          allPlans[0]
+        )
+      : null;
+
+  let price = lowestPlan ? lowestPlan.displayPrice : null;
+  let oldPrice = lowestPlan ? lowestPlan.oldPrice : null;
+  let isOutlet = lowestPlan ? lowestPlan.isOutlet : false;
+  let colorful = isOutlet;
 
   return (
-    <Link href={`/sub`}>
+    <Link href={`products/${item.slug}`}>
       <div className="group relative flex flex-col hover:scale-[1.02] transition-all duration-300">
         {/* Image Section - Now behind the border */}
         <div className="relative aspect-square mb-0 scale-75 translate-y-[28px] -z-10">
           <Image
             className="w-full h-full object-cover rounded-4xl"
-            src={item.imageUrl}
+            src={item.image_small_url}
             width={200}
             height={200}
             alt={item.title}
@@ -22,11 +52,11 @@ function ProductCard({ item }) {
         {/* Card Section */}
         <div
           className={`relative p-0.25 rounded-t-2xl rounded-b-lg ${
-            item.colorful ? "bg-conic-gradient" : "bg-[#252134]"
+            colorful ? "bg-conic-gradient" : "bg-[#252134]"
           }`}
         >
           {/* Outlet Badge */}
-          {isOutlet && (
+          {isOutlet && lowestPlan && (
             <div className="absolute -top-3 right-4 flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-900 to-purple-900 rounded-full text-white shadow-lg transform transition-transform group-hover:scale-110">
               <Image
                 className="mr-1.5"
@@ -34,9 +64,10 @@ function ProductCard({ item }) {
                 width={12}
                 height={12}
                 alt="check"
+                style={{ width: "auto", height: "auto" }}
               />
               <div className="font-grotesk font-bold text-xs uppercase tracking-wider">
-                {item.status}
+                {lowestPlan.state}
               </div>
             </div>
           )}
@@ -46,20 +77,20 @@ function ProductCard({ item }) {
               {item.title}
             </h4>
             <p className="font-light text-xs text-[#757185] mb-4">
-              {item.text}
+              {item.caption}
             </p>
 
             {/* Pricing Section */}
-            {item.price && (
+            {price !== null && (
               <div className="mt-auto flex justify-center">
                 <div className="px-4 py-1.5 rounded-t-md border border-[#ffffff22] bg-[#1a1824]/50 backdrop-blur-md">
                   <div className="flex items-baseline gap-2">
                     <span className="font-bold text-[#FFFF]/80 drop-shadow-glow">
-                      {item.price}
+                      {price} $
                     </span>
-                    {item.oldPrice && (
+                    {oldPrice && (
                       <span className="text-xs text-[#757185] line-through">
-                        {item.oldPrice}
+                        {oldPrice} $
                       </span>
                     )}
                   </div>

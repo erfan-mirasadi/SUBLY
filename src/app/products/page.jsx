@@ -1,7 +1,7 @@
 import Section from "@/src/components/section/Section";
 import AllProducts from "./AllProducts";
 
-function ProductPage() {
+function AllProductPage() {
   return (
     <Section
       className="overflow-hidden pt-[12rem] lg:translate-y-[5.25rem] -mt-[5.25rem]"
@@ -15,4 +15,4 @@ function ProductPage() {
   );
 }
 
-export default ProductPage;
+export default AllProductPage;

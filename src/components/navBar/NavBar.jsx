@@ -5,6 +5,7 @@ import Link from "next/link";
 import NavItem from "./NavItem";
 import MobileMenu from "./MobileMenu";
 import useActiveLink from "@/src/hooks/useActiveLink";
+import DropdownNavigator from "./DropdownNavigator";
 
 const navigation = [
   {
@@ -79,14 +80,20 @@ function NavBar() {
           } fixed top-[72px] left-0 right-0 bottom-0 bg-[#1B1B2E] lg:static lg:flex lg:mx-auto lg:bg-transparent`}
         >
           <div className="relative z-2 flex flex-col items-center justify-center m-auto lg:flex-row -top-[72px] md:top-0">
-            {navigation.map((item) => (
-              <NavItem
-                key={item.id}
-                item={item}
-                isActive={item.url === activeHash} //for showing the active page
-                onClick={handleClick}
-              />
-            ))}
+            {navigation
+              .filter(
+                (item) => item.title !== "Category" && item.title !== "Company"
+              )
+              .map((item) => (
+                <NavItem
+                  key={item.id}
+                  item={item}
+                  isActive={item.url === activeHash}
+                  onClick={handleClick}
+                />
+              ))}
+            {/* Switcher for Category/Company */}
+            <DropdownNavigator />
           </div>
 
           {openNavigation && <MobileMenu />}
@@ -129,5 +136,4 @@ function NavBar() {
     </div>
   );
 }
-
 export default NavBar;

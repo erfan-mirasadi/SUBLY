@@ -1,4 +1,3 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/src/components/navBar/NavBar";
 import Footer from "../components/Footer";
@@ -9,6 +8,7 @@ import {
   Space_Grotesk,
   Inter,
   Poppins,
+  Vazirmatn,
 } from "next/font/google";
 
 const roboto = Roboto({
@@ -42,6 +42,12 @@ const inter = Inter({
   variable: "--font-inter",
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // اینم
 });
+const vazir = Vazirmatn({
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-vazirmatn",
+});
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -60,8 +66,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html
-      lang="en"
-      className={`${roboto.variable} ${sora.variable} ${sourceCodePro.variable} ${spaceGrotesk.variable} ${inter.variable} ${poppins.variable}`}
+      lang="fa"
+      className={`${roboto.variable} ${sora.variable} ${sourceCodePro.variable} ${spaceGrotesk.variable} ${inter.variable} ${poppins.variable} ${vazir.variable}`}
     >
       <body className="flex justify-start flex-col min-h-screen">
         <NavBar />

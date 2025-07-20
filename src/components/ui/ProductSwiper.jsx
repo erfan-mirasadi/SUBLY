@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductSwiper = ({ items }) => {
   return (
@@ -35,15 +36,17 @@ const ProductSwiper = ({ items }) => {
           <SwiperSlide key={item.id}>
             {({ isActive }) => (
               <div className="flex justify-center items-center transition-all duration-500">
-                <Image
-                  src={item.imageUrl}
-                  alt={item.title}
-                  width={300}
-                  height={300}
-                  className={`rounded-xl transition-opacity duration-500 ${
-                    isActive ? "opacity-100" : "opacity-30"
-                  }`}
-                />
+                <Link href={`/products/${item.slug}`}>
+                  <Image
+                    src={item.image_small_url}
+                    alt={item.title}
+                    width={300}
+                    height={300}
+                    className={`rounded-xl transition-opacity duration-500 ${
+                      isActive ? "opacity-100" : "opacity-30"
+                    }`}
+                  />
+                </Link>
               </div>
             )}
           </SwiperSlide>

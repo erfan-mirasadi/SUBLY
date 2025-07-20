@@ -1,7 +1,7 @@
 import Componies from "./Componies";
 import ProductSection from "./ProductSection";
 
-function Compony() {
+export default function Compony() {
   return (
     <div className="overflow-hidden">
       <Componies />
@@ -9,5 +9,3 @@ function Compony() {
     </div>
   );
 }
-
-export default Compony;

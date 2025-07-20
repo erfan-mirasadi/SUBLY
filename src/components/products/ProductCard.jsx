@@ -18,7 +18,13 @@ const ProductCard = ({ item }) => {
           {item.text}
         </p>
         <div className="flex items-center mt-auto">
-          <Image src={item.iconUrl} width={48} height={48} alt={item.title} />
+          <Image
+            src={item.iconUrl}
+            width={48}
+            height={48}
+            // style={{ height: "auto" }}
+            alt={item.title}
+          />
 
           <p className="ml-auto font-code text-xs font-bold text-[#FFFFFF] uppercase tracking-wider">
             Explore more
@@ -40,6 +46,7 @@ const ProductCard = ({ item }) => {
               width={380}
               height={362}
               alt={item.title}
+              // style={{ height: "auto" }}
               className="w-full h-full object-cover"
             />
           )}

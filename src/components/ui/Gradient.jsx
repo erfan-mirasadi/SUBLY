@@ -10,6 +10,7 @@ function Gradient() {
         width={1417}
         height={1417}
         alt="Gradient"
+        style={{ width: "100%", height: "auto" }}
       />
     </div>
   );
