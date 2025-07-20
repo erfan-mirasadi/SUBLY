@@ -32,13 +32,13 @@ export default function MobileMenu() {
       {/* Auth buttons */}
       <div className="absolute bottom-24 left-0 right-0 flex flex-col items-center space-y-7 px-16">
         <a
-          href="/signup"
+          href="/login"
           className="text-base text-white/70 hover:text-white transition-colors py-2"
         >
           New account
         </a>
         <a
-          href="/signin"
+          href="/login"
           className="text-base font-medium px-5 py-2 bg-white/50 rounded-lg text-[#1B1B2E] hover:bg-white/60 transition-colors"
         >
           Sign in

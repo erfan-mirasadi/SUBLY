@@ -8,7 +8,7 @@ const NAVIGATION_TABS = [
   { key: "company", label: "Company" },
 ];
 
-export default function DropdownNavigator() {
+export default function DropdownNavigator({ onMobileMenuClose, isMenuOpen }) {
   const [activeTab, setActiveTab] = useState("category");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -110,7 +110,13 @@ export default function DropdownNavigator() {
                 absolute bottom-0 left-1/2 -translate-x-1/2
                 h-[2px] bg-gradient-to-r from-[#DD734F] to-[#B9AEDF] rounded-full
                 transition-all duration-500
-                ${hoveredTab === tab.key ? "w-1/2 opacity-40" : "w-0 opacity-0"}
+                ${
+                  dropdownOpen && activeTab === tab.key
+                    ? "w-1/2 opacity-40"
+                    : hoveredTab === tab.key
+                    ? "w-1/2 opacity-40"
+                    : "w-0 opacity-0"
+                }
                 group-hover:w-1/3 group-hover:opacity-70
               `}
             />
@@ -134,7 +140,12 @@ export default function DropdownNavigator() {
       </div>
 
       {/* Mobile Component */}
-      <MobileDropdown categories={categories} companies={companies} />
+      <MobileDropdown
+        categories={categories}
+        companies={companies}
+        onClose={onMobileMenuClose}
+        isMenuOpen={isMenuOpen}
+      />
 
       {/* Desktop Dropdown */}
       <div className="hidden lg:block">
@@ -161,7 +172,7 @@ export default function DropdownNavigator() {
                     <div key={`${rowIndex}-${colIndex}`} className="space-y-4">
                       {item && (
                         <Link
-                          href={`${activeTab}/${item.slug || item.id}`}
+                          href={`/${activeTab}/${item.slug}`}
                           onMouseEnter={() => setHoveredItem(item.id)}
                           onMouseLeave={() => setHoveredItem(null)}
                           className="block relative group"
@@ -173,7 +184,7 @@ export default function DropdownNavigator() {
                             {/* Hover line from left to right */}
                             <div
                               className={`absolute left-0 bottom-0 h-[2px] bg-gradient-to-r from-[#DD734F] to-[#B9AEDF] transition-all duration-300 ${
-                                hoveredItem === item.id
+                                dropdownOpen && hoveredItem === item.id
                                   ? "w-full opacity-100"
                                   : "w-0 opacity-0"
                               }`}

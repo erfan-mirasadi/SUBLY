@@ -7,3 +7,24 @@ export async function getApiCompanies() {
   }
   return data;
 }
+
+export async function getApiProductCompanies(companyId) {
+  const { data, error } = await supabase
+    .from("product")
+    .select(
+      `
+      *,
+      product_entry (
+        *,
+        product_plans (*)
+      )
+    `
+    )
+    .eq("company_id", companyId);
+
+  if (error) {
+    console.error("Error fetching product for company:", error);
+  }
+
+  return data;
+}

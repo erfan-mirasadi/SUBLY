@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -8,9 +8,21 @@ const NAVIGATION_TABS = [
   { key: "company", label: "Company" },
 ];
 
-export default function MobileDropdown({ categories = [], companies = [] }) {
+export default function MobileDropdown({
+  categories = [],
+  companies = [],
+  onClose,
+  isMenuOpen,
+}) {
   const [activeTab, setActiveTab] = useState("category");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // اگر منوی اصلی بسته شد، dropdown هم بسته شود
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setDropdownOpen(false);
+    }
+  }, [isMenuOpen]);
 
   const currentList = activeTab === "category" ? categories : companies;
 
@@ -91,8 +103,11 @@ export default function MobileDropdown({ categories = [], companies = [] }) {
                   currentList.map((item) => (
                     <Link
                       key={item.id}
-                      href={`/${activeTab}/${item.slug || item.id}`}
-                      onClick={() => setDropdownOpen(false)}
+                      href={`/${activeTab}/${item.slug}`}
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        if (onClose) onClose();
+                      }}
                       className="block relative py-4 px-6 text-white hover:bg-[#252134]/30 rounded-xl transition-colors group border border-[#252134]/50 hover:border-[#252134]"
                     >
                       <span className="text-lg font-medium">

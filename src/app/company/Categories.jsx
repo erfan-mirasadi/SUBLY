@@ -4,26 +4,13 @@ import recording01 from "@/public/recording-01.svg";
 import disc02 from "@/public/disc-02.svg";
 import chromecast from "@/public/chrome-cast.svg";
 import sliders04 from "@/public/sliders-04.svg";
-import service1 from "@/public/hero/logos/apple-logo-01.png";
-// import service2 from "@/public/hero/logos/apple-music-video.mp4";
-import service3 from "@/public/hero/logos/apple-3.jpg";
 import check from "@/public/check.svg";
-import gradient from "@/public/gradient.png";
 
 //components
 import Section from "@/src/components/section/Section";
 import Heading from "@/src/components/ui/Heading";
 import Image from "next/image";
 import Gradient from "@/src/components/ui/Gradient";
-import { getApiCompanies } from "@/src/services/ApiCompanies";
-
-//variables
-const brainwaveServices = [
-  "Musics of the world’s ",
-  "Best Quality",
-  "Dulby Atmos",
-  "High Quality",
-];
 
 const brainwaveServicesIcons = [
   recording03,
@@ -33,16 +20,11 @@ const brainwaveServicesIcons = [
   sliders04,
 ];
 
-async function Componies() {
-  const company = await getApiCompanies();
-  console.log(company);
+async function Categories({ item }) {
   return (
-    <Section id="compony">
+    <Section id={item.slug}>
       <div className="max-w-[77.5rem] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem]">
-        <Heading
-          title="APPLE"
-          text="SUBLY unlocks every applications in the world"
-        />
+        <Heading title={item.title} text={item.description} />
 
         <div className="relative">
           <div className="relative z-1 flex items-center h-[39rem] mb-5 p-8 border border-[#FFFF]/10 rounded-3xl overflow-hidden lg:p-20 xl:h-[46rem]">
@@ -52,7 +34,7 @@ async function Componies() {
                 width={800}
                 alt="compony-1"
                 height={730}
-                src={service1}
+                src={item.image_url}
               />
             </div>
 
@@ -64,15 +46,16 @@ async function Componies() {
                 Subly unlocks every products of apple applications
               </p>
               <ul className="font-light text-[0.875rem] leading-6 md:text-base">
-                {brainwaveServices.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start py-4 border-t border-[#252134]"
-                  >
-                    <Image width={24} alt="dc" height={24} src={check} />
-                    <p className="ml-4">{item}</p>
-                  </li>
-                ))}
+                {Array.isArray(item?.features) &&
+                  item.features?.map((i, index) => (
+                    <li
+                      key={index}
+                      className="flex items-start py-4 border-t border-[#252134]"
+                    >
+                      <Image width={24} alt="dc" height={24} src={check} />
+                      <p className="ml-4">{i}</p>
+                    </li>
+                  ))}
               </ul>
             </div>
           </div>
@@ -81,7 +64,7 @@ async function Componies() {
             <div className="relative min-h-[39rem] border border-[#FFFF]/10 rounded-3xl overflow-hidden">
               <div className="absolute inset-0">
                 <video
-                  src="videos/apple-music-video.mp4"
+                  src={item.video_url}
                   className="h-full w-full object-cover"
                   width={630}
                   height={750}
@@ -138,7 +121,7 @@ async function Componies() {
 
               <div className="relative h-[20rem] bg-[#0E0C15] rounded-xl overflow-hidden md:h-[25rem]">
                 <Image
-                  src={service3}
+                  src={item.image_url}
                   className="w-full h-full object-cover"
                   width={520}
                   height={400}
@@ -155,4 +138,4 @@ async function Componies() {
   );
 }
 
-export default Componies;
+export default Categories;

@@ -67,7 +67,7 @@ function ProductCard({ item }) {
                 style={{ width: "auto", height: "auto" }}
               />
               <div className="font-grotesk font-bold text-xs uppercase tracking-wider">
-                {lowestPlan.state}
+                تخفیف
               </div>
             </div>
           )}

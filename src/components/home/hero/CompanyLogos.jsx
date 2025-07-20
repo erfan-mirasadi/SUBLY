@@ -14,8 +14,8 @@ const companyLogos = [apple2, apple3, apple4, apple5, apple6];
 const CompanyLogos = ({ className }) => {
   return (
     <div className={className}>
-      <h5 className="tagline mb-6 text-center text-[#FFFFFF]/50">
-        Helping people create beautiful content at
+      <h5 className="tagline mb-6 text-center text-[#FFFFFF]/50 font-vazirmatn">
+        با سابلی، همیشه یک قدم جلوتر باش
       </h5>
       <ul className="flex">
         {companyLogos.map((logo, index) => (

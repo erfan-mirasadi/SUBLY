@@ -6,34 +6,18 @@ import React, { useState, useRef } from "react";
 // ------------------------
 // Define the fields for Login and Sign Up modes
 // ------------------------
-const loginFields = [
-  { name: "usernameOrNumber", label: "Username or Number", type: "text" },
-  {
-    name: "password",
-    label: "Password",
-    type: "password",
-    inputClassName: "font-bold",
-  },
-];
+const loginFields = [{ name: "Number", label: "Number", type: "tel" }];
 
 const signUpFields = [
   { name: "firstName", label: "نام ", type: "text" },
   { name: "lastName", label: "نام خانوادگی", type: "text" },
   { name: "phoneNumber", label: "تلفن", type: "tel" },
-  { name: "username", label: "Username", type: "text" },
-  {
-    name: "password",
-    label: "Password",
-    type: "password",
-    inputClassName: "font-bold",
-  },
-  { name: "confirmPassword", label: "Confirm Password", type: "password" },
 ];
 
 // ------------------------
 // Main Component
 // ------------------------
-const AuthForm = ({ isLogin, onSwitchAuthMode, onSubmit }) => {
+const AuthForm = ({ isLogin, onSubmit }) => {
   const fieldsToRender = isLogin ? loginFields : signUpFields;
 
   const [formData, setFormData] = useState({});
@@ -97,11 +81,11 @@ const AuthForm = ({ isLogin, onSwitchAuthMode, onSubmit }) => {
         ------------------------ */}
       <div className="bg-transparent backdrop-filter backdrop-blur-md rounded-3xl shadow-2xl p-21 m-2 w-full max-w-md border-2 border-[#ffff]/45 border-opacity-30">
         {/* ------------------------
-            Heading: Login / Sign Up
+            Heading
           ------------------------ */}
         <div className="relative -mt-4 mb-8">
           <h2 className="text-center text-xl font-grotesk text-white bg-[#ffff]/20 bg-opacity-20 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[70px] px-3 py-2 rounded-2xl border-2 border-[#ffff]/45  border-opacity-30">
-            {isLogin ? "Login" : "Sign Up"}
+            SUBLY
           </h2>
         </div>
 
@@ -152,42 +136,13 @@ const AuthForm = ({ isLogin, onSwitchAuthMode, onSubmit }) => {
             <div className="flex items-center justify-between mb-6">
               <button
                 type="submit"
-                className="w-full px-6 py-3 tracking-wide uppercase text-[#f5f5f5] transition-colors duration-300 transform rounded-2xl bg-[#f5f5f5]/20 hover:bg-[#f5f5f5]/50 border-[#f5f5f5]/50 border-2 focus:outline-none focus:ring-2 focus:duration-500 focus:p-[12px] text-lg"
+                className="w-full px-6 py-3 tracking-wide uppercase text-[#f5f5f5] transition-colors font-vazirmatn duration-300 transform rounded-2xl bg-[#f5f5f5]/20 hover:bg-[#f5f5f5]/50 border-[#f5f5f5]/50 border-2 focus:outline-none focus:ring-2 focus:duration-500 focus:p-[12px] text-lg"
               >
-                {isLogin ? "Login" : "Sign Up"}
+                ورود
               </button>
             </div>
           </Link>
         </form>
-
-        {/* ------------------------
-            Switch between Login/Signup
-          ------------------------ */}
-        <p className="text-center text-gray-400 text-sm">
-          {isLogin ? (
-            <>
-              Don't have an account?{" "}
-              <button
-                type="button"
-                className="text-blue-500 hover:underline focus:outline-none transition-colors duration-200"
-                onClick={onSwitchAuthMode}
-              >
-                Sign Up
-              </button>
-            </>
-          ) : (
-            <>
-              Already have an account?{" "}
-              <button
-                type="button"
-                className="text-blue-500 hover:underline focus:outline-none transition-colors duration-200"
-                onClick={onSwitchAuthMode}
-              >
-                Login
-              </button>
-            </>
-          )}
-        </p>
       </div>
     </div>
   );

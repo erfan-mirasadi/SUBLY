@@ -93,7 +93,10 @@ function NavBar() {
                 />
               ))}
             {/* Switcher for Category/Company */}
-            <DropdownNavigator />
+            <DropdownNavigator
+              onMobileMenuClose={() => setOpenNavigation(false)}
+              isMenuOpen={openNavigation}
+            />
           </div>
 
           {openNavigation && <MobileMenu />}
@@ -101,13 +104,13 @@ function NavBar() {
 
         <div className="hidden lg:flex items-center gap-4 text-xs font-grotesk">
           <a
-            href="/signup"
+            href="/login"
             className="text-[#FFFFFF]/50 hover:text-[#ADA8C3] px-4 py-2"
           >
             New account
           </a>
           <a
-            href="/signin"
+            href="/login"
             className="px-4 py-2 bg-[#FFFFFF]/50 rounded-lg text-[#1B1B2E] font-medium hover:bg-opacity-90 transition-all "
           >
             Sign in

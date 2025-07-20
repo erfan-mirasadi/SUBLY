@@ -1,11 +1,8 @@
 "use client";
-
-import Auth from "./Auth";
-
+import AuthForm from "@/src/components/auth/AuthForm";
 import { useState } from "react";
-import AuthForm from "./AuthForm";
 
-function SignIn() {
+function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
@@ -23,4 +20,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default LoginPage;

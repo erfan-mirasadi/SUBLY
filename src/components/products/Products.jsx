@@ -19,7 +19,7 @@ const productsList = [
     backgroundUrl: "/benefits/card-2.svg",
     iconUrl: "/benefits/icon-2.svg",
     imageUrl: "/hero/logos/logo-2.png",
-    light: true,
+    light: false,
   },
   {
     id: 3,
@@ -61,8 +61,8 @@ function Products() {
     <Section id="productsss">
       <div className="max-w-[1240px] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[1400px] relative z-[2]">
         <Heading
-          className="md:max-w-md lg:max-w-2xl"
-          title="buy Smarter, Not Harder with SUBLY"
+          className="md:max-w-md lg:max-w-2xl font-vazirmatn"
+          title="با سابلی همیشه یک قدم جلوتر باش"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">

@@ -7,3 +7,24 @@ export async function getApiCategories() {
   }
   return data;
 }
+
+export async function getApiProductCategories(categoryId) {
+  const { data, error } = await supabase
+    .from("product")
+    .select(
+      `
+      *,
+      product_entry (
+        *,
+        product_plans (*)
+      )
+    `
+    )
+    .eq("category_id", categoryId);
+
+  if (error) {
+    console.error("Error fetching product for category:", error);
+  }
+
+  return data;
+}

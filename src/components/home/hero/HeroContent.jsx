@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
+// زندگی دیجیتال رو ارتقا بده با سابلی
 export default function HeroContent() {
   return (
     <div className="relative z-[1] max-w-[992px] mx-auto text-center mb-[62px] md:mb-20 lg:mb-[100px]">
@@ -18,13 +18,12 @@ export default function HeroContent() {
           />
         </span>
       </h1>
-      <p className="my-9 max-w-4xl mx-auto text-[#CAC6DD] lg:mb-8">
-        Unleash the power of AI within SUBLY Upgrade your productivity with
-        SUBLY, the open wold-wide digital goods.
+      <p className="my-9 max-w-4xl mx-auto text-[#CAC6DD] lg:mb-8 font-vazirmatn">
+        همه‌ی اشتراک‌های مورد علاقت بدون محدودیت، بدون دردسر یکجا.
       </p>
       <Link href={"/products"}>
-        <button className="px-6 py-3 rounded-xl bg-white text-black font-medium hover:bg-opacity-90 transition-all">
-          Get Started
+        <button className="px-6 py-3 rounded-xl bg-white text-black font-vazirmatn font-medium hover:bg-opacity-90 transition-all">
+          شروع کن
         </button>
       </Link>
     </div>

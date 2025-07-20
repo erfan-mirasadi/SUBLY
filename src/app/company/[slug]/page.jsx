@@ -1,10 +1,15 @@
-import { getApiCompanies } from "@/src/services/ApiCompanies";
-// import Componies from "../Componies";
-// import ProductSection from "../ProductSection";
+import {
+  getApiCompanies,
+  getApiProductCompanies,
+} from "@/src/services/ApiCompanies";
+import Categories from "../Categories";
+import ProductSection from "../ProductSection";
+import Section from "@/src/components/section/Section";
 
 export default async function ComponyPage({ params }) {
   const { slug } = await params;
   const company = await getApiCompanies();
+
   const data = company?.find((c) => c.slug === slug);
 
   if (!data) {
@@ -14,24 +19,18 @@ export default async function ComponyPage({ params }) {
       </div>
     );
   }
+  const productData = await getApiProductCompanies(data.id);
 
   return (
-    <>
-      <div className="overflow-hidden">
-        {/* <Componies />
-        <ProductSection /> */}
-        <div className="max-w-[77.5rem] mx-auto py-22 md:px-10 lg:px-15 xl:max-w-[87.5rem]">
-          <h1 className="text-2xl font-bold mb-4">{data.title}</h1>
-          <p className="text-lg">{data.description}</p>
-
-          <img
-            src={data.image_url}
-            alt={data.name}
-            className="w-full h-auto mt-4"
-          />
-          <h2 className="text-xl font-semibold mt-6">Products</h2>
-        </div>
-      </div>
-    </>
+    <Section
+      className="overflow-hidden lg:pt-0 pt-[6rem] lg:translate-y-[5.25rem] -mt-[5.25rem]"
+      id="roadmap"
+      crosses
+      crossesOffset="lg:translate-y-[5.25rem]"
+      customPaddings
+    >
+      <Categories item={data} />
+      <ProductSection item={productData} />
+    </Section>
   );
 }
