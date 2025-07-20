@@ -1,14 +1,14 @@
-# Subly - Subscription Management Platform
+# SUBLY - Subscription Management Platform
 
 <div align="center">
-  <img src="public/hero/yourlogo.svg" alt="Sub-ly Logo" width="200"/>
+  <img src="public/hero/robot.jpg" alt="Subly Logo" width="200"/>
   <br/>
-  <p><strong>Modern subscription management platform built with Next.js 13+</strong></p>
+  <p><strong>Modern subscription management platform built with Next.js</strong></p>
 </div>
 
 ## 📋 Overview
 
-Sub-ly is a comprehensive subscription management platform that helps users discover, compare, and manage their digital subscriptions. The platform provides a modern, responsive interface for browsing categories, companies, and products with advanced filtering and search capabilities.
+SUBLY is a comprehensive subscription management platform that helps users discover, compare, and manage their digital subscriptions. The platform provides a modern, responsive interface for browsing categories, companies, and products with advanced filtering and search capabilities.
 
 ### 🎯 Key Features
 
@@ -24,7 +24,7 @@ Sub-ly is a comprehensive subscription management platform that helps users disc
 
 ### Tech Stack
 
-- **Framework:** Next.js 13+ (App Router)
+- **Framework:** Next.js (App Router)
 - **Styling:** Tailwind CSS
 - **Database:** Supabase
 - **Authentication:** Supabase Auth
@@ -72,7 +72,7 @@ sub-ly/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/sub-ly.git
+   git clone https://github.com/erfanmirasadi/SUBLY
    cd sub-ly
    ```
 
@@ -203,24 +203,6 @@ Product listing page:
 - **Pagination** - Load more functionality
 - **Sorting options** - Price, popularity, etc.
 
-## 🔧 Configuration Files
-
-### `next.config.mjs`
-
-```javascript
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    domains: ["your-supabase-domain.supabase.co"],
-  },
-  experimental: {
-    appDir: true,
-  },
-};
-
-export default nextConfig;
-```
-
 ### `tailwind.config.js`
 
 ```javascript
@@ -341,41 +323,10 @@ CREATE TABLE products (
 - **Base Unit:** 4px
 - **Common Spacings:** 4px, 8px, 16px, 24px, 32px, 48px, 64px
 
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. **Connect your repository** to Vercel
-2. **Set environment variables** in Vercel dashboard
-3. **Deploy automatically** on git push
-
-### Manual Deployment
-
-```bash
-# Build the application
-yarn build
-
-# Start production server
-yarn start
-```
-
-## 🔧 Development
-
-### Available Scripts
-
-```bash
-yarn dev          # Start development server
-yarn build        # Build for production
-yarn start        # Start production server
-yarn lint         # Run ESLint
-yarn lint:fix     # Fix ESLint errors
-```
-
 ### Code Style
 
 - **ESLint** for code linting
 - **Prettier** for code formatting
-- **TypeScript** for type safety (optional)
 
 ### Git Workflow
 
@@ -383,21 +334,13 @@ yarn lint:fix     # Fix ESLint errors
 2. **Pull requests** for code review
 3. **Main branch** for production releases
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
-For support, email support@sub-ly.com or create an issue in the repository.
+For support, email erfan.mirasadi@gmail.com or create an issue in the repository.
 
 ---
 
