@@ -28,7 +28,7 @@ export default async function ProductPage({ params }) {
       customPaddings
     >
       <SingleProduct product={data} />
-      <Price productEntry={data.product_entry || []} />
+      <Price productEntry={data.product_entry || []} productInfo={data} />
     </Section>
   );
 }

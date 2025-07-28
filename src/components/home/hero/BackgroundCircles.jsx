@@ -80,6 +80,7 @@ const BackgroundCircles = ({ parallaxRef }) => {
                 src={img.src}
                 alt={`circle-${i}`}
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-contain rounded-full"
               />
             </div>

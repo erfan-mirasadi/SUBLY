@@ -1,23 +1,21 @@
 "use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import AuthForm from "@/src/components/auth/AuthForm";
-import { useState } from "react";
 
-function LoginPage() {
-  const [isLogin, setIsLogin] = useState(true);
+export default function LoginPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  return (
-    <AuthForm
-      isLogin={isLogin}
-      onSwitchAuthMode={() => setIsLogin((prev) => !prev)}
-      onSubmit={(data) => {
-        // handle login or signup
-        console.log(data);
-      }}
-    />
-    // <div className="p-22 ">
-    //   <Auth list={loginFields} rounded="xl" />
-    // </div>
-  );
+  useEffect(() => {
+    if (status === "loading") return;
+    if (session?.user) {
+      router.replace("/userProfile");
+    }
+  }, [session, status, router]);
+
+  if (status === "loading" || session?.user) return null;
+
+  return <AuthForm />;
 }
-
-export default LoginPage;

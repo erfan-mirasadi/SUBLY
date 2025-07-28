@@ -51,6 +51,7 @@ function SingleProduct({ product }) {
                   alt={product.title}
                   height={730}
                   src={product.image_big_url}
+                  priority
                 />
               )}
             </div>

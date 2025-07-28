@@ -45,6 +45,7 @@ function ProductCard({ item }) {
             src={item.image_small_url}
             width={200}
             height={200}
+            priority
             alt={item.title}
           />
         </div>
@@ -72,11 +73,11 @@ function ProductCard({ item }) {
             </div>
           )}
 
-          <div className="p-4 bg-[#0E0C15] rounded-t-2xl flex flex-col min-h-[140px]">
-            <h4 className="text-xl leading-snug mb-1 font-bold">
+          <div className="p-4 bg-[#0E0C15] rounded-t-2xl flex flex-col h-[160px]">
+            <h4 className="text-xl leading-snug mb-1 font-bold line-clamp-2 h-[48px]">
               {item.title}
             </h4>
-            <p className="font-light text-xs text-[#757185] mb-4">
+            <p className="font-light text-xs text-[#757185] mb-4 line-clamp-2 h-[32px]">
               {item.caption}
             </p>
 

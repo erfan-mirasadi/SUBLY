@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     domains: ["spnkwuvimsrrjketymiq.supabase.co"], // ← دامنه‌ی Supabase
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

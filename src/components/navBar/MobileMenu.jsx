@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-export default function MobileMenu() {
+export default function MobileMenu({ handleAuthButton }) {
+  const { data: session } = useSession();
+
   return (
     <div className="absolute inset-0 font-grotesk">
       {/* Background image */}
@@ -29,20 +32,21 @@ export default function MobileMenu() {
         <div className="absolute top-1/2 left-1/2 w-[360px] aspect-square border border-[#CAC6DD]/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
       </div>
 
-      {/* Auth buttons */}
-      <div className="absolute bottom-24 left-0 right-0 flex flex-col items-center space-y-7 px-16">
-        <a
-          href="/login"
-          className="text-base text-white/70 hover:text-white transition-colors py-2"
-        >
-          New account
-        </a>
-        <a
-          href="/login"
-          className="text-base font-medium px-5 py-2 bg-white/50 rounded-lg text-[#1B1B2E] hover:bg-white/60 transition-colors"
-        >
-          Sign in
-        </a>
+      {/* Auth/Dashboard button and Cart at the top */}
+      <div className="w-full flex flex-col items-center pt-10 pb-4 gap-2">
+        {session?.user && (
+          <div className="text-[#f5f5f5] text-lg font-vazirmatn mb-1">
+            سلام {session.user.name || session.user.firstName || "کاربر"}
+          </div>
+        )}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleAuthButton}
+            className="text-base font-medium px-5 py-2 bg-white/50 rounded-lg text-[#1B1B2E] hover:bg-white/60 transition-colors cursor-pointer"
+          >
+            {session?.user ? "Dashboard" : "Login"}
+          </button>
+        </div>
       </div>
     </div>
   );

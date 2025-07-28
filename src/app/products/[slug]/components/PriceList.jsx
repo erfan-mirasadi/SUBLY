@@ -3,6 +3,7 @@ import PlanSwitch from "./PlanSwitch";
 import Link from "next/link";
 import CountUp from "react-countup";
 import Image from "next/image";
+import AddToCartButton from "@/src/components/products/AddToCartButton";
 
 // Color map for entry ids (4 colors)
 const modelColors = [
@@ -12,7 +13,7 @@ const modelColors = [
   "text-white", // white
 ];
 
-function PriceList({ productEntry = [] }) {
+function PriceList({ productEntry = [], productInfo = {} }) {
   // Extract all unique plan titles from all product_entry items
   const allPlanTitles = Array.from(
     new Set(
@@ -142,11 +143,33 @@ function PriceList({ productEntry = [] }) {
                   </>
                 )}
               </div>
-              <Link href={buttonText === "BUY" ? "BUY" : "Contact us"}>
-                <button className="cursor-pointer w-full mb-6 bg-amber-50 text-black rounded-2xl">
-                  {buttonText}
+              {plan ? (
+                <AddToCartButton
+                  plan={{
+                    id: plan.id,
+                    title: plan.title,
+                    price: finalPrice,
+                    oldPrice: oldPrice,
+                    duration: plan.duration,
+                    state: plan.state,
+                    discount_price: plan.discount_price,
+                  }}
+                  productInfo={{
+                    id: productInfo.id,
+                    title: productInfo.title,
+                    image_small_url: productInfo.image_small_url,
+                    caption: productInfo.caption,
+                    model: entry.model,
+                  }}
+                />
+              ) : (
+                <button
+                  className="w-full mb-6 bg-gray-400 text-white rounded-2xl px-6 py-3 font-medium cursor-not-allowed"
+                  disabled
+                >
+                  Contact us
                 </button>
-              </Link>
+              )}
               <ul>
                 {featuresList.map((feature, index) => (
                   <li

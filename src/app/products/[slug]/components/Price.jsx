@@ -12,7 +12,7 @@ import PriceList from "./PriceList";
 // import stars from "@/public/price/stars.svg";
 // import smallSphere from "@/public/price/4-small.png";
 
-function Price({ productEntry = [] }) {
+function Price({ productEntry = [], productInfo = {} }) {
   return (
     <Section className="overflow-hidden" id="pricing">
       <div className="max-w-[77.5rem] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem] relative z-2 flex flex-col items-center">
@@ -42,7 +42,7 @@ function Price({ productEntry = [] }) {
         />
 
         <div className="relative">
-          <PriceList productEntry={productEntry} />
+          <PriceList productEntry={productEntry} productInfo={productInfo} />
           <StyleLines />
         </div>
 

@@ -5,35 +5,54 @@ import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 import Image from "next/image";
 import Link from "next/link";
 
 const ProductSwiper = ({ items }) => {
+  const duplicatedItems = items.length < 4 ? [...items, ...items] : items;
+
   return (
     <div className="relative top-0 w-full max-w-screen mx-auto">
+      <style jsx global>{`
+        .swiper-pagination {
+          position: relative !important;
+          bottom: 0 !important;
+          margin-top: 2rem;
+        }
+        .swiper-pagination-bullet {
+          width: 8px !important;
+          height: 8px !important;
+          background: rgba(255, 255, 255, 0.2) !important;
+          opacity: 1 !important;
+        }
+        .swiper-pagination-bullet-active {
+          background: #fff !important;
+        }
+      `}</style>
       <Swiper
         effect="coverflow"
         modules={[Navigation, Pagination, EffectCoverflow]}
-        slidesPerView={"auto"}
-        navigation={{
-          // nextEl: ".swiper-button-next",
-          // prevEl: ".swiper-button-prev",
-          clickable: true,
-        }}
-        loop={true}
-        grabCursor={true}
-        centeredSlides={true}
-        spaceBetween={-150}
+        slidesPerView="auto"
+        centeredSlides
+        loop
+        grabCursor
+        navigation
         coverflowEffect={{
           rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 2.5,
+          stretch: 100,
+          depth: 150,
+          modifier: 1.5,
+          slideShadows: false,
         }}
-        pagination={{ clickable: true }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        className="swiper-container !px-12 pb-12"
       >
-        {items.map((item) => (
-          <SwiperSlide key={item.id}>
+        {duplicatedItems.map((item, index) => (
+          <SwiperSlide key={`${item.id}-${index}`}>
             {({ isActive }) => (
               <div className="flex justify-center items-center transition-all duration-500">
                 <Link href={`/products/${item.slug}`}>

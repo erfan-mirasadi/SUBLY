@@ -6,38 +6,22 @@ import NavItem from "./NavItem";
 import MobileMenu from "./MobileMenu";
 import useActiveLink from "@/src/hooks/useActiveLink";
 import DropdownNavigator from "./DropdownNavigator";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import CartIcon from "./CartIcon";
 
 const navigation = [
-  {
-    id: 1,
-    title: "Home",
-    url: "/",
-  },
-  {
-    id: 2,
-    title: "Products",
-    url: "/products",
-  },
-  {
-    id: 3,
-    title: "Company",
-    url: "/compony",
-  },
-  {
-    id: 4,
-    title: "Category",
-    url: "/category",
-  },
-  {
-    id: 5,
-    title: "Contact",
-    url: "/contact",
-  },
+  { id: 1, title: "Home", url: "/" },
+  { id: 2, title: "Products", url: "/products" },
+  { id: 4, title: "Category", url: "/category" },
+  { id: 5, title: "Contact", url: "/contact" },
 ];
 
 function NavBar() {
   const [openNavigation, setOpenNavigation] = useState(false);
-  const activeHash = useActiveLink(); //hook to get the current active hash
+  const activeHash = useActiveLink();
+  const { data: session } = useSession();
+  const router = useRouter();
 
   //for hiding the scrollbar when the menu is open
   useEffect(() => {
@@ -46,7 +30,6 @@ function NavBar() {
     } else {
       document.body.style.overflow = "auto";
     }
-
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -59,6 +42,21 @@ function NavBar() {
   const handleClick = () => {
     if (!openNavigation) return;
     setOpenNavigation(false);
+  };
+
+  // Handle login/dashboard button click
+  const handleAuthButton = () => {
+    if (session?.user) {
+      router.push("/userProfile");
+    } else {
+      if (
+        typeof window !== "undefined" &&
+        window.location.pathname !== "/login"
+      ) {
+        localStorage.setItem("redirectAfterLogin", window.location.pathname);
+      }
+      router.push("/login");
+    }
   };
 
   return (
@@ -94,31 +92,27 @@ function NavBar() {
               ))}
             {/* Switcher for Category/Company */}
             <DropdownNavigator
-              onMobileMenuClose={() => setOpenNavigation(false)}
+              onMobileMenuClose={handleClick}
               isMenuOpen={openNavigation}
             />
           </div>
 
-          {openNavigation && <MobileMenu />}
+          {openNavigation && <MobileMenu handleAuthButton={handleAuthButton} />}
         </nav>
 
+        {/* Auth/Dashboard button and Cart */}
         <div className="hidden lg:flex items-center gap-4 text-xs font-grotesk">
-          <a
-            href="/login"
-            className="text-[#FFFFFF]/50 hover:text-[#ADA8C3] px-4 py-2"
+          <CartIcon />
+          <button
+            onClick={handleAuthButton}
+            className="px-4 py-2 bg-[#FFFFFF]/50 rounded-lg text-[#1B1B2E] font-medium hover:bg-opacity-90 transition-all cursor-pointer"
           >
-            New account
-          </a>
-          <a
-            href="/login"
-            className="px-4 py-2 bg-[#FFFFFF]/50 rounded-lg text-[#1B1B2E] font-medium hover:bg-opacity-90 transition-all "
-          >
-            Sign in
-          </a>
+            {session?.user ? "Dashboard" : "Login"}
+          </button>
         </div>
 
         <button
-          className="flex lg:hidden items-center justify-center w-10 h-10 group"
+          className="flex lg:hidden items-center justify-center w-10 h-10 group cursor-pointer"
           onClick={toggleNavigation}
           aria-label="Toggle menu"
         >
