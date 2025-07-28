@@ -10,8 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProductSwiper = ({ items }) => {
-  const duplicatedItems = items.length < 4 ? [...items, ...items] : items;
-
+  const duplicatedItems = items;
   return (
     <div className="relative top-0 w-full max-w-screen mx-auto">
       <style jsx global>{`
@@ -51,7 +50,7 @@ const ProductSwiper = ({ items }) => {
         }}
         className="swiper-container !px-12 pb-12"
       >
-        {duplicatedItems.map((item, index) => (
+        {duplicatedItems.products.map((item, index) => (
           <SwiperSlide key={`${item.id}-${index}`}>
             {({ isActive }) => (
               <div className="flex justify-center items-center transition-all duration-500">

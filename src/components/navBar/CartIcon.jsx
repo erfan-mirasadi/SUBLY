@@ -1,5 +1,4 @@
 "use client";
-
 import { useCart } from "@/src/hooks/useCart";
 import { useRouter } from "next/navigation";
 import { MdOutlineShoppingCart, MdShoppingCart } from "react-icons/md";
@@ -8,15 +7,11 @@ export default function CartIcon() {
   const { getCartItemsCount } = useCart();
   const router = useRouter();
   const cartItemsCount = getCartItemsCount();
-
-  const handleCartClick = () => {
-    router.push("/shoppingCard");
-  };
-
+  const handleCartClick = () => router.push("/shoppingCard");
   return (
     <button
       onClick={handleCartClick}
-      className="relative flex items-center justify-center w-8 h-8 group cursor-pointer"
+      className="relative flex items-center justify-center w-8 h-8 group cursor-pointer hover:scale-110 transition-all duration-300"
       aria-label="Shopping cart"
     >
       {/* Cart Icon */}
