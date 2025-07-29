@@ -15,7 +15,7 @@ const getLocalCartItems = () => {
     const items = localStorage.getItem(CART_STORAGE_KEY);
     return items ? JSON.parse(items) : [];
   } catch (error) {
-    console.error("Error reading cart from localStorage:", error);
+    // console.error("Error reading cart from localStorage:", error);
     return [];
   }
 };
@@ -25,7 +25,7 @@ const setLocalCartItems = (items) => {
   try {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
   } catch (error) {
-    console.error("Error saving cart to localStorage:", error);
+    // console.error("Error saving cart to localStorage:", error);
   }
 };
 
@@ -46,10 +46,10 @@ export function useCart() {
       try {
         const response = await fetch(`/api/cart?user_id=${session.user.id}`);
         const data = await response.json();
-        console.log("📥 Server cart data:", data);
+        // console.log("📥 Server cart data:", data);
         setCartItems(data || []);
       } catch (error) {
-        console.error("❌ Error fetching cart items:", error);
+        // console.error("❌ Error fetching cart items:", error);
         setCartItems([]);
       } finally {
         setLoading(false);
@@ -59,10 +59,10 @@ export function useCart() {
       setLoading(true);
       try {
         const localItems = getLocalCartItems();
-        console.log("📥 Local cart data:", localItems);
+        // console.log("📥 Local cart data:", localItems);
         setCartItems(localItems);
       } catch (error) {
-        console.error("❌ Error reading local cart:", error);
+        // console.error("❌ Error reading local cart:", error);
         setCartItems([]);
       } finally {
         setLoading(false);
@@ -73,11 +73,11 @@ export function useCart() {
 
   // Add item to cart (localStorage or server)
   const addToCart = async (plan_id, quantity = 1, plan = null) => {
-    console.log("➕ addToCart called", {
-      plan_id,
-      quantity,
-      userId: session?.user?.id,
-    });
+    // console.log("➕ addToCart called", {
+    //   plan_id,
+    //   quantity,
+    //   userId: session?.user?.id,
+    // });
 
     if (session?.user?.id) {
       // User is logged in - add to server
@@ -95,20 +95,20 @@ export function useCart() {
         });
 
         if (response.ok) {
-          console.log("✅ Added to server cart successfully");
+          // console.log("✅ Added to server cart successfully");
           await fetchCartItems(); // Refresh cart items
           return true;
         }
-        console.log("❌ Failed to add to server cart");
+        // console.log("❌ Failed to add to server cart");
         return false;
       } catch (error) {
-        console.error("❌ Error adding to cart:", error);
+        // console.error("❌ Error adding to cart:", error);
         return false;
       }
     } else {
       // User is not logged in - add to localStorage
       const currentItems = getLocalCartItems();
-      console.log("📦 Current local items:", currentItems);
+      // console.log("📦 Current local items:", currentItems);
 
       // Check for same plan_id
       const existingItemIndex = currentItems.findIndex(
@@ -118,7 +118,7 @@ export function useCart() {
       if (existingItemIndex >= 0) {
         // Update existing item quantity
         currentItems[existingItemIndex].quantity += quantity;
-        console.log("📝 Updated existing item quantity");
+        // console.log("📝 Updated existing item quantity");
       } else {
         // Add new item with full plan information
         const newItem = {
@@ -140,22 +140,22 @@ export function useCart() {
           },
         };
         currentItems.push(newItem);
-        console.log("➕ Added new item to local cart:", newItem);
+        // console.log("➕ Added new item to local cart:", newItem);
       }
 
       setLocalCartItems(currentItems);
       setCartItems(currentItems);
-      console.log("💾 Saved to localStorage:", currentItems);
+      // console.log("💾 Saved to localStorage:", currentItems);
       return true;
     }
   };
 
   // Remove item from cart
   const removeFromCart = async (cart_item_id) => {
-    console.log("🗑️ removeFromCart called", {
-      cart_item_id,
-      userId: session?.user?.id,
-    });
+    // console.log("🗑️ removeFromCart called", {
+    //   cart_item_id,
+    //   userId: session?.user?.id,
+    // });
 
     if (session?.user?.id) {
       // User is logged in - remove from server
@@ -165,14 +165,14 @@ export function useCart() {
         });
 
         if (response.ok) {
-          console.log("✅ Removed from server cart successfully");
+          // console.log("✅ Removed from server cart successfully");
           await fetchCartItems(); // Refresh cart items
           return true;
         }
-        console.log("❌ Failed to remove from server cart");
+        // console.log("❌ Failed to remove from server cart");
         return false;
       } catch (error) {
-        console.error("❌ Error removing from cart:", error);
+        // console.error("❌ Error removing from cart:", error);
         return false;
       }
     } else {
@@ -183,19 +183,19 @@ export function useCart() {
       );
       setLocalCartItems(updatedItems);
       setCartItems(updatedItems);
-      console.log("🗑️ Removed from local cart");
+      // console.log("🗑️ Removed from local cart");
       return true;
     }
   };
 
   // Sync localStorage cart to server after login
   const syncLocalCartToServer = async () => {
-    console.log("🔄 syncLocalCartToServer called", {
-      userId: session?.user?.id,
-    });
+    // console.log("🔄 syncLocalCartToServer called", {
+    //   userId: session?.user?.id,
+    // });
 
     if (!session?.user?.id) {
-      console.log("❌ No user ID, skipping sync");
+      // console.log("❌ No user ID, skipping sync");
       return;
     }
 
@@ -205,18 +205,18 @@ export function useCart() {
       hasSyncedRef.current ||
       syncedUsers.has(session.user.id)
     ) {
-      console.log(
-        "🛑 Sync already in progress or completed for user:",
-        session.user.id
-      );
+      // console.log(
+      //   "🛑 Sync already in progress or completed for user:",
+      //   session.user.id
+      // );
       return;
     }
 
     const localItems = getLocalCartItems();
-    console.log("📦 Local items to sync:", localItems);
+    // console.log("📦 Local items to sync:", localItems);
 
     if (localItems.length === 0) {
-      console.log("📭 No local items to sync");
+      // console.log("📭 No local items to sync");
       hasSyncedRef.current = true;
       syncedUsers.add(session.user.id);
       return;
@@ -224,12 +224,12 @@ export function useCart() {
 
     try {
       syncInProgress = true;
-      console.log("🚀 Starting sync process...");
+      // console.log("🚀 Starting sync process...");
       localStorage.removeItem(CART_STORAGE_KEY);
       // Add all local items to server
       // setTimeout(async () => {
       for (const item of localItems) {
-        console.log("📤 Syncing item:", item);
+        // console.log("📤 Syncing item:", item);
         const response = await fetch("/api/cart", {
           method: "POST",
           headers: {
@@ -243,25 +243,25 @@ export function useCart() {
         });
 
         if (!response.ok) {
-          console.error("❌ Failed to sync item:", item, response.statusText);
+          // console.error("❌ Failed to sync item:", item, response.statusText);
         } else {
-          console.log("✅ Successfully synced item:", item);
+          // console.log("✅ Successfully synced item:", item);
         }
       }
       // }, 0); // Simulate delay for batch processing
 
       // Clear localStorage after successful sync
 
-      console.log("🗑️ Cleared localStorage");
+      // console.log("🗑️ Cleared localStorage");
 
       // Mark as synced
       hasSyncedRef.current = true;
       syncedUsers.add(session.user.id);
 
       // Refresh cart items from server
-      console.log("✅ Sync completed successfully");
+      // console.log("✅ Sync completed successfully");
     } catch (error) {
-      console.error("❌ Error syncing local cart to server:", error);
+      // console.error("❌ Error syncing local cart to server:", error);
     } finally {
       syncInProgress = false;
     }
@@ -275,12 +275,12 @@ export function useCart() {
 
     // Only log when count actually changes
     if (count !== lastCountRef.current) {
-      console.log(
-        "📊 Cart items count changed:",
-        lastCountRef.current,
-        "→",
-        count
-      );
+      // console.log(
+      //   "📊 Cart items count changed:",
+      //   lastCountRef.current,
+      //   "→",
+      //   count
+      // );
       lastCountRef.current = count;
     }
 
@@ -289,12 +289,12 @@ export function useCart() {
 
   // Initialize cart items - wait for session to be determined
   useEffect(() => {
-    console.log(`${status} **************************`);
+    // console.log(`${status} **************************`);
     if (!fetchTriggeredRef.current && status !== "loading") {
-      console.log("🔄 useEffect [fetchCartItems] triggered", {
-        userId: session?.user?.id,
-        status,
-      });
+      // console.log("🔄 useEffect [fetchCartItems] triggered", {
+      //   userId: session?.user?.id,
+      //   status,
+      // });
       fetchTriggeredRef.current = true;
 
       // Reset flag after a short delay to allow for future fetches
@@ -307,17 +307,17 @@ export function useCart() {
   // Sync localStorage to server when user logs in
   useEffect(() => {
     if (!syncTriggeredRef.current && status !== "loading") {
-      console.log("🔄 useEffect [sync] triggered", {
-        userId: session?.user?.id,
-        status,
-      });
+      // console.log("🔄 useEffect [sync] triggered", {
+      //   userId: session?.user?.id,
+      //   status,
+      // });
       syncTriggeredRef.current = true;
 
       if (session?.user?.id) {
-        console.log("👤 User logged in, starting sync...");
+        // console.log("👤 User logged in, starting sync...");
         syncLocalCartToServer();
       } else if (status === "unauthenticated") {
-        console.log("👤 User logged out");
+        // console.log("👤 User logged out");
         // Reset sync flags when user logs out
         hasSyncedRef.current = false;
         syncedUsers.clear();
