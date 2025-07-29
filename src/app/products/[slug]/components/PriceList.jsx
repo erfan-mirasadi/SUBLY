@@ -1,6 +1,6 @@
+// src/app/products/[slug]/components/PriceList.jsx
 import { useState, useRef } from "react";
 import PlanSwitch from "./PlanSwitch";
-import Link from "next/link";
 import CountUp from "react-countup";
 import Image from "next/image";
 import AddToCartButton from "@/src/components/products/AddToCartButton";

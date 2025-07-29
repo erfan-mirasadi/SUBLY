@@ -16,14 +16,6 @@ import Heading from "@/src/components/ui/Heading";
 import Image from "next/image";
 import Gradient from "@/src/components/ui/Gradient";
 
-//variables
-// const brainwaveServices = [
-//   "Musics of the world’s ",
-//   "Best Quality",
-//   "Dulby Atmos",
-//   "High Quality",
-// ];
-
 const brainwaveServicesIcons = [
   recording03,
   recording01,
@@ -76,8 +68,8 @@ function SingleProduct({ product }) {
               </ul>
             </div>
 
-            {/* </div> */}
-            {/* <div className="relative z-1 grid gap-5 lg:grid-cols-2">
+            {/* </div>
+            <div className="relative z-1 grid gap-5 lg:grid-cols-2">
             <div className="relative min-h-[39rem] border border-[#FFFF]/10 rounded-3xl overflow-hidden">
               <div className="absolute inset-0">
                 <video
@@ -100,9 +92,9 @@ function SingleProduct({ product }) {
                   Automatically download any music you want. Try it now!
                 </p>
               </div>
-            </div> */}
+            </div>
 
-            {/* <div className="p-4 bg-[#15131D] rounded-3xl overflow-hidden lg:min-h-[46rem]">
+            <div className="p-4 bg-[#15131D] rounded-3xl overflow-hidden lg:min-h-[46rem]">
               <div className="py-12 px-4 xl:px-8">
                 <h4 className="text-[2rem] leading-normal mb-4">
                   Watching Movies
@@ -134,9 +126,9 @@ function SingleProduct({ product }) {
                     </li>
                   ))}
                 </ul>
-              </div> */}
+              </div>
 
-            {/* <div className="relative h-[20rem] bg-[#0E0C15] rounded-xl overflow-hidden md:h-[25rem]">
+            <div className="relative h-[20rem] bg-[#0E0C15] rounded-xl overflow-hidden md:h-[25rem]">
                 <Image
                   src={service3}
                   className="w-full h-full object-cover"
@@ -144,8 +136,8 @@ function SingleProduct({ product }) {
                   height={400}
                   alt="compony-3"
                 />
-              </div> */}
-            {/* </div> */}
+              </div>
+            </div> */}
           </div>
 
           <Gradient />

@@ -1,25 +1,16 @@
-import {
-  getApiCompanies,
-  getApiProductCompanies,
-} from "@/src/services/ApiCompanies";
 import Categories from "../Categories";
 import ProductSection from "../ProductSection";
 import Section from "@/src/components/section/Section";
+import {
+  getCompanyQuery,
+  getProductByCompanyQuery,
+} from "@/src/hooks/query/company";
 
 export default async function ComponyPage({ params }) {
   const { slug } = await params;
-  const company = await getApiCompanies();
-
-  const data = company?.find((c) => c.slug === slug);
-
-  if (!data) {
-    return (
-      <div className="p-8 text-center text-red-500">
-        محصول پیدا نشد یا خطا در دریافت اطلاعات!
-      </div>
-    );
-  }
-  const productData = await getApiProductCompanies(data.id);
+  const company = await getCompanyQuery();
+  const matchedCompany = company?.find((c) => c.slug === slug);
+  const productData = await getProductByCompanyQuery(matchedCompany.id);
 
   return (
     <Section
@@ -29,7 +20,7 @@ export default async function ComponyPage({ params }) {
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings
     >
-      <Categories item={data} />
+      <Categories item={matchedCompany} />
       <ProductSection item={productData} />
     </Section>
   );

@@ -1,13 +1,34 @@
-// src/app/products/[slug]/components/PlanSwitch.jsx
-import { useState } from "react";
+// src/app/products/[slug]/components/PlanSwitch2.jsx
+"use client";
 
-const PlanSwitch = ({ options = [], onChange, defaultIndex = 0 }) => {
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+
+const PlanSwitch2 = ({
+  options = [],
+  onChange,
+  defaultIndex = 0,
+  productSlug,
+  currentPlan,
+}) => {
   const [selected, setSelected] = useState(defaultIndex);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const xAmount = 1;
 
   const handleClick = (idx) => {
     setSelected(idx);
-    if (onChange) onChange(options[idx], idx);
+    const selectedOption = options[idx];
+
+    // Call the original onChange for CountUp animation
+    if (onChange) onChange(selectedOption, idx);
+
+    // Navigate to new URL with smooth transition
+    startTransition(() => {
+      router.push(`/products/${productSlug}/${selectedOption.value}`, {
+        scroll: false, // Prevent scrolling to top
+      });
+    });
   };
 
   // Calculate the width and left position of the indicator
@@ -20,6 +41,7 @@ const PlanSwitch = ({ options = [], onChange, defaultIndex = 0 }) => {
         relative z-4 mx-auto flex min-w-[310px] w-[375px] rounded-3xl border-[3px] border-[#1959AD]/25 
         px-[${xAmount * 5}px] bg-[#080D27]/50 py-2 backdrop-blur-[6px] 
         max-md:w-full max-md:overflow-x-auto 
+        ${isPending ? "opacity-70 pointer-events-none" : ""}
       `}
     >
       {/* Indicator */}
@@ -41,12 +63,13 @@ const PlanSwitch = ({ options = [], onChange, defaultIndex = 0 }) => {
         <button
           key={opt.value || opt.label || idx}
           className={
-            "cursor-pointer base-bold relative z-2 h-16 flex-1 uppercase transition-colors duration-500 mx-1 whitespace-nowrap px-2 text-sm md:text-base  " +
+            "cursor-pointer base-bold relative z-2 h-16 flex-1 uppercase transition-colors duration-500 mx-1 whitespace-nowrap px-2 text-sm md:text-base " +
             (selected === idx
               ? "text-[#EAEDFF]"
               : "text-[#C4CBF5] hover:text-[rgb(184,107,107)]")
           }
           onClick={() => handleClick(idx)}
+          disabled={isPending}
         >
           {opt.label || opt}
         </button>
@@ -55,4 +78,4 @@ const PlanSwitch = ({ options = [], onChange, defaultIndex = 0 }) => {
   );
 };
 
-export default PlanSwitch;
+export default PlanSwitch2;

@@ -1,21 +1,26 @@
-// src/app/products/[slug]/components/Price.jsx
+// src/app/products/[slug]/components/Price2.jsx
 import Image from "next/image";
 
 //components
 import Section from "@/src/components/section/Section";
 import Heading from "@/src/components/ui/Heading";
-import StyleLines from "./StyleLines";
-import PriceList from "./PriceList";
+import PriceList2 from "./PriceList2";
+import StyleLines from "@/src/app/products/[slug]/components/StyleLines";
 
 // Assets
-// import stars from "@/public/price/stars.svg";
-// import smallSphere from "@/public/price/4-small.png";
+import stars from "@/public/price/stars.svg";
+import smallSphere from "@/public/price/4-small.png";
 
-function Price({ productEntry = [], productInfo = {} }) {
+function Price2({
+  productEntry = [],
+  productInfo = {},
+  currentPlan,
+  productSlug,
+}) {
   return (
     <Section className="overflow-hidden" id="pricing">
       <div className="max-w-[77.5rem] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem] relative z-2 flex flex-col items-center">
-        {/* <div className="hidden relative justify-center mb-[6.5rem] lg:flex ">
+        <div className="hidden relative justify-center mb-[6.5rem] lg:flex ">
           <Image
             src={smallSphere}
             className="relative z-1"
@@ -32,7 +37,7 @@ function Price({ productEntry = [], productInfo = {} }) {
               alt="Stars"
             />
           </div>
-        </div> */}
+        </div>
 
         <Heading
           tag="Get started with Subly"
@@ -41,7 +46,12 @@ function Price({ productEntry = [], productInfo = {} }) {
         />
 
         <div className="relative">
-          <PriceList productEntry={productEntry} productInfo={productInfo} />
+          <PriceList2
+            productEntry={productEntry}
+            productInfo={productInfo}
+            currentPlan={currentPlan}
+            productSlug={productSlug}
+          />
           <StyleLines />
         </div>
 
@@ -58,4 +68,4 @@ function Price({ productEntry = [], productInfo = {} }) {
   );
 }
 
-export default Price;
+export default Price2;

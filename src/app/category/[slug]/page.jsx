@@ -1,24 +1,16 @@
-import {
-  getApiCategories,
-  getApiProductCategories,
-} from "@/src/services/ApiCategories";
 import Categories from "../../company/Categories";
 import ProductSection from "../../company/ProductSection";
 import Section from "@/src/components/section/Section";
+import {
+  getCategoryQuery,
+  getProductByCategoryQuery,
+} from "@/src/hooks/query/category";
 
 export default async function CategoryPage({ params }) {
   const { slug } = await params;
-  const category = await getApiCategories();
-  const data = category?.find((c) => c.slug === slug);
-  const productData = await getApiProductCategories(data.id);
-
-  if (!data) {
-    return (
-      <div className="p-8 text-center text-red-500">
-        محصول پیدا نشد یا خطا در دریافت اطلاعات!
-      </div>
-    );
-  }
+  const category = await getCategoryQuery();
+  const matchedCategory = category?.find((c) => c.slug === slug);
+  const productData = await getProductByCategoryQuery(matchedCategory.id);
 
   return (
     <Section
@@ -28,7 +20,7 @@ export default async function CategoryPage({ params }) {
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings
     >
-      <Categories item={data} />
+      <Categories item={matchedCategory} />
       <ProductSection item={productData} />
     </Section>
   );

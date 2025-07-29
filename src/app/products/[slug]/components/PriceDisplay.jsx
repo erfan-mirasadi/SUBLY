@@ -1,3 +1,4 @@
+// src/app/products/[slug]/components/PriceDisplay.jsx
 import CountUp from "react-countup";
 
 export default function PriceDisplay({ prevPrice, finalPrice }) {
