@@ -3,8 +3,11 @@ import { getProductsQuery } from "@/src/hooks/query/product";
 
 import Section from "@/src/components/section/Section";
 import { notFound } from "next/navigation";
-import SingleProduct from "../SingleProduct";
 import Price2 from "@/src/components/productPrice/Price2";
+import HeroSection from "./HeroSection";
+import SecondSection from "./SecondSection";
+import ThirdSection from "./ThirdSection";
+import PriceSection from "./PriceSection";
 
 export default async function ProductPlanPage({ params }) {
   const { slug, plan } = await params;
@@ -31,13 +34,16 @@ export default async function ProductPlanPage({ params }) {
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings
     >
-      <SingleProduct product={data} />
-      <Price2
+      <HeroSection product={data}/>
+      {/* <SecondSection product={data} /> */}
+      <ThirdSection/>
+      <PriceSection params={slug}/>
+      {/* <Price2
         productEntry={data.product_entry || []}
         productInfo={data}
         currentPlan={plan}
         productSlug={slug}
-      />
+      /> */}
     </Section>
   );
 }
@@ -56,12 +62,12 @@ export async function generateStaticParams() {
       )
     );
 
-    allPlanTitles.forEach((planTitle) => {
-      params.push({
-        slug: product.slug,
-        plan: planTitle.toLowerCase(),
-      });
-    });
+    // allPlanTitles.forEach((planTitle) => {
+    //   params.push({
+    //     slug: product.slug,
+    //     plan: planTitle.toLowerCase(),
+    //   });
+    // });
   });
 
   return params;
