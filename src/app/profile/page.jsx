@@ -1,10 +1,13 @@
+"use client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 function UserProfilePage() {
-  return (
-    <div className="flex-1 flex ">
-      <h1>User Profile</h1>
-    </div>
-  );
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/profile/account");
+  }, []);
+  return <div className="flex-1 flex " />;
 }
 
 export default UserProfilePage;
