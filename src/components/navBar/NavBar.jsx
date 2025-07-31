@@ -16,7 +16,7 @@ export default function NavBar({children}) {
         <div className="flex items-center justify-end md:items-center gap-4 text-xs font-grotesk z-30 relative">
           <CartIcon />
           <div className="bg-conic-gradient hidden p-[1px] md:flex justify-center items-center cursor-pointer hover:scale-105 transition-all duration-300 rounded-lg">
-            <AuthButton/>
+            <AuthButton />
           </div>
         </div>
       </div>

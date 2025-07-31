@@ -8,7 +8,7 @@ export function useSendOtp() {
     mutationFn: async (phone) => {
       const { data, error } = await supabase.rpc("generate_otp", { phone_number: phone });
       if (error) throw error;
-      console.log(data);
+      console.log(`OTP sent to ${data[0].otp_code}`);
       return data;
     },
   });
@@ -17,28 +17,37 @@ export function useSendOtp() {
 export function useVerifyOtp() {
   return useMutation({
     mutationFn: async ({ phone, code }) => {
-      // مرحله ۱: چک کردن OTP
+      // 1️⃣ چک کردن OTP
       const { data, error } = await supabase.rpc("verify_otp", {
         phone_number: phone,
         code,
       });
       if (error) throw error;
 
-      const result = data[0];
-      if (!result.success) return { success: false };
+      const result = data?.[0];
+      if (!result?.success) {
+        throw new Error("OTP verification failed");
+      }
 
-      // ایمیل فیک
       const fakeEmail = `${phone}@gmail.com`;
       const password = phone;
 
-      // تلاش برای لاگین
-      let { data: signInData } = await supabase.auth.signInWithPassword({
-        email: fakeEmail,
-        password,
-      });
+      // 2️⃣ تلاش برای لاگین
+      let { data: signInData, error: signInError } =
+        await supabase.auth.signInWithPassword({
+          email: fakeEmail,
+          password,
+        });
 
-      // اگر کاربر وجود نداشت، SignUp و بعد دوباره SignIn
-      if (!signInData.session) {
+      // فقط اگر خطا چیز دیگه‌ای غیر از invalid_credentials بود → throw کن
+      if (signInError && signInError.code !== "invalid_credentials") {
+        throw signInError;
+      }
+
+      let finalSession = signInData?.session;
+
+      // 3️⃣ اگر کاربر وجود نداشت → SignUp
+      if (!finalSession) {
         const { error: signUpError } = await supabase.auth.signUp({
           email: fakeEmail,
           password,
@@ -47,35 +56,30 @@ export function useVerifyOtp() {
         });
         if (signUpError) throw signUpError;
 
-        const { data: newSignInData, error: signInError } =
+        // 4️⃣ دوباره SignIn بعد از SignUp
+        const { data: newSignInData, error: secondSignInError } =
           await supabase.auth.signInWithPassword({
             email: fakeEmail,
             password,
           });
-        if (signInError) throw signInError;
 
-        signInData = newSignInData;
+        if (secondSignInError) throw secondSignInError;
+
+        finalSession = newSignInData.session;
       }
 
-      // ✅ ذخیره JWT توی localStorage
-      if (signInData.session?.access_token) {
-        localStorage.setItem(
-          "subly_access_token",
-          signInData.session.access_token
-        );
+      if (!finalSession?.access_token) {
+        throw new Error("Authentication failed: No access token received");
       }
+
+      // ✅ ذخیره JWT
+      localStorage.setItem("subly_access_token", finalSession.access_token);
 
       return {
         ...result,
-        session: signInData.session,
-        user: signInData.user,
+        session: finalSession,
+        user: finalSession.user,
       };
     },
   });
 }
-
-
-
-  
-  
-

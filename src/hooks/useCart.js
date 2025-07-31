@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-import { useSession } from "next-auth/react";
+import { useState, useRef } from "react";
 
 // Local storage key for cart items
 const CART_STORAGE_KEY = "subly_cart_items";
@@ -32,7 +31,6 @@ const setLocalCartItems = (items) => {
 export function useCart() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true); // Start with loading true
-  const { data: session, status } = useSession(); // Add status to check if session is loading
   const hasSyncedRef = useRef(false);
   const fetchTriggeredRef = useRef(false);
   const syncTriggeredRef = useRef(false);
@@ -286,50 +284,6 @@ export function useCart() {
 
     return count;
   };
-
-  // Initialize cart items - wait for session to be determined
-  useEffect(() => {
-    // console.log(`${status} **************************`);
-    if (!fetchTriggeredRef.current && status !== "loading") {
-      // console.log("🔄 useEffect [fetchCartItems] triggered", {
-      //   userId: session?.user?.id,
-      //   status,
-      // });
-      fetchTriggeredRef.current = true;
-
-      // Reset flag after a short delay to allow for future fetches
-      setTimeout(() => {
-        fetchTriggeredRef.current = false;
-      }, 100);
-    }
-  }, [session?.user?.id, status]);
-
-  // Sync localStorage to server when user logs in
-  useEffect(() => {
-    if (!syncTriggeredRef.current && status !== "loading") {
-      // console.log("🔄 useEffect [sync] triggered", {
-      //   userId: session?.user?.id,
-      //   status,
-      // });
-      syncTriggeredRef.current = true;
-
-      if (session?.user?.id) {
-        // console.log("👤 User logged in, starting sync...");
-        syncLocalCartToServer();
-      } else if (status === "unauthenticated") {
-        // console.log("👤 User logged out");
-        // Reset sync flags when user logs out
-        hasSyncedRef.current = false;
-        syncedUsers.clear();
-      }
-
-      // Reset flag after a short delay
-      setTimeout(() => {
-        syncTriggeredRef.current = false;
-      }, 100);
-    }
-    fetchCartItems();
-  }, [session?.user?.id, status]);
 
   return {
     cartItems,

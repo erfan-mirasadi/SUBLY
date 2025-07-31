@@ -14,24 +14,28 @@ export default function LoginPage() {
  const { mutate, isPending } = useSendOtp();
  const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOtp();
  const router = useRouter();
-
-  const handleSubmit = (e) => {
+ const handleSubmit = (e) => {
     e.preventDefault();
     if(step === 1){
       mutate(phone);
       setStep(2);
+      const inputs = document.querySelectorAll("input[name='otp']");
+      if (inputs && inputs.length > 0) {
+        inputs[0].focus();
+      }
     }else{
-      verifyOtp({ phone, code: otp });
-      router.push("/")
+      verifyOtp({ phone, code: otp },{
+        onSuccess:()=>{
+          router.replace("/")
+        }
+      });
     }
-  }
-
-  const changePhone = () => {
+ }
+ const changePhone = () => {
     setStep(1);
     setPhone("");
     setOtp("");
-  }
-
+ }
   return (
     <div className="w-full min-h-screen py-4 flex justify-center items-center">
       <form onSubmit={handleSubmit} className="w-full max-w-[400px] mx-3 sm:mx-auto my-4 flex flex-col gap-4 shadow-lg border-[1px] border-gray-300/20 shadow-gray-300/10 rounded-md p-4 ">

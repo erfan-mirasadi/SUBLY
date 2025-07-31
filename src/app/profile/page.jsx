@@ -1,9 +1,8 @@
-import UserProfile from "./UserProfile";
 
 function UserProfilePage() {
   return (
     <div className="flex-1 flex ">
-      <UserProfile />
+      <h1>User Profile</h1>
     </div>
   );
 }

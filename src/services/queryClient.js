@@ -18,12 +18,12 @@ export const queryClient = new QueryClient({
           description: error?.message || 'Something went wrong!',
         })
       },
-      onSuccess: (data) => {
-        toast.success('Success', {
-          description:
-            data?.message || 'Your action has been completed successfully!',
-        })
-      },
+      // onSuccess: (data) => {
+      //   toast.success('Success', {
+      //     description:
+      //       data?.message || 'Your action has been completed successfully!',
+      //   })
+      // },
     },
   },
 })
