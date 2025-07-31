@@ -3,6 +3,7 @@ import React from "react";
 import CartIcon from "./CartIcon";
 import Menu from "./Menu";
 import NavbarContainer from "./NavbarContainer";
+import AuthButton from "./AuthButton";
 export default function NavBar({children}) {
   return (
     <NavbarContainer>
@@ -15,7 +16,7 @@ export default function NavBar({children}) {
         <div className="flex items-center justify-end md:items-center gap-4 text-xs font-grotesk z-30 relative">
           <CartIcon />
           <div className="bg-conic-gradient hidden p-[1px] md:flex justify-center items-center cursor-pointer hover:scale-105 transition-all duration-300 rounded-lg">
-            <Link href="/login" className=" bg-[#0E0C15]/90 px-4 py-2 rounded-lg text-white font-grotesk cursor-pointer">Login</Link>
+            <AuthButton/>
           </div>
         </div>
       </div>
