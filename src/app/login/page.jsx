@@ -7,8 +7,11 @@ import Button from "@/src/components/Button";
 import Timer from "@/src/components/ui/Timer";
 import { useRouter } from "next/navigation";
 import { useSendOtp, useVerifyOtp } from "@/src/hooks/mutate/auth";
+import { useCartQuery, useSyncCartToServerMutation } from "@/src/hooks/mutate/cart";
 export default function LoginPage() {
  const [otp,setOtp] = useState("");
+ const {data: cartItems,refetch} = useCartQuery();
+ const {mutate: syncCartToServer} = useSyncCartToServerMutation();
  const [phone,setPhone] = useState("");
  const [step,setStep] = useState(1);
  const { mutate, isPending } = useSendOtp();
@@ -25,7 +28,17 @@ export default function LoginPage() {
       }
     }else{
       verifyOtp({ phone, code: otp },{
-        onSuccess:()=>{
+        onSuccess:(res)=>{
+          console.log({res});
+          if(!cartItems || cartItems.length === 0){
+            syncCartToServer(res.user.id,{
+              onSuccess:()=>{
+                console.log("synced");
+                localStorage.removeItem("cart-items");
+                refetch()
+              }
+            })
+          }
           router.replace("/")
         }
       });

@@ -1,20 +1,17 @@
 "use client";
 import Button from "@/src/components/Button";
+import { useAddToCartMutation, useCart } from "@/src/hooks/mutate/cart";
 import CountUp from "react-countup";
 // Object to store previous prices globally
 let lastShownPrices = {};
 
 export default function ClientPrice({ productEntry, plan }) {
+  const { cart, addItem, removeItem, clearCart, hasItem } = useCart("cart-items");
+  const {mutate: addToCart,isPending} = useAddToCartMutation();
   const planDetail = productEntry.product_plans.find((p) => p.title === plan);
   // Price calculation and display logic
-  const oldPrice =
-    planDetail && planDetail.state === "outlet" && planDetail.discount_price
-      ? planDetail.price
-      : null;
-  const finalPrice =
-    planDetail?.state === "outlet" && planDetail?.discount_price
-      ? parseFloat((planDetail.price - planDetail.discount_price).toFixed(10))
-      : planDetail?.price ?? null;
+  const oldPrice = planDetail && planDetail.state === "outlet" && planDetail.discount_price? planDetail.price: null;
+  const finalPrice = planDetail?.state === "outlet" && planDetail?.discount_price ? parseFloat((planDetail.price - planDetail.discount_price).toFixed(10)) : planDetail?.price ?? null;
   // Button text logic
   const buttonText = finalPrice ? "خرید" : "تماس با ما";
 
@@ -32,10 +29,30 @@ export default function ClientPrice({ productEntry, plan }) {
 
   // Update the last shown price for next plan change
   lastShownPrices[productId] = finalPrice ?? 0;
-
-  console.log("Previous Price:", previousPrice);
-  console.log("Current Price:", finalPrice);
-
+  const dataToLocalStorage = {
+    id: planDetail?.id,
+    title: productEntry.title,
+    price: finalPrice,
+    oldPrice: oldPrice,
+    plan: plan,
+    image: productEntry.image,
+    model: productEntry.model,
+    description: productEntry.description,
+    features: productEntry.features,
+  }
+  const handleAddToCart = () => {
+    const authToken = localStorage.getItem("subly_access_token");
+    if (!authToken) {
+      addItem(dataToLocalStorage);
+      return;
+    }else{
+      addToCart({
+        id: planDetail?.id,
+        user_id: localStorage.getItem("subly_user_id"),
+        quantity: 1,
+      })
+    }
+  }
   return (
     <div className="">
       <h3 dir="rtl" className="text-extrabold text-6xl text-center my-12">
@@ -62,7 +79,7 @@ export default function ClientPrice({ productEntry, plan }) {
         </>
       </h3>
       <div className="my-11">
-        <Button>{buttonText}</Button>
+        <Button onClick={handleAddToCart} loading={isPending}>{buttonText}</Button>
       </div>
     </div>
   );

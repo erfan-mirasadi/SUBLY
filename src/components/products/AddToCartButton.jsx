@@ -3,31 +3,8 @@
 export default function AddToCartButton({ plan, productInfo, className = "" }) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-
-  // const handleAddToCart = async () => {
-  //   setLoading(true);
-  //   try {
-  //     // Combine plan and product info for localStorage
-  //     const fullPlanInfo = {
-  //       ...plan,
-  //       product_id: productInfo?.id,
-  //       product_title: productInfo?.title,
-  //       product_image: productInfo?.image_small_url,
-  //       product_caption: productInfo?.caption,
-  //       model: productInfo?.model,
-  //     };
-
-  //     const result = await addToCart(plan.id, 1, fullPlanInfo);
-  //     if (result) {
-  //       setSuccess(true);
-  //       setTimeout(() => setSuccess(false), 2000);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding to cart:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  
+  console.log({plan,productInfo});
 
   return (
     <button

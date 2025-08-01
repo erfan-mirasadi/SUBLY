@@ -2,7 +2,7 @@
 import { getProductsQuery } from "@/src/hooks/query/product";
 
 import Section from "@/src/components/section/Section";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Price2 from "@/src/components/productPrice/Price2";
 import HeroSection from "./HeroSection";
 import SecondSection from "./SecondSection";
@@ -12,9 +12,11 @@ import PriceSection from "./PriceSection";
 export default async function ProductPlanPage({ params ,searchParams }) {
   const { slug } = await params;
   const { plan } = await searchParams;
+  if (!plan) {
+    redirect(`/products/${slug}?index=0&plan=1`);
+  }
   const products = await getProductsQuery();
   const data = products?.find((p) => p.slug === slug);
- 
   // Extract all available plans for this product
   // const allPlanTitles = Array.from(
   //   new Set(
@@ -39,7 +41,7 @@ export default async function ProductPlanPage({ params ,searchParams }) {
       <HeroSection product={data}/>
       {/* <SecondSection product={data} /> */}
       <ThirdSection/>
-      <PriceSection params={slug} data={data.product_entry} plan={plan}/>
+      <PriceSection params={slug} data={data} plan={plan}/>
     </Section>
   );
 }

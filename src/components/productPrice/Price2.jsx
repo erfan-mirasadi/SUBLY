@@ -5,11 +5,12 @@ import Image from "next/image";
 import Section from "@/src/components/section/Section";
 import Heading from "@/src/components/ui/Heading";
 import PriceList2 from "./PriceList2";
-import StyleLines from "@/src/app/products/[slug]/components/StyleLines";
+
 
 // Assets
 import stars from "@/public/price/stars.svg";
 import smallSphere from "@/public/price/4-small.png";
+import StyleLines from "@/src/app/products/[slug]/StyleLines";
 
 function Price2({
   productEntry = [],

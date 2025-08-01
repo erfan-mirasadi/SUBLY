@@ -1,32 +1,45 @@
 "use client";
-import { useCart } from "@/src/hooks/useCart";
-import { useRouter } from "next/navigation";
+import {useCart, useCartQuery } from "@/src/hooks/mutate/cart";
+import { useEffect, useState } from "react";
 import { MdOutlineShoppingCart, MdShoppingCart } from "react-icons/md";
-
+import Cart from "./Cart";
 export default function CartIcon() {
-  const { getCartItemsCount } = useCart();
-  const router = useRouter();
-  const cartItemsCount = getCartItemsCount();
-  const handleCartClick = () => router.push("/shoppingCard");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [id,setId] = useState(null);
+  const {data: cartItems,refetch} = useCartQuery();
+  const {totalQuantity} = useCart("cart-items");
+  useEffect(() => {
+    setId(localStorage.getItem("subly_user_id"));
+    setIsMounted(true);
+  }, []);
+  useEffect(() => {
+    if(id){
+      refetch();
+    }
+  }, [id]);
   return (
-    <button
-      onClick={handleCartClick}
-      className="relative flex items-center justify-center w-8 h-8 group cursor-pointer hover:scale-110 transition-all duration-300"
-      aria-label="Shopping cart"
-    >
-      {/* Cart Icon */}
-      {cartItemsCount > 0 ? (
-        <MdShoppingCart className="w-6 h-6 text-white group-hover:text-gray-600 transition-colors duration-300" />
-      ) : (
-        <MdOutlineShoppingCart className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors duration-300" />
+    <>
+      {isMounted && (
+        <>
+          <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
+          <div
+            className="relative mr-3 cursor-pointer"
+            onClick={() => setIsCartOpen(!isCartOpen)}
+          >
+            {totalQuantity > 0 || cartItems.length > 0 ? (
+              <MdShoppingCart className="w-6 h-6 text-white cursor-pointer hover:text-gray-600 transition-colors duration-300" />
+            ) : (
+              <MdOutlineShoppingCart className="w-6 h-6 text-gray-600 cursor-pointer hover:text-white transition-colors duration-300" />
+            )}
+            {(totalQuantity > 0 || cartItems.length > 0) && (
+              <div className="absolute cursor-pointer -top-[12px] -right-[15px] text-[14px] flex items-center justify-center w-6 h-6 bg-red-400 text-white font-bold rounded-full">
+                {totalQuantity > 0 ? totalQuantity : cartItems.reduce((acc,item)=>acc+item.quantity,0)}
+              </div>
+            )}
+          </div>
+        </>
       )}
-
-      {/* Cart Badge */}
-      {cartItemsCount > 0 && (
-        <div className="absolute -top-1 -right-1 flex items-center justify-center w-4 h-4 bg-red-500 text-white text-xs font-bold rounded-full">
-          {cartItemsCount > 99 ? "99+" : cartItemsCount}
-        </div>
-      )}
-    </button>
+    </>
   );
 }

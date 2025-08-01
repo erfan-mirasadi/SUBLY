@@ -1,4 +1,3 @@
-// src/app/products/[slug]/components/StyleLines.jsx
 import lines from "@/public/price/lines.svg";
 import Image from "next/image";
 

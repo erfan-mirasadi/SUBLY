@@ -10,7 +10,7 @@ export default function PriceSection({params ,data,plan,month=true,threeMonth=tr
       <div className="relative w-full">
         <PlanSwitchTab params={params} month={month} threeMonth={threeMonth} sixMonth={sixMonth} year={year} length={length}/>
         <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-10'>
-          {data.map((item)=>(<PlanCards key={item.id} data={item} plan={plan}/>))}
+          {data.product_entry.map((item)=>(<PlanCards key={item.id} data={{...item,title:data.title,image:data.image_small_url}} plan={plan}/>))}
         </div>
         {/* <StyleLines /> */}
       </div>
