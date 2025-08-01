@@ -1,13 +1,14 @@
 import { FaCheckCircle } from "react-icons/fa";
-import Section from "@/src/components/section/Section";
 import Heading from "@/src/components/ui/Heading";
 import Image from "next/image";
+import Section from "@/src/components/section/Section";
 
 export default function HeroSection({ product }) {
   const explanationList = product.explanation
     ? product.explanation.split("\n")
     : [];
   return (
+    <Section>
       <div className="max-w-[77.5rem] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem]">
         <Heading title={product.title} text={product.caption} />
         <div className="relative">
@@ -47,5 +48,6 @@ export default function HeroSection({ product }) {
           </div>
         </div>
       </div>
+    </Section>
   );
 }

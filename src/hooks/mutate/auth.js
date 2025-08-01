@@ -42,7 +42,12 @@ export function useVerifyOtp() {
           password,
         });
 
-      if (signInError && signInError.code !== "invalid_credentials") {
+      // Ignore credential errors - we'll handle signup if needed
+      if (
+        signInError &&
+        signInError.status !== 400 &&
+        !signInError.message?.includes("Invalid login credentials")
+      ) {
         throw signInError;
       }
 

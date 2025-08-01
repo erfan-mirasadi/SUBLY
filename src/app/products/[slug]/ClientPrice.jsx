@@ -1,17 +1,37 @@
 "use client";
 import Button from "@/src/components/Button";
-import { useAddToCartMutation, useCart } from "@/src/hooks/mutate/cart";
+import Spinner from "@/src/components/ui/Spinner";
+import {
+  useAddToCartMutation,
+  useCart,
+  useCartQuery,
+  useUpdateCartMutation,
+  useRemoveCartMutation,
+} from "@/src/hooks/mutate/cart";
+import { FaMinus, FaPlus } from "react-icons/fa";
 import CountUp from "react-countup";
 // Object to store previous prices globally
 let lastShownPrices = {};
 
 export default function ClientPrice({ productEntry, plan }) {
-  const { cart, addItem, removeItem, clearCart, hasItem } = useCart("cart-items");
-  const {mutate: addToCart,isPending} = useAddToCartMutation();
+  const { cart, addItem, removeItem, clearCart, hasItem } =
+    useCart("cart-items");
+  const { data: cartItems } = useCartQuery();
+  const { mutate: addToCart, isPending: isAddPending } = useAddToCartMutation();
+  const { mutate: updateCart, isPending: isUpdatePending } =
+    useUpdateCartMutation();
+  const { mutate: removeCart, isPending: isRemovePending } =
+    useRemoveCartMutation();
   const planDetail = productEntry.product_plans.find((p) => p.title === plan);
   // Price calculation and display logic
-  const oldPrice = planDetail && planDetail.state === "outlet" && planDetail.discount_price? planDetail.price: null;
-  const finalPrice = planDetail?.state === "outlet" && planDetail?.discount_price ? parseFloat((planDetail.price - planDetail.discount_price).toFixed(10)) : planDetail?.price ?? null;
+  const oldPrice =
+    planDetail && planDetail.state === "outlet" && planDetail.discount_price
+      ? planDetail.price
+      : null;
+  const finalPrice =
+    planDetail?.state === "outlet" && planDetail?.discount_price
+      ? parseFloat((planDetail.price - planDetail.discount_price).toFixed(10))
+      : planDetail?.price ?? null;
   // Button text logic
   const buttonText = finalPrice ? "خرید" : "تماس با ما";
 
@@ -29,6 +49,30 @@ export default function ClientPrice({ productEntry, plan }) {
 
   // Update the last shown price for next plan change
   lastShownPrices[productId] = finalPrice ?? 0;
+
+  // Check if product is in cart
+  const authToken =
+    typeof window !== "undefined"
+      ? localStorage.getItem("subly_access_token")
+      : null;
+  const isLoggedIn = !!authToken;
+
+  let cartItem = null;
+  let quantity = 0;
+
+  if (isLoggedIn) {
+    // Check server cart
+    cartItem = cartItems?.find((item) => item.plan_id === planDetail?.id);
+    quantity = cartItem?.quantity || 0;
+  } else {
+    // Check local cart
+    cartItem = cart.find((item) => item.id === planDetail?.id);
+    quantity = cartItem?.quantity || 0;
+  }
+
+  const isInCart = quantity > 0;
+  const isPending = isAddPending || isUpdatePending || isRemovePending;
+
   const dataToLocalStorage = {
     id: planDetail?.id,
     title: productEntry.title,
@@ -39,20 +83,63 @@ export default function ClientPrice({ productEntry, plan }) {
     model: productEntry.model,
     description: productEntry.description,
     features: productEntry.features,
-  }
+  };
   const handleAddToCart = () => {
-    const authToken = localStorage.getItem("subly_access_token");
-    if (!authToken) {
-      addItem(dataToLocalStorage);
-      return;
-    }else{
+    const authToken =
+      typeof window !== "undefined"
+        ? localStorage.getItem("subly_access_token")
+        : null;
+    if (authToken) {
+      // User is logged in - add to server
       addToCart({
         id: planDetail?.id,
-        user_id: localStorage.getItem("subly_user_id"),
+        user_id:
+          typeof window !== "undefined"
+            ? localStorage.getItem("subly_user_id")
+            : null,
         quantity: 1,
-      })
+      });
+    } else {
+      // User is not logged in - add to local storage
+      addItem(dataToLocalStorage);
     }
-  }
+  };
+
+  const handleIncrease = () => {
+    if (isLoggedIn) {
+      // Add to server cart
+      addToCart({
+        id: planDetail?.id,
+        user_id:
+          typeof window !== "undefined"
+            ? localStorage.getItem("subly_user_id")
+            : null,
+        quantity: 1,
+      });
+    } else {
+      // Add to local cart
+      addItem(dataToLocalStorage);
+    }
+  };
+
+  const handleDecrease = () => {
+    if (isLoggedIn) {
+      if (quantity === 1) {
+        // Remove from server cart
+        removeCart(cartItem.id);
+      } else {
+        // Update quantity in server cart
+        updateCart({
+          cart_item_id: cartItem.id,
+          quantity: quantity - 1,
+        });
+      }
+    } else {
+      // Remove from local cart
+      removeItem(planDetail?.id);
+    }
+  };
+
   return (
     <div className="">
       <h3 dir="rtl" className="text-extrabold text-6xl text-center my-12">
@@ -71,7 +158,7 @@ export default function ClientPrice({ productEntry, plan }) {
               end={finalPrice}
               decimals={decimals}
               decimal=","
-              duration={2}
+              duration={1}
               useEasing={false}
               preserveValue
             />
@@ -79,7 +166,41 @@ export default function ClientPrice({ productEntry, plan }) {
         </>
       </h3>
       <div className="my-11">
-        <Button onClick={handleAddToCart} loading={isPending}>{buttonText}</Button>
+        {!finalPrice ? (
+          <Button>{buttonText}</Button>
+        ) : isInCart ? (
+          <div className="flex items-center justify-center gap-4">
+            <button
+              className="bg-gray-800/60 text-white rounded-md p-3 hover:bg-gray-700/60 disabled:opacity-50"
+              onClick={handleDecrease}
+              disabled={isPending}
+            >
+              <FaMinus size={16} />
+            </button>
+
+            <div className="flex items-center justify-center min-w-[60px] h-12 bg-gray-800/60 rounded-md">
+              {isPending ? (
+                <Spinner size={20} />
+              ) : (
+                <span className="text-white font-vazirmatn text-lg">
+                  {quantity}
+                </span>
+              )}
+            </div>
+
+            <button
+              className="bg-gray-800/60 text-white rounded-md p-3 hover:bg-gray-700/60 disabled:opacity-50"
+              onClick={handleIncrease}
+              disabled={isPending}
+            >
+              <FaPlus size={16} />
+            </button>
+          </div>
+        ) : (
+          <Button onClick={handleAddToCart} loading={isPending}>
+            {buttonText}
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useMemo } from "react";
-import { getCartItems, addToCart, removeCartItems, clearCart } from "@/src/services/ApiCartItmes";
+import {
+  getCartItems,
+  addToCart,
+  removeCartItems,
+  updateCartItemQuantity,
+} from "@/src/services/ApiCartItmes";
 import { queryClient } from "@/src/services/queryClient";
 
 const getUserId = () => {
@@ -23,24 +28,56 @@ export const useCartQuery = () => {
   return useQuery({
     queryKey: ["cart", userId],
     queryFn: async () => {
-      const cartItems = await getCartItems(userId);
-      return Array.isArray(cartItems) ? cartItems : [];
+      if (!userId) {
+        return [];
+      }
+      try {
+        const cartItems = await getCartItems(userId);
+        return Array.isArray(cartItems) ? cartItems : [];
+      } catch (error) {
+        console.error("Cart query error:", error);
+        return [];
+      }
     },
-    enabled: !!userId, 
-    staleTime: 5 * 60 * 1000, 
-    initialData: [], 
+    enabled: !!userId,
+    staleTime: 5 * 60 * 1000,
+    initialData: [],
+    retry: 1, // Only retry once to avoid spam
+    retryDelay: 1000, // Wait 1 second before retry
   });
 };
 
 export const useAddToCartMutation = () => {
-    return useMutation({
-      mutationFn: async ({ id, user_id, quantity = 1 }) => {
-        return await addToCart(user_id, id, quantity);
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["cart"] });
-      },
-    });
+  return useMutation({
+    mutationFn: async ({ id, user_id, quantity = 1 }) => {
+      return await addToCart(user_id, id, quantity);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+};
+
+export const useUpdateCartMutation = () => {
+  return useMutation({
+    mutationFn: async ({ cart_item_id, quantity }) => {
+      return await updateCartItemQuantity(cart_item_id, quantity);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+};
+
+export const useRemoveCartMutation = () => {
+  return useMutation({
+    mutationFn: async (cart_item_id) => {
+      return await removeCartItems(cart_item_id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
 };
 
 export const useSyncCartToServerMutation = (key = "cart-items") => {
@@ -48,7 +85,8 @@ export const useSyncCartToServerMutation = (key = "cart-items") => {
     mutationFn: async (userId) => {
       if (!userId) throw new Error("User ID is required for sync");
       const localItems = getLocalCartItems(key);
-      if (localItems.length === 0) return {message: "No items to sync",synced: 0,total: 0};
+      if (localItems.length === 0)
+        return { message: "No items to sync", synced: 0, total: 0 };
       const results = [];
       const errors = [];
       for (const item of localItems) {
@@ -60,12 +98,12 @@ export const useSyncCartToServerMutation = (key = "cart-items") => {
         }
       }
       if (results.length > 0) localStorage.removeItem(key);
-      return { 
-        synced: results.length, 
+      return {
+        synced: results.length,
         total: localItems.length,
         errors: errors.length,
         results,
-        errorDetails: errors
+        errorDetails: errors,
       };
     },
   });
@@ -73,9 +111,11 @@ export const useSyncCartToServerMutation = (key = "cart-items") => {
 
 const emitCartChange = (key, data) => {
   if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent(`cart-${key}-changed`, {
-      detail: data
-    }));
+    window.dispatchEvent(
+      new CustomEvent(`cart-${key}-changed`, {
+        detail: data,
+      })
+    );
   }
 };
 
@@ -118,9 +158,10 @@ export function useCart(key) {
     const handleCartChange = (e) => {
       setCart(e.detail);
     };
-    
+
     window.addEventListener(`cart-${key}-changed`, handleCartChange);
-    return () => window.removeEventListener(`cart-${key}-changed`, handleCartChange);
+    return () =>
+      window.removeEventListener(`cart-${key}-changed`, handleCartChange);
   }, [key]);
 
   const addItem = (product) => {
@@ -136,7 +177,7 @@ export function useCart(key) {
         }
         return [...prev, { ...product, quantity: 1 }];
       })();
-      
+
       // Emit custom event for same-tab sync
       setTimeout(() => emitCartChange(key, newCart), 0);
       return newCart;
@@ -152,7 +193,7 @@ export function useCart(key) {
             : item
         )
         .filter((item) => item.quantity > 0);
-      
+
       // Emit custom event for same-tab sync
       setTimeout(() => emitCartChange(key, newCart), 0);
       return newCart;
@@ -175,4 +216,3 @@ export function useCart(key) {
 
   return { cart, addItem, removeItem, clearCart, hasItem, totalQuantity };
 }
-

@@ -1,15 +1,13 @@
-// src/app/products/[slug]/[plan]/page.jsx
 import { getProductsQuery } from "@/src/hooks/query/product";
 
 import Section from "@/src/components/section/Section";
 import { notFound, redirect } from "next/navigation";
-import Price2 from "@/src/components/productPrice/Price2";
 import HeroSection from "./HeroSection";
 import SecondSection from "./SecondSection";
 import ThirdSection from "./ThirdSection";
 import PriceSection from "./PriceSection";
 
-export default async function ProductPlanPage({ params ,searchParams }) {
+export default async function ProductPlanPage({ params, searchParams }) {
   const { slug } = await params;
   const { plan } = await searchParams;
   if (!plan) {
@@ -38,10 +36,10 @@ export default async function ProductPlanPage({ params ,searchParams }) {
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings
     >
-      <HeroSection product={data}/>
+      <HeroSection product={data} />
       {/* <SecondSection product={data} /> */}
-      <ThirdSection/>
-      <PriceSection params={slug} data={data} plan={plan}/>
+      <ThirdSection />
+      <PriceSection params={slug} data={data} plan={plan} />
     </Section>
   );
 }
@@ -98,5 +96,5 @@ export default async function ProductPlanPage({ params ,searchParams }) {
 //     alternates: {
 //       canonical: `/products/${slug}/${plan}`,
 //     },
-//   };
+//   };z
 // }
