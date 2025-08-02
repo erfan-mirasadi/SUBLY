@@ -13,6 +13,7 @@ import {
   useRemoveCartMutation,
 } from "@/src/hooks/mutate/cart";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Cart({ isCartOpen, setIsCartOpen }) {
   const {
@@ -222,7 +223,13 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
           )}
         </div>
         {[...cart, ...(cartItems || [])].length > 0 && (
-          <Button className="!w-[85%] !max-w-none mb-5">پرداخت</Button>
+          <Link
+            className="!w-[85%] !max-w-none mb-5"
+            href="/checkout"
+            onClick={() => setIsCartOpen(false)}
+          >
+            <Button>پرداخت</Button>
+          </Link>
         )}
       </div>
     </div>
