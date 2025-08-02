@@ -1,8 +1,14 @@
-"use client"
+"use client";
 import Link from "next/link";
 import useActiveLink from "@/src/hooks/useActiveLink";
 
-export default function NavItem({ item, onClick,children,onMouseEnter ,onMouseLeave,}) {
+export default function NavItem({
+  item,
+  onClick,
+  children,
+  onMouseEnter,
+  onMouseLeave,
+}) {
   const activeHash = useActiveLink();
   const isActive = activeHash === item.url;
   return (
@@ -13,7 +19,7 @@ export default function NavItem({ item, onClick,children,onMouseEnter ,onMouseLe
       onMouseLeave={onMouseLeave}
       className={`
         relative
-        block font-medium uppercase 
+        block
         transition-all duration-300
         px-6 py-1 my-2 md:my-0 text-2xl
         text-white/70
@@ -21,6 +27,8 @@ export default function NavItem({ item, onClick,children,onMouseEnter ,onMouseLe
         hover:text-white
         group
         z-0
+        font-vazirmatn
+        font-bold
       `}
     >
       {children}

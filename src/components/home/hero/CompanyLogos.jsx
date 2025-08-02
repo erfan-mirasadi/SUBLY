@@ -29,7 +29,7 @@ const CompanyLogos = ({ className }) => {
               height={28}
               alt={`Company logo ${index + 1}`}
               style={{ width: "auto", height: "auto" }}
-              className="max-w-[134px] max-h-[28px] object-contain"
+              className="max-w-[400px] max-h-[400px] object-contain"
             />
           </li>
         ))}
