@@ -1,6 +1,7 @@
 import Hero from "@/src/components/home/hero/Hero";
-import Products from "../components/products/Products";
+
 import RoadMap from "../components/home/roadmap/RoadMap";
+import Products from "../components/products/Products";
 
 function Home() {
   return (
