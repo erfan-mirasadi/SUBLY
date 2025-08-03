@@ -7,6 +7,7 @@ import {
   updateCartItemQuantity,
 } from "@/src/services/ApiCartItmes";
 import { queryClient } from "@/src/services/queryClient";
+import { getCurrenciesQuery, convertCartItems } from "../query/currencies";
 
 const getUserId = () => {
   if (typeof window === "undefined") return null;
@@ -32,8 +33,17 @@ export const useCartQuery = () => {
         return [];
       }
       try {
-        const cartItems = await getCartItems(userId);
-        return Array.isArray(cartItems) ? cartItems : [];
+        // Fetch cart items and currency rates in parallel for better performance
+        const [cartItems, currencies] = await Promise.all([
+          getCartItems(userId),
+          getCurrenciesQuery(),
+        ]);
+        const items = Array.isArray(cartItems) ? cartItems : [];
+
+        // Convert all cart item prices to Iranian Rial (IRR) based on region
+        // If plan.product_entry.region === "turkey" -> use TRY rate
+        // Otherwise -> use USD rate
+        return await convertCartItems(items, currencies);
       } catch (error) {
         console.error("Cart query error:", error);
         return [];

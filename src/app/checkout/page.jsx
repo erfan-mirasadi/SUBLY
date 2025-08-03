@@ -16,6 +16,7 @@ import { fetchCartWithDetails } from "@/src/services/ApiOrders";
 import Button from "@/src/components/Button";
 import Spinner from "@/src/components/ui/Spinner";
 import Image from "next/image";
+import { toPersianNumbers } from "@/src/lib/persianNumbers";
 
 function OrderPage() {
   const router = useRouter();
@@ -210,14 +211,19 @@ function OrderPage() {
                           <div className="flex flex-wrap items-center gap-4">
                             <div className="flex items-center gap-3">
                               <span className="text-green-400 font-vazirmatn font-bold text-lg">
-                                {(
-                                  plan.price - (plan.discount_price || 0)
-                                ).toLocaleString()}{" "}
+                                {toPersianNumbers(
+                                  (
+                                    plan.price - (plan.discount_price || 0)
+                                  ).toLocaleString()
+                                )}{" "}
                                 تومان
                               </span>
                               {plan.discount_price > 0 && (
                                 <span className="text-gray-500 line-through font-vazirmatn text-sm">
-                                  {plan.price.toLocaleString()} تومان
+                                  {toPersianNumbers(
+                                    plan.price.toLocaleString()
+                                  )}{" "}
+                                  تومان
                                 </span>
                               )}
                             </div>
@@ -226,7 +232,7 @@ function OrderPage() {
                                 تعداد:
                               </span>
                               <span className="bg-blue-600/20 text-blue-300 px-3 py-1 rounded-full font-vazirmatn text-sm font-bold">
-                                {item.quantity}
+                                {toPersianNumbers(item.quantity.toString())}
                               </span>
                             </div>
                           </div>
@@ -264,7 +270,10 @@ function OrderPage() {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between items-center py-3 border-b border-gray-600">
                   <span className="text-white font-vazirmatn">
-                    {calculations.originalPrice.toLocaleString()} تومان
+                    {toPersianNumbers(
+                      calculations.originalPrice.toLocaleString()
+                    )}{" "}
+                    تومان
                   </span>
                   <span className="text-gray-400 font-vazirmatn">
                     {" "}
@@ -275,7 +284,11 @@ function OrderPage() {
                 {calculations.totalDiscount > 0 && (
                   <div className="flex justify-between items-center py-3 border-b border-gray-600">
                     <span className="text-red-400 font-vazirmatn">
-                      -{calculations.totalDiscount.toLocaleString()} تومان
+                      -
+                      {toPersianNumbers(
+                        calculations.totalDiscount.toLocaleString()
+                      )}{" "}
+                      تومان
                     </span>
                     <span className="text-gray-400 font-vazirmatn">
                       : تخفیف
@@ -285,7 +298,7 @@ function OrderPage() {
 
                 <div className="flex justify-between items-center py-3 border-b border-gray-600">
                   <span className="text-white font-vazirmatn">
-                    محصول {cartItems.length}
+                    محصول {toPersianNumbers(cartItems.length.toString())}
                   </span>
                   <span className="text-gray-400 font-vazirmatn">
                     : تعداد آیتم‌ها
@@ -294,7 +307,8 @@ function OrderPage() {
 
                 <div className="flex justify-between items-center py-4 bg-gradient-to-r from-green-900/30 to-blue-900/30 rounded-lg px-4">
                   <span className="text-green-400 font-vazirmatn font-bold text-xl">
-                    {calculations.totalPrice.toLocaleString()} تومان
+                    {toPersianNumbers(calculations.totalPrice.toLocaleString())}{" "}
+                    تومان
                   </span>
                   <span className="text-white font-vazirmatn font-bold text-lg">
                     : مبلغ نهایی

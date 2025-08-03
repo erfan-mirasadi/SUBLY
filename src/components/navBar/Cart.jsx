@@ -14,6 +14,7 @@ import {
 } from "@/src/hooks/mutate/cart";
 import Image from "next/image";
 import Link from "next/link";
+import { toPersianNumbers } from "@/src/lib/persianNumbers";
 
 export default function Cart({ isCartOpen, setIsCartOpen }) {
   const {
@@ -150,8 +151,8 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
                       <p className="font-vazirmatn text-2xs">ماهه </p>
                       <p className="text-sm font-vazirmatn">
                         {typeof item.plan === "string"
-                          ? item.plan
-                          : item.plan?.title}
+                          ? toPersianNumbers(item.plan)
+                          : toPersianNumbers(item.plan?.title || "")}
                       </p>
                     </div>
                   </div>
@@ -166,22 +167,30 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
                           تومان
                         </p>
                         <p className="text-md line-through text-gray-400">
-                          {item.oldPrice || item.plan?.price}
+                          {toPersianNumbers(
+                            (
+                              item.oldPrice || item.plan?.price
+                            )?.toLocaleString() || "0"
+                          )}
                         </p>
                       </div>
                     )}
                     <div className="flex items-center gap-1">
                       <p className="text-2xs font-vazirmatn">تومان</p>
                       <p className="text-lg font-vazirmatn">
-                        {item.price ||
-                          (item.plan?.state === "outlet" &&
-                          item.plan?.discount_price
-                            ? parseFloat(
-                                (
-                                  item.plan.price - item.plan.discount_price
-                                ).toFixed(10)
-                              )
-                            : item.plan?.price)}
+                        {toPersianNumbers(
+                          (
+                            item.price ||
+                            (item.plan?.state === "outlet" &&
+                            item.plan?.discount_price
+                              ? parseFloat(
+                                  (
+                                    item.plan.price - item.plan.discount_price
+                                  ).toFixed(10)
+                                )
+                              : item.plan?.price)
+                          )?.toLocaleString() || "0"
+                        )}
                       </p>
                     </div>
                   </div>
@@ -212,7 +221,7 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
                         addToCartMutation.isPending ? (
                           <Spinner size={25} />
                         ) : (
-                          item.quantity || 1
+                          toPersianNumbers((item.quantity || 1).toString())
                         )}
                       </span>
                       <button

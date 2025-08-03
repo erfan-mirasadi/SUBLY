@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { toPersianNumbers } from "@/src/lib/persianNumbers";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   EffectCoverflow,
@@ -197,7 +198,10 @@ export default function HeroProductCarousel() {
                     {product.title}
                   </h3>
                   <div className="text-green-400 font-vazirmatn font-bold text-sm">
-                    {product.price?.toLocaleString() || "قیمت ویژه"} تومان
+                    {toPersianNumbers(
+                      product.price?.toLocaleString() || "قیمت ویژه"
+                    )}{" "}
+                    تومان
                   </div>
                 </div>
 
@@ -218,7 +222,10 @@ export default function HeroProductCarousel() {
 
                     <div className="mb-4">
                       <span className="text-2xl font-bold text-green-400 font-vazirmatn">
-                        {product.price?.toLocaleString() || "قیمت ویژه"} تومان
+                        {product.price?.toLocaleString()
+                          ? toPersianNumbers(product.price.toLocaleString())
+                          : "قیمت ویژه"}{" "}
+                        تومان
                       </span>
                     </div>
                   </div>

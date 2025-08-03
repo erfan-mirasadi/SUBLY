@@ -10,6 +10,7 @@ import {
 } from "@/src/hooks/mutate/cart";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import CountUp from "react-countup";
+import { toPersianNumbers } from "@/src/lib/persianNumbers";
 // Object to store previous prices globally
 let lastShownPrices = {};
 
@@ -146,24 +147,31 @@ export default function ClientPrice({ productEntry, plan }) {
         <div className="flex flex-col items-center justify-center min-h-[120px] md:min-h-[200px]">
           {oldPrice && (
             <div className="text-gray-500 text-sm md:text-xl line-through mb-2 font-vazirmatn">
-              {oldPrice.toLocaleString()} تومان
+              {toPersianNumbers(oldPrice.toLocaleString())} تومان
             </div>
           )}
-          <div className="flex items-center justify-center">
-            <div className="text-[1.5rem] md:text-[2rem] leading-normal md:leading-normal md:md:text-[2.5rem] flex items-end">
-              $
-            </div>
-            <div className="text-[3.5rem] md:text-[5.5rem] leading-none font-bold">
-              <CountUp
-                start={previousPrice}
-                end={finalPrice}
-                decimals={decimals}
-                decimal=","
-                duration={1}
-                useEasing={false}
-                preserveValue
-              />
-            </div>
+          <div className="flex flex-col items-center justify-center">
+            {finalPrice ? (
+              <>
+                <div className="text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-none font-bold font-vazirmatn">
+                  <CountUp
+                    start={previousPrice}
+                    end={finalPrice}
+                    decimals={decimals}
+                    decimal=","
+                    duration={1}
+                    useEasing={false}
+                    preserveValue
+                    formattingFn={(value) =>
+                      toPersianNumbers(value.toLocaleString())
+                    }
+                  />
+                </div>
+                <div className="text-[1rem] md:text-[1.2rem] text-gray-400 mt-2 font-vazirmatn shadow-xl shadow-gray-700/10 bg-gradient-to-r from-purple-900/5 via-blue-900/5 p-2 rounded-md">
+                  تومان
+                </div>
+              </>
+            ) : null}
           </div>
         </div>
       </h3>

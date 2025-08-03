@@ -1,6 +1,10 @@
 import supabase from "./supabase";
+import {
+  getCurrenciesQuery,
+  convertCartItems,
+} from "../hooks/query/currencies";
 
-// دریافت آیتم‌های سبد خرید + دیتای مرتبط
+// Fetch cart items with details and convert prices to Iranian Rial
 export async function fetchCartWithDetails(user_id) {
   const { data, error } = await supabase
     .from("cart_items")
@@ -19,19 +23,29 @@ export async function fetchCartWithDetails(user_id) {
     .eq("user_id", user_id);
 
   if (error) throw new Error(error.message);
-  return data;
+
+  // Convert prices to Iranian Rial before returning
+  const [cartItems, currencies] = await Promise.all([
+    Promise.resolve(data),
+    getCurrenciesQuery(),
+  ]);
+
+  return await convertCartItems(cartItems, currencies);
 }
 
-// ساخت سفارش جدید
+// Create new order with converted prices (in Iranian Rial)
+// All prices (total_price, discount_price, unit_price) are already converted to IRR
 export async function createOrder(user_id, cartItems) {
   if (!cartItems || cartItems.length === 0) {
     throw new Error("سبد خرید خالی است");
   }
 
+  // Map cart items to order items with converted prices
   const order_items = cartItems.map((item) => {
     const plan = item.plan;
     const quantity = item.quantity;
 
+    // These prices are already converted to Iranian Rial
     const unit_price = plan?.price ?? 0;
     const discount_price = plan?.discount_price ?? 0;
     const total_price = (unit_price - discount_price) * quantity;
@@ -47,7 +61,7 @@ export async function createOrder(user_id, cartItems) {
 
   const orderTotal = order_items.reduce((acc, i) => acc + i.total_price, 0);
 
-  // مرحله اول: ساخت سفارش
+  // Step 1: Create order with converted prices
   const { data: orderData, error: orderError } = await supabase
     .from("order")
     .insert({
@@ -70,7 +84,7 @@ export async function createOrder(user_id, cartItems) {
 
   const orderId = orderData.id;
 
-  // مرحله دوم: ساخت order_items
+  // Step 2: Create order_items with converted prices
   const enrichedItems = order_items.map((item) => ({
     ...item,
     order_id: orderId,

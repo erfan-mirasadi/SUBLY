@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import check2 from "@/public/check-02.svg";
+import { toPersianNumbers } from "@/src/lib/persianNumbers";
 
 function ProductCard({ item }) {
   // Flatten all plans with their discount logic
@@ -86,12 +87,12 @@ function ProductCard({ item }) {
               <div className="mt-auto flex justify-center">
                 <div className="px-4 py-1.5 rounded-t-md border border-[#ffffff22] bg-[#1a1824]/50 backdrop-blur-md">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-[#FFFF]/80 drop-shadow-glow">
-                      {price} $
+                    <span className="font-bold text-[#FFFF]/80 drop-shadow-glow font-vazirmatn">
+                      {toPersianNumbers(price)} تومان
                     </span>
                     {oldPrice && (
-                      <span className="text-xs text-[#757185] line-through">
-                        {oldPrice} $
+                      <span className="text-xs text-[#757185] line-through font-vazirmatn">
+                        {toPersianNumbers(oldPrice)} تومان
                       </span>
                     )}
                   </div>

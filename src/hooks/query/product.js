@@ -1,20 +1,25 @@
-import { useQuery } from '@tanstack/react-query'
-import supabase from '../../services/supabase'
+import supabase from "../../services/supabase";
+import { getCurrenciesQuery, convertProductPrices } from "./currencies";
 
+// کوئری گرفتن محصولات
 export const getProductsQuery = Object.assign(
-    async function getProductsQuery() {
-      const { data, error } = await supabase
-        .from('product')
-        .select(`*, product_entry(*, product_plans(*))`)
-      if (error) throw new Error(error.message)
-      return data
-    },
-    {
-      queryKey: ['products'],
-      staleTime: 1000 * 60 * 5,
-    }
-)
+  async function getProductsQuery() {
+    const [{ data: products, error }, currencyMap] = await Promise.all([
+      supabase.from("product").select(`*, product_entry(*, product_plans(*))`),
+      getCurrenciesQuery(),
+    ]);
 
+    if (error) throw new Error(error.message);
+
+    return convertProductPrices(products, currencyMap);
+  },
+  {
+    queryKey: ["products"],
+    staleTime: 1000 * 60 * 5,
+  }
+);
+
+// کوئری گرفتن محصولات براساس دسته‌بندی
 export const getProductCategoriesQuery = Object.assign(
   async function getProductCategoriesQuery() {
     const categories = [
@@ -23,16 +28,22 @@ export const getProductCategoriesQuery = Object.assign(
       { id: 31, title: "Social Media" },
     ];
 
+    const currencyMap = await getCurrenciesQuery();
+
     const results = await Promise.all(
       categories.map(async (cat) => {
-        const { data, error } = await supabase
+        const { data: products, error } = await supabase
           .from("product")
           .select(`*, product_entry(*, product_plans(*))`)
           .eq("category_id", cat.id);
 
         if (error) throw new Error(error.message);
 
-        return { ...cat, products: data };
+        const updatedProducts = await convertProductPrices(
+          products,
+          currencyMap
+        );
+        return { ...cat, products: updatedProducts };
       })
     );
 
