@@ -11,7 +11,7 @@ export default function SelectTab({ length }) {
         width: `calc(${100 / length}%)`,
         left: `calc(${(index / length) * 100}%)`,
       }}
-      className="absolute duration-300 ease-in-out left-[1px] h-[70px] bg-blue-500/20 rounded-lg"
+      className="absolute duration-500 ease-in-out left-[1px] h-17 bg-gradient-to-r from-blue-900/40 via-purple-700/30 to-pink-700/10 rounded-md shadow-md shadow-blue-500/15 backdrop-blur-sm"
     />
   );
 }

@@ -39,7 +39,10 @@ export default function HeroSection({ product }) {
                     key={index}
                     className="flex items-start py-4 border-t border-[#252134]"
                   >
-                    <FaCheckCircle className="w-6 h-6 text-purple-500 bg-white rounded-full" />
+                    <FaCheckCircle
+                      size={50}
+                      className="w-30 h-30 text-purple-500 rounded-full"
+                    />
                     <p className="ml-4">{item}</p>
                   </li>
                 ))}

@@ -143,27 +143,29 @@ export default function ClientPrice({ productEntry, plan }) {
   return (
     <div className="">
       <h3 dir="rtl" className="text-extrabold text-6xl text-center my-12">
-        {oldPrice && (
-          <div className="text-gray-500 scale-20 line-through">
-            {oldPrice} تومان
+        <div className="flex flex-col items-center justify-center min-h-[120px] md:min-h-[200px]">
+          {oldPrice && (
+            <div className="text-gray-500 text-sm md:text-xl line-through mb-2 font-vazirmatn">
+              {oldPrice.toLocaleString()} تومان
+            </div>
+          )}
+          <div className="flex items-center justify-center">
+            <div className="text-[1.5rem] md:text-[2rem] leading-normal md:leading-normal md:md:text-[2.5rem] flex items-end">
+              $
+            </div>
+            <div className="text-[3.5rem] md:text-[5.5rem] leading-none font-bold">
+              <CountUp
+                start={previousPrice}
+                end={finalPrice}
+                decimals={decimals}
+                decimal=","
+                duration={1}
+                useEasing={false}
+                preserveValue
+              />
+            </div>
           </div>
-        )}
-        <>
-          <div className="text-[2rem] leading-normal md:text-[2.5rem] flex items-end">
-            $
-          </div>
-          <div className="text-[5.5rem] leading-none font-bold">
-            <CountUp
-              start={previousPrice}
-              end={finalPrice}
-              decimals={decimals}
-              decimal=","
-              duration={1}
-              useEasing={false}
-              preserveValue
-            />
-          </div>
-        </>
+        </div>
       </h3>
       <div className="my-11">
         {!finalPrice ? (
@@ -171,14 +173,14 @@ export default function ClientPrice({ productEntry, plan }) {
         ) : isInCart ? (
           <div className="flex items-center justify-center gap-4">
             <button
-              className="bg-gray-800/60 text-white rounded-md p-3 hover:bg-gray-700/60 disabled:opacity-50"
+              className="bg-gray-800/60 text-white rounded-md p-3 hover:bg-gray-700/60 disabled:opacity-50 cursor-pointer hover:scale-95 duration-300 transition-all"
               onClick={handleDecrease}
               disabled={isPending}
             >
               <FaMinus size={16} />
             </button>
 
-            <div className="flex items-center justify-center min-w-[60px] h-12 bg-gray-800/60 rounded-md">
+            <div className="flex items-center justify-center min-w-[60px] h-12 bg-gray-800/60 rounded-md select-none">
               {isPending ? (
                 <Spinner size={20} />
               ) : (
@@ -189,7 +191,7 @@ export default function ClientPrice({ productEntry, plan }) {
             </div>
 
             <button
-              className="bg-gray-800/60 text-white rounded-md p-3 hover:bg-gray-700/60 disabled:opacity-50"
+              className="bg-gray-800/60 hover:scale-105 duration-300 transition-all text-white rounded-md p-3 hover:bg-gray-700/60 disabled:opacity-50 cursor-pointer"
               onClick={handleIncrease}
               disabled={isPending}
             >

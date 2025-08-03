@@ -1,6 +1,4 @@
-"use client";
 import Link from "next/link";
-import React, { useState } from "react";
 import CartIcon from "./CartIcon";
 import Menu from "./Menu";
 import NavbarContainer from "./NavbarContainer";

@@ -30,7 +30,7 @@ export default async function ProductPlanPage({ params, searchParams }) {
 
   return (
     <Section
-      className="overflow-hidden lg:pt-0 pt-[6rem] lg:translate-y-[5.25rem] -mt-[5.25rem]"
+      className="overflow-hidden lg:pt-0 pt-[6rem] lg:translate-y-[5.25rem] -mt-[4.6rem]"
       id="roadmap"
       crosses
       crossesOffset="lg:translate-y-[5.25rem]"
@@ -96,5 +96,5 @@ export default async function ProductPlanPage({ params, searchParams }) {
 //     alternates: {
 //       canonical: `/products/${slug}/${plan}`,
 //     },
-//   };z
+//   };
 // }

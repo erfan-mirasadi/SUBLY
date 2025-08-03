@@ -26,8 +26,8 @@ export default function PriceSection({
             year={year}
             length={length}
           />
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-10">
-            {data.product_entry.map((item) => (
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-10">
+            {data.product_entry.map((item, index) => (
               <PlanCards
                 key={item.id}
                 data={{
@@ -36,6 +36,7 @@ export default function PriceSection({
                   image: data.image_small_url,
                 }}
                 plan={plan}
+                index={index}
               />
             ))}
           </div>
