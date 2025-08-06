@@ -27,9 +27,9 @@ export default function ThirdSection() {
       </div>
 
       <Heading
-        tag="Get started with Subly"
-        title="با سابلی تمام قدرت را شروع کنید"
-        className="font-vazirmatn"
+        tag="اولین سایت معتبر فروش محصوالت دیجیتال"
+        title="با سابلی شروع کنید"
+        className="font-code"
       />
     </div>
   );

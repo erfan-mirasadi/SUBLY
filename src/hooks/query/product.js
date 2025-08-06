@@ -23,7 +23,7 @@ export const getProductsQuery = Object.assign(
 export const getProductCategoriesQuery = Object.assign(
   async function getProductCategoriesQuery() {
     const categories = [
-      { id: 33, title: "AI Programs" },
+      { id: 33, title: "AI" },
       { id: 30, title: "MEDIA" },
       { id: 31, title: "Social Media" },
     ];
@@ -52,6 +52,46 @@ export const getProductCategoriesQuery = Object.assign(
   {
     queryKey: ["product-categories"],
     queryFn: () => getProductCategoriesQuery(),
+    staleTime: 1000 * 60 * 5,
+  }
+);
+
+// کوئری گرفتن محصولات فیلتر شده
+export const getFilteredProductsQuery = Object.assign(
+  async function getFilteredProductsQuery() {
+    // مرحله ۱: گرفتن محصولات
+    const { data: products, error } = await supabase
+      .from("product")
+      .select(`*, product_entry(*, product_plans(*))`);
+
+    if (error) throw new Error(error.message);
+
+    // مرحله ۲: گرفتن نرخ ارز
+    const currencyMap = await getCurrenciesQuery();
+
+    // مرحله ۳: تبدیل قیمت‌ها به تومان
+    const updatedProducts = await convertProductPrices(products, currencyMap);
+
+    // مرحله ۴: فیلتر کردن محصولات با کلمات کلیدی خاص
+    const keywords = [
+      "apple music",
+      "spotify",
+      "nuke",
+      "youtube",
+      "apple",
+      "chatgpt",
+    ];
+    const filtered = updatedProducts.filter((product) => {
+      const title = product.title?.toLowerCase() || "";
+      return keywords.some((key) => title.includes(key));
+    });
+
+    // مرحله ۵: محدود کردن تعداد محصولات
+    return filtered.slice(0, 12);
+  },
+  {
+    queryKey: ["filtered-products"],
+    queryFn: () => getFilteredProductsQuery(),
     staleTime: 1000 * 60 * 5,
   }
 );

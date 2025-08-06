@@ -3,8 +3,8 @@ import { getProductsQuery } from "@/src/hooks/query/product";
 import Section from "@/src/components/section/Section";
 import { notFound, redirect } from "next/navigation";
 import HeroSection from "./HeroSection";
-import SecondSection from "./SecondSection";
-import ThirdSection from "./ThirdSection";
+// import SecondSection from "./SecondSection";
+// import ThirdSection from "./ThirdSection";
 import PriceSection from "./PriceSection";
 
 export default async function ProductPlanPage({ params, searchParams }) {
@@ -38,7 +38,7 @@ export default async function ProductPlanPage({ params, searchParams }) {
     >
       <HeroSection product={data} />
       {/* <SecondSection product={data} /> */}
-      <ThirdSection />
+      {/* <ThirdSection /> */}
       <PriceSection params={slug} data={data} plan={plan} />
     </Section>
   );

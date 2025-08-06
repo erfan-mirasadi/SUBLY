@@ -20,7 +20,7 @@ export default function HeroImage({ heroIcons }) {
         <div className="relative bg-[#0E0C15] rounded-[16px]">
           {/* <div className="h-[22px] bg-[#43435C] rounded-t-[14px]" /> */}
 
-          <div className="rounded-b-[14px] overflow-hidden w-full h-[400px] sm:h-[500px] md:h-[900px] lg:h-[900px]">
+          <div className="rounded-b-[14px] overflow-hidden w-full h-[400px] sm:h-[500px] md:h-[500px] lg:h-[600px]">
             <HeroProductCarousel className="w-full h-full" />
 
             <ScrollParallax isAbsolutelyPositioned>

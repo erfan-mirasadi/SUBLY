@@ -59,7 +59,7 @@ function ProductCard({ item }) {
         >
           {/* Outlet Badge */}
           {isOutlet && lowestPlan && (
-            <div className="absolute -top-3 right-4 flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-900 to-purple-900 rounded-full text-white shadow-lg transform transition-transform group-hover:scale-110">
+            <div className="absolute -top-3 right-4 flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-900 to-purple-900 rounded-full text-white shadow-lg transform transition-transform group-hover:scale-110 font-vazirmatn">
               <Image
                 className="mr-1.5"
                 src={check2}
@@ -75,10 +75,10 @@ function ProductCard({ item }) {
           )}
 
           <div className="p-4 bg-[#0E0C15] rounded-t-2xl flex flex-col h-[160px]">
-            <h4 className="text-xl leading-snug mb-1 font-bold line-clamp-2 h-[48px]">
+            <h4 className="text-xl font-vazirmatn leading-snug mb-1 font-bold line-clamp-2 h-[48px]">
               {item.title}
             </h4>
-            <p className="font-light text-xs text-[#757185] mb-4 line-clamp-2 h-[32px]">
+            <p className="font-light font-vazirmatn text-xs text-[#757185] mb-4 line-clamp-2 h-[32px]">
               {item.caption}
             </p>
 
