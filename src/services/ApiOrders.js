@@ -73,7 +73,10 @@ export async function createOrder(user_id, cartItems) {
         (acc, i) => acc + i.unit_price * i.quantity,
         0
       ),
-      discount_price: order_items.reduce((acc, i) => acc + i.discount_price, 0),
+      discount_price: order_items.reduce(
+        (acc, i) => acc + i.discount_price * i.quantity,
+        0
+      ),
     })
     .select()
     .single();

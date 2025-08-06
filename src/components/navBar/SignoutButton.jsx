@@ -22,9 +22,7 @@ function SignoutButton() {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    if (window.confirm("آیا مطمئن هستید که می‌خواهید از حساب خود خارج شوید؟")) {
-      logout();
-    }
+    logout();
   };
 
   if (isPending) return <Spinner size={20} />;
