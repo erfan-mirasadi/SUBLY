@@ -33,6 +33,12 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
       ? localStorage.getItem("subly_user_id")
       : null;
 
+  // تشخیص اینکه کاربر لاگین هست یا نه
+  const isLoggedIn = !!getUserId();
+
+  // اگر لاگین هست فقط cartItems رو نمایش بده، وگرنه cart رو
+  const displayItems = isLoggedIn ? cartItems || [] : cart;
+
   // Block body scroll when cart is open
   useEffect(() => {
     if (isCartOpen) {
@@ -75,7 +81,7 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
     }
   };
 
-  console.log({ cart, cartItems });
+  console.log({ cart, cartItems, displayItems, isLoggedIn });
 
   return (
     <>
@@ -103,7 +109,7 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
         </span>
         <div className="w-full h-full flex-1 flex flex-col items-center justify-between pb-2">
           <div className="w-full h-full mb-1 overflow-y-auto flex flex-col gap-2 px-4">
-            {[...cart, ...(cartItems || [])].length === 0 ? (
+            {displayItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center px-6">
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-full p-8 mb-6 border border-gray-700/30">
                   <BsCart3 size={80} className="text-gray-400" />
@@ -116,7 +122,7 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
                 </p>
               </div>
             ) : (
-              [...cart, ...(cartItems || [])].map((item, index) => (
+              displayItems.map((item, index) => (
                 <div
                   key={item.id || `item-${index}`}
                   className="flex items-start justify-between py-4 border-b-[1px] border-b-gray-300 gap-3"
@@ -240,7 +246,7 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
               ))
             )}
           </div>
-          {[...cart, ...(cartItems || [])].length > 0 && (
+          {displayItems.length > 0 && (
             <Link
               className="!w-[85%] !max-w-none mb-5"
               href="/checkout"

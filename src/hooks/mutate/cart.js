@@ -95,26 +95,55 @@ export const useSyncCartToServerMutation = (key = "cart-items") => {
     mutationFn: async (userId) => {
       if (!userId) throw new Error("User ID is required for sync");
       const localItems = getLocalCartItems(key);
-      if (localItems.length === 0)
+      // console.log("Starting sync for user:", userId, "Items:", localItems);
+
+      if (localItems.length === 0) {
+        console.log("No items to sync");
         return { message: "No items to sync", synced: 0, total: 0 };
+      }
+
       const results = [];
       const errors = [];
+
       for (const item of localItems) {
+        // console.log("Syncing item:", item);
         try {
           const result = await addToCart(userId, item.id, item.quantity);
+          // console.log("Item synced successfully:", result);
           results.push(result);
         } catch (error) {
+          console.error("Failed to sync item:", error);
           errors.push({ item: item.id, error: error.message });
         }
       }
-      if (results.length > 0) localStorage.removeItem(key);
-      return {
+
+      // پاک کردن localStorage اگر حداقل یک آیتم sync شده باشه
+      if (results.length > 0) {
+        localStorage.removeItem(key);
+        // اطمینان از پاک شدن کامل
+        try {
+          localStorage.setItem(key, JSON.stringify([]));
+          localStorage.removeItem(key);
+        } catch (e) {
+          console.warn("Could not fully clear localStorage:", e);
+        }
+        // console.log("localStorage cleared after successful sync");
+      }
+
+      const syncResult = {
         synced: results.length,
         total: localItems.length,
         errors: errors.length,
         results,
         errorDetails: errors,
       };
+
+      console.log("Sync completed:", syncResult);
+      return syncResult;
+    },
+    onSuccess: () => {
+      // Invalidate cart queries to refresh UI
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
   });
 };
