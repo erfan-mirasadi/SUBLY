@@ -1,136 +1,32 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import NavItem from "./NavItem";
-import MobileMenu from "./MobileMenu";
-import useActiveLink from "@/src/hooks/useActiveLink";
-import DropdownNavigator from "./DropdownNavigator";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import CartIcon from "./CartIcon";
+import Menu from "./Menu";
+import NavbarContainer from "./NavbarContainer";
+import AuthButton from "./AuthButton";
+import SignoutButton from "./SignoutButton";
 
-const navigation = [
-  { id: 1, title: "Home", url: "/" },
-  { id: 2, title: "Products", url: "/products" },
-  { id: 4, title: "Category", url: "/category" },
-  { id: 5, title: "Contact", url: "/contact" },
-];
-
-function NavBar() {
-  const [openNavigation, setOpenNavigation] = useState(false);
-  const activeHash = useActiveLink();
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  //for hiding the scrollbar when the menu is open
-  useEffect(() => {
-    if (openNavigation) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [openNavigation]);
-
-  const toggleNavigation = () => {
-    setOpenNavigation(!openNavigation);
-  };
-
-  const handleClick = () => {
-    if (!openNavigation) return;
-    setOpenNavigation(false);
-  };
-
-  // Handle login/dashboard button click
-  const handleAuthButton = () => {
-    if (session?.user) {
-      router.push("/userProfile");
-    } else {
-      if (
-        typeof window !== "undefined" &&
-        window.location.pathname !== "/login"
-      ) {
-        localStorage.setItem("redirectAfterLogin", window.location.pathname);
-      }
-      router.push("/login");
-    }
-  };
-
+export default function NavBar({ children }) {
   return (
-    <div
-      className={`fixed top-0 left-0 w-full z-50 border-b border-[#252134] lg:bg-[#0E0C15]/90 ${
-        openNavigation ? "bg-[#0E0C15]" : "bg-[#0E0C15]/90 backdrop-blur-sm"
-      }`}
-    >
-      <div className="flex items-center justify-between px-5 py-4 lg:px-8 xl:px-10 max-w-[1440px] mx-auto">
-        <Link href="/" className="block w-[140px] xl:mr-8">
-          <div className="text-2xl text-white font-grotesk uppercase">
-            SUBLY
-          </div>
+    <NavbarContainer>
+      <div className=" flex w-full justify-between items-center px-5 py-5 lg:px-8 xl:px-10 max-w-[1440px] !mx-auto z-20">
+        <Menu />
+        <Link
+          href="/"
+          className="flex justify-center font-grotesk font-bold text-2xl items-center md:justify-start ml-[2px]"
+        >
+          SUBLY
         </Link>
-
-        <nav
-          className={`${
-            openNavigation ? "flex" : "hidden"
-          } fixed top-[72px] left-0 right-0 bottom-0 bg-[#1B1B2E] lg:static lg:flex lg:mx-auto lg:bg-transparent`}
-        >
-          <div className="relative z-2 flex flex-col items-center justify-center m-auto lg:flex-row -top-[72px] md:top-0">
-            {navigation
-              .filter(
-                (item) => item.title !== "Category" && item.title !== "Company"
-              )
-              .map((item) => (
-                <NavItem
-                  key={item.id}
-                  item={item}
-                  isActive={item.url === activeHash}
-                  onClick={handleClick}
-                />
-              ))}
-            {/* Switcher for Category/Company */}
-            <DropdownNavigator
-              onMobileMenuClose={handleClick}
-              isMenuOpen={openNavigation}
-            />
-          </div>
-
-          {openNavigation && <MobileMenu handleAuthButton={handleAuthButton} />}
-        </nav>
-
-        {/* Auth/Dashboard button and Cart */}
-        <div className="hidden lg:flex items-center gap-4 text-xs font-grotesk">
-          <CartIcon />
-          <button
-            onClick={handleAuthButton}
-            className="px-4 py-2 bg-[#FFFFFF]/50 rounded-lg text-[#1B1B2E] font-medium hover:bg-opacity-90 transition-all cursor-pointer"
-          >
-            {session?.user ? "Dashboard" : "Login"}
-          </button>
+        <div className="items-center gap-4 text-xs font-grotesk hidden md:flex">
+          {children}
         </div>
-
-        <button
-          className="flex lg:hidden items-center justify-center w-10 h-10 group cursor-pointer"
-          onClick={toggleNavigation}
-          aria-label="Toggle menu"
-        >
-          <div className="relative w-6 h-5">
-            <span
-              className={`absolute left-0 w-full h-[2px] bg-white rounded-sm transition-all duration-300 group-hover:bg-[#AC6AFF]/50 ${
-                openNavigation ? "top-[7.5px] rotate-150" : "top-0.5"
-              }`}
-            />
-            <span
-              className={`absolute left-0 bottom-0 w-full h-[2px] bg-white rounded-sm transition-all duration-300 group-hover:bg-[#AC6AFF]/80 ${
-                openNavigation ? "bottom-[10px] -rotate-150" : "bottom-0.5"
-              }`}
-            />
+        <div className="flex items-center justify-end md:items-center gap-4 text-xs font-grotesk z-30 relative">
+          <CartIcon />
+          <div className="bg-conic-gradient hidden p-[1px] md:flex justify-center items-center cursor-pointer hover:scale-105 transition-all duration-300 rounded-lg">
+            <AuthButton />
           </div>
-        </button>
+          <SignoutButton />
+        </div>
       </div>
-    </div>
+    </NavbarContainer>
   );
 }
-export default NavBar;

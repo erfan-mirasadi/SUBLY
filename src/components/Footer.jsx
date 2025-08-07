@@ -1,12 +1,10 @@
-//assets
 import discordBlack from "@/public/socials/discord.svg";
 import facebook from "@/public/socials/facebook.svg";
 import instagram from "@/public/socials/instagram.svg";
 import telegram from "@/public/socials/telegram.svg";
 import twitter from "@/public/socials/twitter.svg";
-
+import FooterContainer from "./FooterContainer";
 import Image from "next/image";
-
 const socials = [
   {
     id: "0",
@@ -40,13 +38,10 @@ const socials = [
   },
 ];
 
-function Footer() {
+export default function Footer() {
   return (
-    <div className=" max-w-[77.5rem] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem] flex sm:justify-between justify-center items-center gap-10 max-sm:flex-col pt-22">
-      <p className="text-xs text-[#757185] lg:block">
-        ©Erfan {new Date().getFullYear()}. All rights reserved.
-      </p>
-
+    <FooterContainer>
+                <p className="text-xs text-[#757185] lg:block">©Erfan {new Date().getFullYear()}. All rights reserved.</p>
       <ul className="flex gap-5 flex-wrap">
         {socials.map((item) => (
           <a
@@ -59,8 +54,6 @@ function Footer() {
           </a>
         ))}
       </ul>
-    </div>
-  );
+    </FooterContainer>
+  )
 }
-
-export default Footer;

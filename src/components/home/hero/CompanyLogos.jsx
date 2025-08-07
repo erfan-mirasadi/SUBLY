@@ -23,7 +23,14 @@ const CompanyLogos = ({ className }) => {
             className="flex items-center justify-center flex-1 h-[136px]"
             key={index}
           >
-            <Image src={logo} width={134} height={28} alt={logo} />
+            <Image
+              src={logo}
+              width={134}
+              height={28}
+              alt={`Company logo ${index + 1}`}
+              style={{ width: "auto", height: "auto" }}
+              className="max-w-[400px] max-h-[400px] object-contain"
+            />
           </li>
         ))}
       </ul>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import check2 from "@/public/check-02.svg";
+import { toPersianNumbers } from "@/src/lib/persianNumbers";
 
 function ProductCard({ item }) {
   // Flatten all plans with their discount logic
@@ -58,7 +59,7 @@ function ProductCard({ item }) {
         >
           {/* Outlet Badge */}
           {isOutlet && lowestPlan && (
-            <div className="absolute -top-3 right-4 flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-900 to-purple-900 rounded-full text-white shadow-lg transform transition-transform group-hover:scale-110">
+            <div className="absolute -top-3 right-4 flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-900 to-purple-900 rounded-full text-white shadow-lg transform transition-transform group-hover:scale-110 font-vazirmatn">
               <Image
                 className="mr-1.5"
                 src={check2}
@@ -74,10 +75,10 @@ function ProductCard({ item }) {
           )}
 
           <div className="p-4 bg-[#0E0C15] rounded-t-2xl flex flex-col h-[160px]">
-            <h4 className="text-xl leading-snug mb-1 font-bold line-clamp-2 h-[48px]">
+            <h4 className="text-xl font-vazirmatn leading-snug mb-1 font-bold line-clamp-2 h-[48px]">
               {item.title}
             </h4>
-            <p className="font-light text-xs text-[#757185] mb-4 line-clamp-2 h-[32px]">
+            <p className="font-light font-vazirmatn text-xs text-[#757185] mb-4 line-clamp-2 h-[32px]">
               {item.caption}
             </p>
 
@@ -86,12 +87,12 @@ function ProductCard({ item }) {
               <div className="mt-auto flex justify-center">
                 <div className="px-4 py-1.5 rounded-t-md border border-[#ffffff22] bg-[#1a1824]/50 backdrop-blur-md">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-[#FFFF]/80 drop-shadow-glow">
-                      {price} $
+                    <span className="font-bold text-[#FFFF]/80 drop-shadow-glow font-vazirmatn">
+                      {toPersianNumbers(price)} تومان
                     </span>
                     {oldPrice && (
-                      <span className="text-xs text-[#757185] line-through">
-                        {oldPrice} $
+                      <span className="text-xs text-[#757185] line-through font-vazirmatn">
+                        {toPersianNumbers(oldPrice)} تومان
                       </span>
                     )}
                   </div>

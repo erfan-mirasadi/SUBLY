@@ -1,11 +1,5 @@
 import Image from "next/image";
-// import notification1 from "@/public/hero/notification/image-1.png";
-import notification2 from "@/public/hero/notification/image-2.png";
-import notification3 from "@/public/hero/notification/image-3.png";
-import notification4 from "@/public/hero/notification/image-4.png";
 import notification1 from "@/public/hero/logos/logo-2.png";
-
-const notificationImages = [notification4, notification3, notification2];
 
 const Notification = ({ className, title }) => {
   return (
@@ -29,7 +23,7 @@ const Notification = ({ className, title }) => {
 
         <div className="flex items-center justify-between">
           <ul className="flex -m-0.5">
-            {notificationImages.map((item, index) => (
+            {/* {notificationImages.map((item, index) => (
               <li
                 key={index}
                 className="flex w-6 h-6 border-2 border-[#2E2A41] rounded-full overflow-hidden"
@@ -42,7 +36,7 @@ const Notification = ({ className, title }) => {
                   alt={item}
                 />
               </li>
-            ))}
+            ))} */}
           </ul>
           <div className=" text-[#6C7275]">1m ago</div>
         </div>

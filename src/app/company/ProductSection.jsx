@@ -8,6 +8,7 @@ import Heading from "@/src/components/ui/Heading";
 import Image from "next/image";
 import Gradient from "@/src/components/ui/Gradient";
 import Link from "next/link";
+import { toPersianNumbers } from "@/src/lib/persianNumbers";
 //COMPONENTS
 function ProductSection({ item }) {
   return (
@@ -116,14 +117,18 @@ function ProductSection({ item }) {
                       <div className="px-4 py-2 rounded-xl border border-[#ffffff22] bg-[#1a1824]/50 backdrop-blur-md">
                         <div className="flex items-baseline gap-2">
                           {/* New Price */}
-                          <span className="text-[1.5rem] font-bold text-[#FFFF]/80 drop-shadow-glow">
-                            {price}
+                          <span className="text-[1.5rem] font-bold text-[#FFFF]/80 drop-shadow-glow font-vazirmatn">
+                            {toPersianNumbers(price?.toLocaleString() || "0")}{" "}
+                            تومان
                           </span>
 
                           {/* Old Price if exists */}
                           {oldPrice && (
-                            <span className="text-sm text-[#757185] line-through">
-                              {oldPrice}
+                            <span className="text-sm text-[#757185] line-through font-vazirmatn">
+                              {toPersianNumbers(
+                                oldPrice?.toLocaleString() || "0"
+                              )}{" "}
+                              تومان
                             </span>
                           )}
                         </div>
