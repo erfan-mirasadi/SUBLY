@@ -657,5 +657,5 @@ For support, email erfan.mirasadi@gmail.com or create an issue in the repository
 ---
 
 <div align="center">
-  <p>Built with ❤️ using Next.js and Supabase</p>
+  <p>Built with ❤️</p>
 </div>
