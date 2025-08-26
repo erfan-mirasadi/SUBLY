@@ -24,7 +24,10 @@ export default function NavBar({ children }) {
           <div className="bg-conic-gradient hidden p-[1px] md:flex justify-center items-center cursor-pointer hover:scale-105 transition-all duration-300 rounded-lg">
             <AuthButton />
           </div>
-          <SignoutButton />
+          {/* Only show SignoutButton on desktop (md and up) */}
+          <div className="hidden md:block">
+            <SignoutButton />
+          </div>
         </div>
       </div>
     </NavbarContainer>

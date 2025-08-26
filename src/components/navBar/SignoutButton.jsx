@@ -30,18 +30,19 @@ function SignoutButton() {
   if (!isAuth) return null;
 
   return (
-    <div className="flex justify-center items-center text-[#B9AEDF]/50 hover:text-[#B9AEDF] transition-colors duration-300">
-      <button
-        onClick={handleLogout}
-        disabled={isPending}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        title="خروج"
-        className="cursor-pointer hover:scale-110 transition-all duration-300 flex items-center justify-center p-2 rounded-full"
-      >
-        {isHovered ? <IoExit size={27} /> : <IoExitOutline size={27} />}
-      </button>
-    </div>
+    <button
+      onClick={handleLogout}
+      disabled={isPending}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      title="خروج"
+      className="flex flex-col items-center justify-center text-[#B9AEDF]/50 hover:text-[#B9AEDF] transition-colors duration-300 cursor-pointer hover:scale-110 p-2 rounded-full md:rounded-lg md:flex-row md:gap-2"
+    >
+      {isHovered ? <IoExit size={27} /> : <IoExitOutline size={27} />}
+      <span className="mt-2 text-[#B9AEDF] bg-[#18162A]/80 px-4 py-1 rounded-lg text-sm font-vazirmatn shadow-md md:hidden">
+        خروج
+      </span>
+    </button>
   );
 }
 

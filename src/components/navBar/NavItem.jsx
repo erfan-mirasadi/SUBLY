@@ -8,16 +8,11 @@ export default function NavItem({
   children,
   onMouseEnter,
   onMouseLeave,
+  disableLink = false,
 }) {
   const activeHash = useActiveLink();
   const isActive = activeHash === item.url;
-  return (
-    <Link
-      href={item.url}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      className={`
+  const baseClasses = `
         relative
         block
         transition-all duration-300
@@ -29,12 +24,22 @@ export default function NavItem({
         z-0
         font-vazirmatn
         font-bold
-      `}
+        cursor-pointer
+        select-none
+      `;
+
+  const Component = disableLink ? "span" : Link;
+
+  return (
+    <Component
+      {...(!disableLink ? { href: item.url } : {})}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={baseClasses}
     >
       {children}
-      {/* {item.title} */}
 
-      {/* buttom line */}
       <span
         className={`
           absolute bottom-0 left-1/2 -translate-x-1/2
@@ -45,7 +50,6 @@ export default function NavItem({
         `}
       />
 
-      {/* dot */}
       <span
         className={`
           absolute -left-1 top-1/2 -translate-y-1/2
@@ -55,6 +59,6 @@ export default function NavItem({
           lg:hidden
         `}
       />
-    </Link>
+    </Component>
   );
 }
