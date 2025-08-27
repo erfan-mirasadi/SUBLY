@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import NavItem from "../components/navBar/NavItem";
 import DropdownNavigator from "../components/navBar/DropdownNavigator";
 import { navigation } from "../lib/staticData";
-import { Toaster } from "sonner"
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "SUBLY",
@@ -13,16 +13,29 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
-    <html dir="ltr" lang="fa">
-      <body className="flex justify-start flex-col min-h-screen" cz-shortcut-listen="true" suppressHydrationWarning>
+    <html dir="rtl" lang="fa">
+      <body
+        className="flex justify-start flex-col min-h-screen"
+        cz-shortcut-listen="true"
+        suppressHydrationWarning
+      >
         <ClientProviders>
           <NavBar>
-            {navigation.map((item) => item.isDropDown ? <DropdownNavigator key={item.id} item={item}>{item.title}</DropdownNavigator> : <NavItem key={item.id} item={item}>{item.title}</NavItem> )}
+            {navigation.map((item) =>
+              item.isDropDown ? (
+                <DropdownNavigator key={item.id} item={item}>
+                  {item.title}
+                </DropdownNavigator>
+              ) : (
+                <NavItem key={item.id} item={item}>
+                  {item.title}
+                </NavItem>
+              )
+            )}
           </NavBar>
           <main className="flex-1">{children}</main>
-          <Footer/>
+          <Footer />
           <Toaster />
         </ClientProviders>
       </body>
