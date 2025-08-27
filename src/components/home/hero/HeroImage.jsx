@@ -24,7 +24,7 @@ export default function HeroImage({ heroIcons }) {
             <HeroProductCarousel className="w-full h-full" />
 
             <ScrollParallax isAbsolutelyPositioned>
-              <ul className="hidden absolute -left-[88px] bottom-[120px] px-1 py-1 bg-[#474060]/40 backdrop-blur border border-[#FFFFFF]/10 rounded-2xl xl:flex z-20">
+              {/* <ul className="hidden absolute -left-[88px] bottom-[120px] px-1 py-1 bg-[#474060]/40 backdrop-blur border border-[#FFFFFF]/10 rounded-2xl xl:flex z-20">
                 {heroIcons.map((icon, index) => (
                   <li className="p-5" key={index}>
                     <Image
@@ -35,13 +35,17 @@ export default function HeroImage({ heroIcons }) {
                     />
                   </li>
                 ))}
-              </ul>
+              </ul> */}
+              <Notification
+                className="hidden absolute -left-[88px] bottom-[120px]  w-[288px] xl:flex z-20 font-vazirmatn"
+                title="تخفیف ویژه هفته !  "
+              />
             </ScrollParallax>
 
             <ScrollParallax isAbsolutelyPositioned>
               <Notification
                 className="hidden absolute -right-[88px] bottom-[176px] w-[288px] xl:flex z-20 font-vazirmatn"
-                title="!تخفیف ویژه  "
+                title="تخفیف ویژه امروز !!!  "
               />
             </ScrollParallax>
           </div>

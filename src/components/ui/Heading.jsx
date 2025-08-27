@@ -7,7 +7,7 @@ const Heading = ({ className, title, text, tag }) => {
     >
       {tag && <TagLine className="mb-4 md:justify-center">{tag}</TagLine>}
       {title && (
-        <h2 className="text-[1.75rem] leading-[2.5rem] md:text-[2rem] md:leading-[2.5rem] lg:text-[2.5rem] lg:leading-[3.5rem] xl:text-[3rem] xl:leading-tight">
+        <h2 className="text-[1.5rem] leading-[2rem] md:text-[2rem] md:leading-[2.5rem] lg:text-[2.5rem] lg:leading-[3.5rem] xl:text-[3rem] xl:leading-tight">
           {title}
         </h2>
       )}

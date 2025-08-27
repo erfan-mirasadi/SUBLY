@@ -1,12 +1,13 @@
 import Image from "next/image";
 import check from "@/public/check.svg";
+import { FaCheckCircle } from "react-icons/fa";
 
 function RoadMapCards({ item }) {
   return (
     <div>
       <li className="mb-3 py-3 " key={item.id}>
         <div className="flex items-center">
-          <Image src={check} width={24} height={24} alt="check" />
+          <FaCheckCircle className="w-4 h-4 my-1 ml-3 text-purple-800 shrink-0" />
           <h6 className="font-light text-sm leading-6 md:text-base ml-5">
             {item.title}
           </h6>

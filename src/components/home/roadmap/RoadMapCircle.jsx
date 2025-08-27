@@ -26,7 +26,7 @@ const AppIcon = ({ app, rotation }) => (
 
 function RoadMapCircle({ apps }) {
   return (
-    <div className="relative left-1/2 flex w-[350px] aspect-square border border-[#252134] rounded-full -translate-x-1/2 scale:75 md:scale-100">
+    <div className="relative flex w-[350px] aspect-square border border-[#252134] rounded-full scale:75 md:scale-100 mx-auto lg:right-1/3">
       <div className="flex w-60 aspect-square m-auto border border-[#252134] rounded-full">
         <div className="w-24 aspect-square m-auto p-[3px] bg-conic-gradient rounded-full">
           <div className="flex items-center justify-center w-full h-full bg-[#0E0C15] rounded-full font-grotesk font-bold text-xl">

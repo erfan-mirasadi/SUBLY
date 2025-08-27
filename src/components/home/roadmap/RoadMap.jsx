@@ -1,11 +1,3 @@
-//Assets
-// import apple6 from "@/public/hero/logos/logo-1.png";
-// import apple1 from "@/public/hero/logos/logo-2.png";
-// import apple2 from "@/public/hero/logos/logo-3.webp";
-// import apple3 from "@/public/hero/logos/logo-4.webp";
-// import apple4 from "@/public/hero/logos/logo-5.png";
-// import apple5 from "@/public/hero/logos/logo-6.png";
-//Components
 import RoadMapCricle from "./RoadMapCircle";
 import RoadMapCards from "./RoadMapCards";
 import Section from "../../section/Section";
@@ -14,58 +6,6 @@ import { getFilteredProductsQuery } from "@/src/hooks/query/product";
 
 const RoadMapText =
   "سابلی، راهی سریع و هوشمند برای خرید اشتراک‌ سرویس‌های محبوب از سراسر دنیاست.";
-
-// const RoadMapApps = [
-//   {
-//     id: "0",
-//     title: "Figma",
-//     icon: apple1,
-//     width: 26,
-//     height: 36,
-//   },
-//   {
-//     id: "1",
-//     title: "Notion",
-//     icon: apple2,
-//     width: 34,
-//     height: 36,
-//   },
-//   {
-//     id: "2",
-//     title: "Discord",
-//     icon: apple3,
-//     width: 36,
-//     height: 28,
-//   },
-//   {
-//     id: "3",
-//     title: "Slack",
-//     icon: apple4,
-//     width: 34,
-//     height: 35,
-//   },
-//   {
-//     id: "4",
-//     title: "Photoshop",
-//     icon: apple5,
-//     width: 34,
-//     height: 34,
-//   },
-//   {
-//     id: "5",
-//     title: "Protopie",
-//     icon: apple3,
-//     width: 34,
-//     height: 34,
-//   },
-//   {
-//     id: "6",
-//     title: "Framer",
-//     icon: apple6,
-//     width: 26,
-//     height: 34,
-//   },
-// ];
 
 const RoadMapContent = [
   {
@@ -107,8 +47,8 @@ async function RoadMap() {
           </Link>
         </div>
 
-        <div className="lg:ml-auto xl:w-[500px] mt-12 lg:mt-25">
-          <p className="font-light text-sm leading-6 md:text-base mb-22 text-[#757185] md:mb-16 lg:mb-32 lg:w-[350px] lg:mx-auto  font-vazirmatn">
+        <div className="flex flex-col items-center xl:w-[500px] mt-12 lg:mt-25 lg:items-end">
+          <p className="font-light text-sm leading-6 md:text-base mb-22 text-[#757185] md:mb-16 lg:mb-30 lg:w-[320px] xl:mr-70 lg:self-start font-vazirmatn lg:mr-15">
             {RoadMapText}
           </p>
 

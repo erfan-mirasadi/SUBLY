@@ -38,7 +38,7 @@ const Notification = ({ className, title }) => {
               </li>
             ))} */}
           </ul>
-          <div className=" text-[#6C7275]">1m ago</div>
+          <div className=" text-[#6C7275]">15m ago</div>
         </div>
       </div>
     </div>
