@@ -4,6 +4,7 @@ import Menu from "./Menu";
 import NavbarContainer from "./NavbarContainer";
 import AuthButton from "./AuthButton";
 import SignoutButton from "./SignoutButton";
+import SearchBar from "./SearchBar";
 
 export default function NavBar({ children }) {
   return (
@@ -23,6 +24,9 @@ export default function NavBar({ children }) {
           <CartIcon />
           <div className="bg-conic-gradient hidden p-[1px] md:flex justify-center items-center cursor-pointer hover:scale-105 transition-all duration-300 rounded-lg">
             <AuthButton />
+          </div>
+          <div className="hidden md:flex">
+            <SearchBar />
           </div>
           {/* Only show SignoutButton on desktop (md and up) */}
           <div className="hidden md:block">

@@ -12,6 +12,7 @@ import Spinner from "../ui/Spinner";
 import Link from "next/link";
 import { useGetCurrentUser } from "@/src/hooks/query/user";
 import SignoutButton from "./SignoutButton";
+import SearchBar from "./SearchBar";
 
 export default function Menu() {
   const { data: user, isPending: userLoading } = useGetCurrentUser();
@@ -101,6 +102,9 @@ export default function Menu() {
           </span>
         </span>
         <div className="flex flex-col items-center justify-start pt-[80px] gap-4 h-full">
+          <div className=" border-1 border-white/10 rounded-md md:hidden mb-4 ">
+            <SearchBar onProductClick={() => setIsOpen(false)} />
+          </div>
           <div className="w-full flex flex-col items-center gap-2 mb-8">
             <span className="p-[1px] rounded-full w-fit font-vazirmatn">
               <FaCircleUser size={50} />
