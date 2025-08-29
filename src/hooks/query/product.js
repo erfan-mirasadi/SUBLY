@@ -74,12 +74,12 @@ export const getFilteredProductsQuery = Object.assign(
 
     // مرحله ۴: فیلتر کردن محصولات با کلمات کلیدی خاص
     const keywords = [
-      "apple music",
+      "hbo max",
       "spotify",
-      "nuke",
-      "youtube",
-      "apple",
       "chatgpt",
+      "apple music",
+      "netflix",
+      "grok",
     ];
     const filtered = updatedProducts.filter((product) => {
       const title = product.title?.toLowerCase() || "";

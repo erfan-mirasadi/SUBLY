@@ -7,34 +7,49 @@ import { MouseParallax } from "react-just-parallax";
 // Images for the circles that appear around the rings
 const images = [
   {
-    src: "/hero/logos/logo-1.png",
+    src: "/hero/logos/ChatGPT.png",
     rotate: "rotate-[46deg]",
-    transform: "-ml-3 -mt-36 scale-100",
+    transform: "-ml-3 -mt-36 scale-160",
   },
   {
-    src: "/hero/logos/logo-2.png",
-    rotate: "-rotate-[56deg]",
-    transform: "-ml-3 -mt-32 scale-125",
+    src: "/hero/logos/hbo_max.png",
+    rotate: "rotate-[26deg]",
+    transform: "-ml-12 -mt-6 scale-160",
   },
   {
-    src: "/hero/logos/logo-3.webp",
-    rotate: "rotate-[54deg]",
-    transform: "-ml-3 mt-[206px] scale-[1.1]",
+    src: "/hero/logos/Creative_Cloud_Pro.png",
+    rotate: "-rotate-[60deg]",
+    transform: "-ml-12 -mt-2 scale-145",
   },
   {
-    src: "/hero/logos/logo-5.png",
-    rotate: "-rotate-[65deg]",
-    transform: "-ml-3 mt-52 scale-150",
+    src: "/hero/logos/netflix.png",
+    rotate: "rotate-[51deg]",
+    transform: "-ml-3 mt-[206px] scale-160",
   },
   {
-    src: "/hero/logos/logo-4.webp",
-    rotate: "-rotate-[85deg]",
-    transform: "-ml-4 -mt-3 scale-125",
+    src: "/hero/logos/PhotoShop.png",
+    rotate: "-rotate-[22deg]",
+    transform: "ml-20 -mt-1 scale-125",
   },
   {
-    src: "/hero/logos/logo-6.png",
+    src: "/hero/logos/apple_music.png",
+    rotate: "-rotate-[73deg]",
+    transform: "-ml-3 -mt-32 scale-195",
+  },
+  {
+    src: "/hero/logos/spotify.png",
     rotate: "rotate-[70deg]",
-    transform: "-ml-4 -mt-3 scale-110",
+    transform: "-ml-4 -mt-3 scale-190",
+  },
+  {
+    src: "/hero/logos/udemy.png",
+    rotate: "rotate-[55deg]",
+    transform: "-ml-4 -mt-1 scale-140",
+  },
+  {
+    src: "/hero/logos/youtube.png",
+    rotate: "-rotate-[42deg]",
+    transform: "-ml-0 -mt-32 scale-195",
   },
 ];
 

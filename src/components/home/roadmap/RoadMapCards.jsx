@@ -1,5 +1,3 @@
-import Image from "next/image";
-import check from "@/public/check.svg";
 import { FaCheckCircle } from "react-icons/fa";
 
 function RoadMapCards({ item }) {

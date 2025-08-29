@@ -1,24 +1,22 @@
 //assets
-import recording03 from "@/public/recording-03.svg";
-import recording01 from "@/public/recording-01.svg";
-import disc02 from "@/public/disc-02.svg";
-import chromecast from "@/public/chrome-cast.svg";
-import sliders04 from "@/public/sliders-04.svg";
-import check from "@/public/check.svg";
-
+// import recording03 from "@/public/recording-03.svg";
+// import recording01 from "@/public/recording-01.svg";
+// import disc02 from "@/public/disc-02.svg";
+// import chromecast from "@/public/chrome-cast.svg";
+// import sliders04 from "@/public/sliders-04.svg";
 //components
 import Section from "@/src/components/section/Section";
 import Heading from "@/src/components/ui/Heading";
 import Image from "next/image";
 import Gradient from "@/src/components/ui/Gradient";
 
-const brainwaveServicesIcons = [
-  recording03,
-  recording01,
-  disc02,
-  chromecast,
-  sliders04,
-];
+// const brainwaveServicesIcons = [
+//   recording03,
+//   recording01,
+//   disc02,
+//   chromecast,
+//   sliders04,
+// ];
 
 async function Categories({ item }) {
   return (

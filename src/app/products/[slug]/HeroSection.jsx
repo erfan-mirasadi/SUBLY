@@ -5,9 +5,13 @@ import Section from "@/src/components/section/Section";
 import Gradient from "@/src/components/ui/Gradient";
 
 export default function HeroSection({ product }) {
-  const explanationList = product.explanation
-    ? product.explanation.split("\n")
-    : [];
+  const explanationText = product.explanation || "";
+  const lines = explanationText
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
+  const firstLine = lines.length > 0 ? lines[0] : "";
+  const explanationList = lines.length > 1 ? lines.slice(1) : [];
   return (
     <Section>
       <div className="max-w-[77.5rem] mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem] font-vazirmatn">
@@ -31,17 +35,20 @@ export default function HeroSection({ product }) {
                 {product.title}
               </h4> */}
               <div>
-                <p className="text-base text-slate-100 mb-8">
-                  {product.explanation}
-                </p>
-                <ul className="space-y-3">
-                  {explanationList.map((item, index) => (
-                    <li key={index} className="flex py-1" dir="rtl">
-                      <FaCheckCircle className="w-4 h-4 my-1 ml-3 text-purple-800 shrink-0" />
-                      <p className="text-slate-300"> {item} </p>
-                    </li>
-                  ))}
-                </ul>
+                {firstLine && (
+                  <p className="text-base text-slate-100 mb-8">{firstLine}</p>
+                )}
+
+                {explanationList.length > 0 && (
+                  <ul className="space-y-3">
+                    {explanationList.map((item, index) => (
+                      <li key={index} className="flex py-1" dir="rtl">
+                        <FaCheckCircle className="w-4 h-4 my-1 ml-3 text-purple-800 shrink-0" />
+                        <p className="text-slate-300"> {item} </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import { getProductsQuery } from "@/src/hooks/query/product";
 import { toPersianNumbers } from "@/src/lib/persianNumbers";
 import Button from "../../Button";
 import Spinner from "../../ui/Spinner";
+import Heading from "../../ui/Heading";
 
 // Helper function to find the lowest price
 const getLowestPrice = (product) => {
@@ -39,6 +40,9 @@ const getLowestPrice = (product) => {
 export default function HeroProductCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const stripParenthetical = (s) =>
+    typeof s === "string" ? s.replace(/\s*\(.*?\)\s*/g, "").trim() : s;
+
   const {
     data: products,
     isLoading,
@@ -53,7 +57,7 @@ export default function HeroProductCarousel() {
     if (!products) return [];
     return products
       .filter((product) =>
-        ["apple music", "spotify", "nuke", "youtube"].some((term) =>
+        ["apple music", "spotify", "apple tv", "hbo max"].some((term) =>
           product.title.toLowerCase().includes(term)
         )
       )
@@ -88,6 +92,11 @@ export default function HeroProductCarousel() {
       ? `${toPersianNumbers(lowestPrice.toLocaleString())} تومان`
       : "قیمت ویژه";
 
+  // strip parenthetical parts and remove any leading Persian word 'اکانت' (and following spaces)
+  const displayedTitle = stripParenthetical(currentProduct.title)
+    .replace(/^\s*اکانت\s*/iu, "")
+    .trim();
+
   return (
     <div className="relative w-full h-full overflow-hidden bg-black transition-all duration-500 rounded-[14px] ">
       {/* Background Image with subtle animation */}
@@ -101,37 +110,43 @@ export default function HeroProductCarousel() {
             className={`object-cover transition-opacity duration-1000 ease-in-out rounded-2xl ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
-            priority={index === 0} // Only load the first image with high priority
+            priority={index === 0}
           />
         ))}
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-xs"></div>
+        <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
       {/* Content */}
-      <div className="relative  flex flex-col items-center justify-center text-white text-center h-full px-8">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black font-vazirmatn mb-2 animate-fade-in-up">
-          {currentProduct.title}
+      <div className="relative flex flex-col items-center justify-start text-white text-center h-full px-8 pt-2">
+        <h1 className="text-4xl md:text-6xl lg:text-6xl font-black font-vazirmatn mt-0 animate-fade-in-up sticky top-0 z-30">
+          <Heading
+            title={displayedTitle}
+            tag={currentProduct.caption}
+            className="scale-140"
+          />
         </h1>
 
-        {currentProduct.caption && (
-          <p className="text-sm md:text-lg lg:text-xl font-vazirmatn mb-6 max-w-2xl leading-relaxed animate-fade-in-up delay-200">
-            {currentProduct.caption.length > 120
-              ? `${currentProduct.caption.substring(0, 120)}...`
-              : currentProduct.caption}
+        {/* {currentProduct.caption && (
+          <p className="text-sm md:text-md font-vazirmatn mb-40 max-w-2xl leading-relaxed animate-fade-in-up delay-200 text-white/65">
+            <Heading title={displayedTitle} tag={currentProduct.caption} />
           </p>
-        )}
+        )} */}
 
-        <div className="text-2xl md:text-3xl lg:text-4xl font-black text-yellow-300 font-vazirmatn mb-8 animate-fade-in-up delay-400">
+        <div className="flex-1" />
+      </div>
+
+      {/* Price and CTA pinned to the bottom */}
+      <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-3 z-30 px-4 mb-10">
+        <div className="text-md md:text-xl lg:text-2xl text-yellow-200 font-vazirmatn m-2.5 animate-fade-in-up delay-600 backdrop-blur-md shadow-md border-1 border-yellow-200/10 rounded-2xl p-3">
           {formattedPrice}
         </div>
-
         <Link
           className="cursor-pointer z-20 animate-fade-in-up delay-600"
           href={`/products/${currentProduct.slug}`}
         >
-          <Button className="transform transition-transform duration-300 hover:scale-105">
+          {/* <Button className="transform transition-transform duration-300 hover:scale-110">
             مشاهده محصول
-          </Button>
+          </Button> */}
         </Link>
       </div>
 

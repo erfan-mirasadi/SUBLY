@@ -10,9 +10,9 @@ const TagLine = ({ className, children }) => {
         className || ""
       }`}
     >
-      <Brackets position="left" />
-      <div className="mx-3 text-[#ADA8C3]">{children}</div>
       <Brackets position="right" />
+      <div className="mx-3 text-[#ADA8C3]">{children}</div>
+      <Brackets position="left" />
     </div>
   );
 };

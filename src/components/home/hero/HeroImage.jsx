@@ -1,5 +1,4 @@
 import { ScrollParallax } from "react-just-parallax";
-import Image from "next/image";
 import Notification from "./Notification";
 import HeroProductCarousel from "./HeroProductCarousel";
 
@@ -13,7 +12,7 @@ const Gradient = () => {
   );
 };
 
-export default function HeroImage({ heroIcons }) {
+export default function HeroImage({}) {
   return (
     <div className="relative w-full max-w-full mx-auto md:max-w-[1200px] xl:mb-24">
       <div className="relative z-[1]  p-0.5 rounded-2xl bg-conic-gradient">
@@ -39,6 +38,10 @@ export default function HeroImage({ heroIcons }) {
               <Notification
                 className="hidden absolute -left-[88px] bottom-[120px]  w-[288px] xl:flex z-20 font-vazirmatn"
                 title="تخفیف ویژه هفته !  "
+                price="٪۱۰ تخفیف"
+                time="30m ago"
+                href="/products/netflix"
+                image="/hero/logos/netflix.png"
               />
             </ScrollParallax>
 
@@ -46,6 +49,10 @@ export default function HeroImage({ heroIcons }) {
               <Notification
                 className="hidden absolute -right-[88px] bottom-[176px] w-[288px] xl:flex z-20 font-vazirmatn"
                 title="تخفیف ویژه امروز !!!  "
+                price="٪۵۰ تخفیف"
+                time="10m ago"
+                href="/products/spotify"
+                image="/hero/logos/spotify.png"
               />
             </ScrollParallax>
           </div>

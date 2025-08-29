@@ -50,8 +50,8 @@ const ProductCard = ({ item, index = 0 }) => {
           {smallImageSrc && (
             <Image
               src={smallImageSrc}
-              width={48}
-              height={48}
+              width={58}
+              height={58}
               alt={item.title}
             />
           )}

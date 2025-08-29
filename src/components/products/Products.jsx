@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Section from "../section/Section";
 import Heading from "../ui/Heading";
 import ProductCard from "./ProductCard";

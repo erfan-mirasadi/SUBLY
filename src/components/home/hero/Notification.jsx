@@ -1,18 +1,24 @@
 import Image from "next/image";
-import notification1 from "@/public/hero/logos/logo-2.png";
+import Link from "next/link";
 
-const Notification = ({ className, title }) => {
-  return (
-    <div
-      className={`${
-        className || ""
-      } flex items-center p-4 pr-6 bg-[#474060]/40 backdrop-blur border border-[#FFFFFF]/10 rounded-2xl gap-5`}
+const Notification = ({
+  className,
+  title,
+  image,
+  price,
+  time = "15m ago",
+  href,
+}) => (
+  <div>
+    <Link
+      href={href}
+      className={`flex items-center p-4 pr-6 bg-[#474060]/40 backdrop-blur border border-[#FFFFFF]/10 rounded-2xl gap-5   ${className}`}
     >
       <Image
-        src={notification1}
+        src={image}
         width={62}
         height={62}
-        alt="image"
+        alt={title || "image"}
         className="rounded-xl"
       />
 
@@ -21,28 +27,15 @@ const Notification = ({ className, title }) => {
           {title}
         </h6>
 
+        {price && <div className="text-sm text-[#A78BFA] mb-2">{price}</div>}
+
         <div className="flex items-center justify-between">
-          <ul className="flex -m-0.5">
-            {/* {notificationImages.map((item, index) => (
-              <li
-                key={index}
-                className="flex w-6 h-6 border-2 border-[#2E2A41] rounded-full overflow-hidden"
-              >
-                <Image
-                  src={item}
-                  className="w-full"
-                  width={20}
-                  height={20}
-                  alt={item}
-                />
-              </li>
-            ))} */}
-          </ul>
-          <div className=" text-[#6C7275]">15m ago</div>
+          <ul className="flex -m-0.5"></ul>
+          <div className=" text-[#6C7275]">{time}</div>
         </div>
       </div>
-    </div>
-  );
-};
+    </Link>
+  </div>
+);
 
 export default Notification;
