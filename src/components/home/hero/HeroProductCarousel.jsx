@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -39,7 +39,7 @@ const getLowestPrice = (product) => {
 
 export default function HeroProductCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  //remove () from title
   const stripParenthetical = (s) =>
     typeof s === "string" ? s.replace(/\s*\(.*?\)\s*/g, "").trim() : s;
 
@@ -53,16 +53,15 @@ export default function HeroProductCarousel() {
     staleTime: getProductsQuery.staleTime,
   });
 
-  const popularProducts = useMemo(() => {
-    if (!products) return [];
-    return products
-      .filter((product) =>
-        ["apple music", "spotify", "apple tv", "hbo max"].some((term) =>
-          product.title.toLowerCase().includes(term)
+  const popularProducts = products
+    ? products
+        .filter((product) =>
+          ["grok", "apple music", "chatgpt", "hbo max"].some((term) =>
+            (product.title || "").toLowerCase().includes(term)
+          )
         )
-      )
-      .slice(0, 6);
-  }, [products]);
+        .slice(0, 6)
+    : [];
 
   // Auto-slide every 5 seconds for a more professional feel
   useEffect(() => {
@@ -89,7 +88,7 @@ export default function HeroProductCarousel() {
   const lowestPrice = getLowestPrice(currentProduct);
   const formattedPrice =
     lowestPrice !== null
-      ? `${toPersianNumbers(lowestPrice.toLocaleString())} تومان`
+      ? `${toPersianNumbers(lowestPrice.toLocaleString())}`
       : "قیمت ویژه";
 
   // strip parenthetical parts and remove any leading Persian word 'اکانت' (and following spaces)
@@ -117,36 +116,37 @@ export default function HeroProductCarousel() {
       </div>
 
       {/* Content */}
-      <div className="relative flex flex-col items-center justify-start text-white text-center h-full px-8 pt-2">
-        <h1 className="text-4xl md:text-6xl lg:text-6xl font-black font-vazirmatn mt-0 animate-fade-in-up sticky top-0 z-30">
+      <div className="relative flex flex-col items-center justify-start text-white text-center h-full px-8 pt-8">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold font-vazirmatn mt-0 animate-fade-in-up top-2 z-30 opacity-80">
           <Heading
             title={displayedTitle}
             tag={currentProduct.caption}
-            className="scale-140"
+            className="scale-145"
           />
         </h1>
-
-        {/* {currentProduct.caption && (
-          <p className="text-sm md:text-md font-vazirmatn mb-40 max-w-2xl leading-relaxed animate-fade-in-up delay-200 text-white/65">
-            <Heading title={displayedTitle} tag={currentProduct.caption} />
-          </p>
-        )} */}
-
-        <div className="flex-1" />
       </div>
 
-      {/* Price and CTA pinned to the bottom */}
+      {/* Price  */}
       <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-3 z-30 px-4 mb-10">
-        <div className="text-md md:text-xl lg:text-2xl text-yellow-200 font-vazirmatn m-2.5 animate-fade-in-up delay-600 backdrop-blur-md shadow-md border-1 border-yellow-200/10 rounded-2xl p-3">
-          {formattedPrice}
+        <div className="text-md md:text-xl lg:text-2xl text-white-200 font-vazirmatn m-2.5 animate-fade-in-up delay-600 shadow-md border-1 border-white/10 rounded-2xl p-3 flex flex-col items-center backdrop-blur-xs ">
+          <span className="text-xs md:text-sm lg:text-sm text-white-100 mb-1 opacity-45 ">
+            شروع قیمت از
+          </span>
+          <div className="flex items-baseline gap-2">
+            <span className="font-extrabold opacity-80 ">{formattedPrice}</span>
+            <span className="text-xs md:text-sm lg:text-md opacity-65 ">
+              تومان
+            </span>
+          </div>
         </div>
+        {/* Button */}
         <Link
-          className="cursor-pointer z-20 animate-fade-in-up delay-600"
+          className="cursor-pointer z-20 mb-2"
           href={`/products/${currentProduct.slug}`}
         >
-          {/* <Button className="transform transition-transform duration-300 hover:scale-110">
+          <Button className="transform transition-transform duration-300  scale-90 hover:scale-97 opacity-85">
             مشاهده محصول
-          </Button> */}
+          </Button>
         </Link>
       </div>
 

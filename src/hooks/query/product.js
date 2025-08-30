@@ -77,9 +77,9 @@ export const getFilteredProductsQuery = Object.assign(
       "hbo max",
       "spotify",
       "chatgpt",
-      "apple music",
+      "apple tv",
       "netflix",
-      "grok",
+      "claude",
     ];
     const filtered = updatedProducts.filter((product) => {
       const title = product.title?.toLowerCase() || "";

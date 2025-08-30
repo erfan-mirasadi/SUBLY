@@ -49,8 +49,11 @@ async function RoadMap() {
         </div>
 
         <div className="flex flex-col items-center xl:w-[500px] mt-12 lg:mt-25 lg:items-end">
-          <div className="font-light text-sm leading-6 md:text-base mb-22 text-[#757185] md:mb-16 lg:mb-3 lg:w-[320px] xl:mr-70 lg:self-start font-vazirmatn lg:mr-20">
-            <Heading tag={RoadMapText} />
+          <div className="font-light text-sm leading-6 md:text-base mb-22 text-[#757185] md:mb-16 lg:mb-3 lg:w-[320px] xl:mr-65 lg:self-start font-vazirmatn lg:mr-20">
+            <Heading
+              className="scale-100 md:scale-120 font-bold"
+              tag={RoadMapText}
+            />
           </div>
 
           <RoadMapCricle apps={RoadMapApps} />

@@ -17,6 +17,12 @@ const ProductCard = ({ item, index = 0 }) => {
   // Select background image based on index, or use modulo to cycle through them
   const backgroundImage = backgroundImages[index % backgroundImages.length];
 
+  // remove parenthetical parts from titles, e.g. "Netflix (1 month)" -> "Netflix"
+  const stripParenthetical = (s) =>
+    typeof s === "string" ? s.replace(/\s*\(.*?\)\s*/g, "").trim() : s;
+
+  const displayedTitle = stripParenthetical(item.title || "");
+
   // Fallback images if the item doesn't have proper image URLs
   const smallImageSrc = item.image_small_url || "/benefits/icon-1.svg";
   const bigImageSrc = item.image_big_url || "/hero/gradient.png";
@@ -36,14 +42,14 @@ const ProductCard = ({ item, index = 0 }) => {
         className="relative z-2 flex flex-col min-h-[352px] p-[38px] pointer-events-none"
         style={{ transform: "scaleX(-1)" }}
       >
-        <h5 className="text-[32px] leading-normal mb-5">{item.title}</h5>
+        <h5 className="text-[32px] leading-normal mb-5">{displayedTitle}</h5>
         <p className="font-light text-[14px] leading-6 md:text-base mb-6 text-[#ADA8C3] font-vazirmatn">
           {item.text || item.caption}
         </p>
         <div className="flex items-center justify-between mt-auto mx-1 cursor-pointer">
-          <div className="flex items-center mt-auto mx-1">
+          <div className="flex items-center mt-auto mx-1 mb-3 shadow-md rounded-md">
             <Arrow />
-            <p className="text-xs font-bold text-[#FFFFFF] tracking-wider cursor-pointer mx-2 z-3 font-vazirmatn">
+            <p className="text-xs font-bold text-[#FFFFFF] tracking-wider cursor-pointer mx-2 z-3  font-vazirmatn">
               مشاهده محصول
             </p>
           </div>
@@ -52,7 +58,7 @@ const ProductCard = ({ item, index = 0 }) => {
               src={smallImageSrc}
               width={58}
               height={58}
-              alt={item.title}
+              alt={displayedTitle}
             />
           )}
         </div>
@@ -70,7 +76,7 @@ const ProductCard = ({ item, index = 0 }) => {
               src={bigImageSrc}
               width={380}
               height={362}
-              alt={item.title || "Product"}
+              alt={displayedTitle || "Product"}
               className="w-full h-full object-cover"
               style={{ transform: "scaleX(-1)" }}
             />

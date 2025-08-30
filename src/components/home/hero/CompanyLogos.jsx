@@ -26,7 +26,7 @@ const CompanyLogos = ({ className }) => {
   return (
     <div className={className}>
       <h5 className="tagline mb-16 text-center text-[#FFFFFF]/50 font-vazirmatn">
-        <Heading tag="محصولات پرفروش" />
+        <Heading className="scale-150 font-bold" tag="محصولات پرفروش" />
       </h5>
       <ul className="flex">
         {companyLogos.map((logo, index) => (
