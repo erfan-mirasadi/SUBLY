@@ -45,7 +45,7 @@ export default function HeroImage({}) {
               />
             </ScrollParallax>
 
-            <ScrollParallax isAbsolutelyPositioned>
+            {/* <ScrollParallax isAbsolutelyPositioned>
               <Notification
                 className="hidden absolute -right-[88px] bottom-[176px] w-[288px] xl:flex z-20 font-vazirmatn"
                 title="تخفیف ویژه امروز !!!  "
@@ -54,7 +54,7 @@ export default function HeroImage({}) {
                 href="/products/spotify"
                 image="/hero/logos/spotify.png"
               />
-            </ScrollParallax>
+            </ScrollParallax> */}
           </div>
         </div>
         <Gradient />

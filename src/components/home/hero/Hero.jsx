@@ -19,7 +19,7 @@ function Hero() {
 
   return (
     <Section
-      className="pt-[8rem] -mt-[5.25rem]"
+      className="pt-[6.5rem] -mt-[5.25rem]"
       crosses
       crossesOffset="lg:translate-y-[5.25rem]"
       customPaddings

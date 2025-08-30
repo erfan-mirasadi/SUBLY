@@ -1,12 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
 // زندگی دیجیتال رو ارتقا بده با سابلی
 export default function HeroContent() {
   return (
-    <div className="relative z-[1] max-w-[992px] mx-auto text-center mb-[62px] md:mb-20 lg:mb-[100px]">
-      <h1 className="text-6xl mb-6 font-vazirmatn">
-        همه‌ی اشتراک‌های مورد علاقت با <br />
-        <span className="inline-block relative mt-7">
+    <div className="relative z-[1] max-w-[992px] mx-auto text-center mb-[62px] md:mb-20 lg:mb-[80px]">
+      <h1 className="text-5xl mb-5 font-vazirmatn">
+        {" "}
+        خرید اشتراک سریع و ارزان
+        {/* <br /> */}
+        <span className="inline-block font-grotesk relative mx-4.5 mt-7">
           SUBLY
           <Image
             src="/hero/curve.png"
@@ -17,9 +18,9 @@ export default function HeroContent() {
           />
         </span>
       </h1>
-      <p className="my-9 max-w-4xl mx-auto text-[#CAC6DD] lg:mb-8 font-vazirmatn">
+      {/* <p className=" max-w-4xl mx-auto text-[#CAC6DD] lg:mb-8 font-vazirmatn">
         همه‌ی اشتراک‌های مورد علاقت بدون محدودیت، بدون دردسر یکجا
-      </p>
+      </p> */}
       {/* <Link href={"/products"}>
         <button className="px-6 py-3 rounded-xl bg-white text-black font-vazirmatn font-medium hover:bg-opacity-90 transition-all cursor-pointer">
           شروع کن
