@@ -20,6 +20,12 @@ function ProductSection({ item }) {
 
       <div className="relative grid gap-6 md:grid-cols-2 md:gap-4 md:pb-[7rem]">
         {item.map((item) => {
+          // Check if any product plan is available
+          const hasAvailablePlans =
+            item.product_entry?.some((entry) =>
+              entry.product_plans?.some((plan) => plan.is_available !== false)
+            ) || false;
+
           // --- ProductCard style price logic ---
           let allPlans =
             item.product_entry?.flatMap(
@@ -112,8 +118,14 @@ function ProductSection({ item }) {
                   </p>
 
                   {/* 🛒 Pricing Section */}
-                  {price && (
-                    <div className="relative mt-6 flex flex-col items-start">
+                  <div className="relative mt-6 flex flex-col items-start">
+                    {!hasAvailablePlans ? (
+                      <div className="px-4 py-2 rounded-xl border border-red-500/30 bg-red-500/10 backdrop-blur-md">
+                        <span className="text-sm font-medium text-red-500">
+                          ناموجود
+                        </span>
+                      </div>
+                    ) : price ? (
                       <div className="px-4 py-2 rounded-xl border border-[#ffffff22] bg-[#1a1824]/50 backdrop-blur-md">
                         <div className="flex items-baseline gap-2">
                           {/* New Price */}
@@ -133,9 +145,8 @@ function ProductSection({ item }) {
                           )}
                         </div>
                       </div>
-                    </div>
-                  )}
-                  {/* End Pricing Section */}
+                    ) : null}
+                  </div>
                 </div>
                 <Gradient />
               </div>

@@ -39,7 +39,12 @@ export async function getCartItems(user_id) {
       throw new Error("خطا در دریافت سبد خرید");
     }
 
-    return data || [];
+    // فقط آیتم‌هایی که plan دارند و موجود هستند را برگردان
+    const availableItems = (data || []).filter(
+      (item) => item.plan && item.plan.is_available !== false
+    );
+
+    return availableItems;
   } catch (err) {
     console.error("Unexpected error in getCartItems:", err);
     return [];
@@ -51,7 +56,18 @@ export async function addToCart(user_id, plan_id, quantity = 1) {
   console.log("Adding to cart:", { user_id, plan_id, quantity });
 
   try {
-    // First, check if the item already exists in cart
+    // چک کردن موجودی plan
+    const { data: planData, error: planError } = await supabase
+      .from("product_plans")
+      .select("id, is_available")
+      .eq("id", plan_id)
+      .single();
+
+    if (planError || !planData || planData.is_available === false) {
+      throw new Error("این محصول در حال حاضر موجود نیست");
+    }
+
+    // چک کردن اینکه آیتم از قبل در سبد هست یا نه
     const { data: existingItems, error: getError } = await supabase
       .from("cart_items")
       .select("id, quantity")
@@ -59,11 +75,10 @@ export async function addToCart(user_id, plan_id, quantity = 1) {
       .eq("plan_id", plan_id);
 
     if (getError) {
-      console.error("Error checking existing cart item:", getError);
       throw new Error(`خطا در بررسی سبد خرید: ${getError.message}`);
     }
 
-    // If item exists, update the quantity
+    // اگر آیتم وجود داره، quantity رو افزایش بده
     if (existingItems && existingItems.length > 0) {
       const existingItem = existingItems[0];
       const newQuantity = existingItem.quantity + quantity;
@@ -74,15 +89,13 @@ export async function addToCart(user_id, plan_id, quantity = 1) {
         .select();
 
       if (updateError) {
-        console.error("Error updating cart item:", updateError);
         throw new Error(`خطا در به‌روزرسانی سبد خرید: ${updateError.message}`);
       }
 
-      console.log("Successfully updated cart item:", updateData);
       return updateData;
     }
 
-    // If item doesn't exist, insert new item
+    // اگر آیتم وجود نداره، جدید اضافه کن
     const { data: insertData, error: insertError } = await supabase
       .from("cart_items")
       .insert({
@@ -93,11 +106,9 @@ export async function addToCart(user_id, plan_id, quantity = 1) {
       .select();
 
     if (insertError) {
-      console.error("Error inserting cart item:", insertError);
       throw new Error(`خطا در افزودن به سبد خرید: ${insertError.message}`);
     }
 
-    console.log("Successfully added to cart:", insertData);
     return insertData;
   } catch (error) {
     console.error("Unexpected error in addToCart:", error);

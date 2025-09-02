@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/src/components/Button";
 import Spinner from "@/src/components/ui/Spinner";
+import Link from "next/link";
 import {
   useAddToCartMutation,
   useCart,
@@ -23,6 +24,12 @@ export default function ClientPrice({ productEntry, plan }) {
     useUpdateCartMutation();
   const { mutate: removeCart, isPending: isRemovePending } =
     useRemoveCartMutation();
+  // Check if current plan is available
+  const currentPlanDetail = productEntry.product_plans.find(
+    (p) => p.title === plan
+  );
+  const isPlanAvailable = currentPlanDetail?.is_available !== false; // Default to true if null/undefined
+
   const planDetail = productEntry.product_plans.find((p) => p.title === plan);
   // Price calculation and display logic
   const oldPrice =
@@ -34,7 +41,7 @@ export default function ClientPrice({ productEntry, plan }) {
       ? parseFloat((planDetail.price - planDetail.discount_price).toFixed(10))
       : planDetail?.price ?? null;
   // Button text logic
-  const buttonText = finalPrice ? "خرید" : "تماس با ما";
+  const buttonText = !isPlanAvailable || !finalPrice ? "تماس با ما" : "خرید";
 
   // Determine decimals for CountUp
   let decimals = 0;
@@ -145,40 +152,51 @@ export default function ClientPrice({ productEntry, plan }) {
     <div className="">
       <h3 dir="rtl" className="text-extrabold text-6xl text-center my-12">
         <div className="flex flex-col items-center justify-center min-h-[120px] md:min-h-[200px]">
-          {oldPrice && (
-            <div className="text-gray-500 text-sm md:text-xl line-through mb-2 font-vazirmatn">
-              {toPersianNumbers(oldPrice.toLocaleString())} تومان
+          {!isPlanAvailable ? (
+            <div className="flex flex-col items-center justify-center min-h-[132px] md:min-h-[239px]">
+              <div className="text-[1.8rem] md:text-[2.5rem] xl:text-[3rem] leading-none font-bold font-vazirmatn text-red-400">
+                ناموجود
+              </div>
+              <div className="text-[0.9rem] md:text-[1rem] text-gray-400 mt-2 font-vazirmatn shadow-xl shadow-gray-700/10 bg-gradient-to-r from-red-900/5 via-gray-900/5 p-2 rounded-md">
+                موقتاً در دسترس نیست
+              </div>
             </div>
+          ) : (
+            <>
+              {oldPrice && (
+                <div className="text-gray-500 text-sm md:text-xl line-through mb-2 font-vazirmatn">
+                  {toPersianNumbers(oldPrice.toLocaleString())} تومان
+                </div>
+              )}
+              <div className="flex flex-col items-center justify-center">
+                {finalPrice ? (
+                  <>
+                    <div className="text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-none font-bold font-vazirmatn">
+                      <CountUp
+                        start={previousPrice}
+                        end={finalPrice}
+                        decimals={decimals}
+                        decimal=","
+                        duration={1}
+                        useEasing={false}
+                        preserveValue
+                        formattingFn={(value) =>
+                          toPersianNumbers(value.toLocaleString())
+                        }
+                      />
+                    </div>
+                    <div className="text-[1rem] md:text-[1.2rem] text-gray-400 mt-2 font-vazirmatn shadow-xl shadow-gray-700/10 bg-gradient-to-r from-purple-900/5 via-blue-900/5 p-2 rounded-md">
+                      تومان
+                    </div>
+                  </>
+                ) : null}
+              </div>
+            </>
           )}
-          <div className="flex flex-col items-center justify-center">
-            {finalPrice ? (
-              <>
-                <div className="text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-none font-bold font-vazirmatn">
-                  <CountUp
-                    start={previousPrice}
-                    end={finalPrice}
-                    decimals={decimals}
-                    decimal=","
-                    duration={1}
-                    useEasing={false}
-                    preserveValue
-                    formattingFn={(value) =>
-                      toPersianNumbers(value.toLocaleString())
-                    }
-                  />
-                </div>
-                <div className="text-[1rem] md:text-[1.2rem] text-gray-400 mt-2 font-vazirmatn shadow-xl shadow-gray-700/10 bg-gradient-to-r from-purple-900/5 via-blue-900/5 p-2 rounded-md">
-                  تومان
-                </div>
-              </>
-            ) : null}
-          </div>
         </div>
       </h3>
       <div className="my-11">
-        {!finalPrice ? (
-          <Button>{buttonText}</Button>
-        ) : isInCart ? (
+        {isInCart ? (
           <div className="flex items-center justify-center gap-4">
             <button
               className="bg-gray-800/60 text-white rounded-md p-3 hover:bg-gray-700/60 disabled:opacity-50 cursor-pointer hover:scale-95 duration-300 transition-all"
@@ -206,8 +224,16 @@ export default function ClientPrice({ productEntry, plan }) {
               <FaPlus size={16} />
             </button>
           </div>
+        ) : buttonText === "تماس با ما" ? (
+          <Link href="/support">
+            <Button>{buttonText}</Button>
+          </Link>
         ) : (
-          <Button onClick={handleAddToCart} loading={isPending}>
+          <Button
+            onClick={handleAddToCart}
+            loading={isPending}
+            disabled={!isPlanAvailable}
+          >
             {buttonText}
           </Button>
         )}

@@ -37,6 +37,15 @@ const getLowestPrice = (product) => {
   return lowestPlan ? lowestPlan.displayPrice : null;
 };
 
+// Helper function to check if product has available plans
+const hasAvailablePlans = (product) => {
+  return (
+    product.product_entry?.some((entry) =>
+      entry.product_plans?.some((plan) => plan.is_available !== false)
+    ) || false
+  );
+};
+
 export default function HeroProductCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   //remove () from title
@@ -85,11 +94,13 @@ export default function HeroProductCarousel() {
   }
 
   const currentProduct = popularProducts[currentIndex];
+  const isAvailable = hasAvailablePlans(currentProduct);
   const lowestPrice = getLowestPrice(currentProduct);
-  const formattedPrice =
-    lowestPrice !== null
-      ? `${toPersianNumbers(lowestPrice.toLocaleString())}`
-      : "قیمت ویژه";
+  const formattedPrice = !isAvailable
+    ? "ناموجود"
+    : lowestPrice !== null
+    ? `${toPersianNumbers(lowestPrice.toLocaleString())}`
+    : "قیمت ویژه";
 
   // strip parenthetical parts and remove any leading Persian word 'اکانت' (and following spaces)
   const displayedTitle = stripParenthetical(currentProduct.title)
@@ -128,24 +139,38 @@ export default function HeroProductCarousel() {
 
       {/* Price  */}
       <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-3 z-30 px-4 mb-10">
-        <div className="text-md md:text-xl lg:text-2xl text-white-200 font-vazirmatn m-2.5 animate-fade-in-up delay-600 shadow-md border-1 border-white/10 rounded-2xl p-3 flex flex-col items-center backdrop-blur-xs ">
-          <span className="text-xs md:text-sm lg:text-sm text-white-100 mb-1 opacity-45 ">
-            شروع قیمت از
-          </span>
-          <div className="flex items-baseline gap-2">
-            <span className="font-extrabold opacity-80 ">{formattedPrice}</span>
-            <span className="text-xs md:text-sm lg:text-md opacity-65 ">
-              تومان
-            </span>
-          </div>
+        <div
+          className={`text-md md:text-xl lg:text-2xl font-vazirmatn m-2.5 animate-fade-in-up delay-600 shadow-md border-1 rounded-2xl p-3 flex flex-col items-center backdrop-blur-xs ${
+            !isAvailable
+              ? "text-red-400 border-red-500/30 bg-red-500/10"
+              : "text-white-200 border-white/10"
+          }`}
+        >
+          {!isAvailable ? (
+            <span className="font-bold">ناموجود</span>
+          ) : (
+            <>
+              <span className="text-xs md:text-sm lg:text-sm text-white-100 mb-1 opacity-45">
+                شروع قیمت از
+              </span>
+              <div className="flex items-baseline gap-2">
+                <span className="font-extrabold opacity-80">
+                  {formattedPrice}
+                </span>
+                <span className="text-xs md:text-sm lg:text-md opacity-65">
+                  تومان
+                </span>
+              </div>
+            </>
+          )}
         </div>
         {/* Button */}
         <Link
           className="cursor-pointer z-20 mb-2"
-          href={`/products/${currentProduct.slug}`}
+          href={!isAvailable ? "/support" : `/products/${currentProduct.slug}`}
         >
           <Button className="transform transition-transform duration-300  scale-90 hover:scale-97 opacity-85">
-            مشاهده محصول
+            {!isAvailable ? "تماس با ما" : "مشاهده محصول"}
           </Button>
         </Link>
       </div>

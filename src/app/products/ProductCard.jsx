@@ -4,6 +4,12 @@ import check2 from "@/public/check-02.svg";
 import { toPersianNumbers } from "@/src/lib/persianNumbers";
 
 function ProductCard({ item }) {
+  // Check if any product plan is available
+  const hasAvailablePlans =
+    item.product_entry?.some((entry) =>
+      entry.product_plans?.some((plan) => plan.is_available !== false)
+    ) || false;
+
   // Flatten all plans with their discount logic
   let allPlans =
     item.product_entry?.flatMap(
@@ -81,9 +87,15 @@ function ProductCard({ item }) {
             </p>
 
             {/* Pricing Section */}
-            {price !== null && (
-              <div className="mt-auto flex justify-center">
-                <div className="px-4 py-0.5 rounded-t-md border border-[#ffffff22] bg-[#1a1824]/50 backdrop-blur-md">
+            <div className="mt-auto flex justify-center">
+              <div className="px-4 py-0.5 rounded-t-md border border-[#ffffff22] bg-[#1a1824]/50 backdrop-blur-md">
+                {!hasAvailablePlans ? (
+                  <div className="flex items-center">
+                    <span className="font-bold text-red-400 font-vazirmatn text-sm">
+                      ناموجود
+                    </span>
+                  </div>
+                ) : price !== null ? (
                   <div className="flex items-baseline gap-1.5">
                     <span className="font-bold text-[#FFFF]/80 drop-shadow-glow font-vazirmatn">
                       {toPersianNumbers(price)} تومان
@@ -94,9 +106,9 @@ function ProductCard({ item }) {
                       </span>
                     )}
                   </div>
-                </div>
+                ) : null}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

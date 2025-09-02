@@ -12,15 +12,19 @@ export default function PlanCards({ data, plan, index }) {
   ];
   const modelColor = colors[index % colors.length];
 
+  // Check if current plan is available
+  const currentPlan = data.product_plans?.find((p) => p.title === plan);
+  const isAvailable = currentPlan?.is_available !== false; // Default to true if null/undefined
+
   return (
     <div className="w-full mt-8 md:mt-12 border border-gray-200/20 hover:shadow-lg hover:shadow-gray-100/10 hover:-translate-y-1 duration-300 ease-in-out shadow-gray-200/20 rounded-lg p-3 sm:p-5 flex flex-col justify-start font-vazirmatn">
       <div className="flex-grow">
         <h2
-          className={`font-extrabold text-2xl sm:text-3xl lg:text-4xl font-vazirmatn flex items-center  ${modelColor}`}
+          className={`font-extrabold text-2xl sm:text-3xl lg:text-4xl font-vazirmatn flex items-center ${modelColor}`}
         >
           {data.model}
         </h2>
-        <p className="text-sm sm:text-base text-gray-400 my-2 sm:my-3 font-vazirmatn flex items-center  ">
+        <p className="text-sm sm:text-base text-gray-400 my-2 sm:my-3 font-vazirmatn flex items-center">
           {data.description}
         </p>
         <ClientPrice productEntry={data} plan={plan} />
