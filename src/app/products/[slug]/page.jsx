@@ -11,11 +11,28 @@ import ProductInfo from "./ProductInfo";
 export default async function ProductPlanPage({ params, searchParams }) {
   const { slug } = await params;
   const { plan } = await searchParams;
-  if (!plan) {
-    redirect(`/products/${slug}?index=0&plan=1`);
-  }
+
   const products = await getProductsQuery();
   const data = products?.find((p) => p.slug === slug);
+
+  if (!data) {
+    notFound();
+  }
+
+  // Find the first available plan if no plan is specified
+  if (!plan) {
+    const firstAvailablePlan = data.product_entry
+      ?.flatMap((entry) =>
+        entry.product_plans?.filter((plan) => plan.is_available !== false)
+      )
+      ?.sort((a, b) => parseInt(a.title) - parseInt(b.title))[0]; // Sort by duration and get first
+
+    if (firstAvailablePlan) {
+      redirect(`/products/${slug}?index=0&plan=${firstAvailablePlan.title}`);
+    } else {
+      notFound(); // No available plans
+    }
+  }
 
   // Extract all available plans for this product
   // const allPlanTitles = Array.from(

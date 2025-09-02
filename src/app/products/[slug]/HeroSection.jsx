@@ -25,8 +25,8 @@ export default function HeroSection({ product }) {
                   fill
                   alt={product.title}
                   src={product.image_big_url}
-                  priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  loading="eager"
                 />
               )}
             </div>
