@@ -127,16 +127,14 @@ export function useLogout() {
       // clear the query cache
       queryClient.clear();
 
-      // redirect to home page
-      router.push("/");
-      window.location.reload();
+      // redirect to home page with full reload to reset all states
+      window.location.href = "/";
     },
     onError: (error) => {
       console.error("خطا در خروج:", error);
       // clear the query cache and redirect to home page
       queryClient.clear();
-      router.push("/");
-      window.location.reload();
+      window.location.href = "/";
     },
   });
 }

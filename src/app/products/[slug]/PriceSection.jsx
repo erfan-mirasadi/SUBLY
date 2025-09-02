@@ -3,6 +3,7 @@ import React from "react";
 import PlanSwitchTab from "./PlanSwitchTab";
 import PlanCards from "./PlanCards";
 import StyleLines from "./StyleLines";
+import Link from "next/link";
 
 export default function PriceSection({
   params,
@@ -43,12 +44,12 @@ export default function PriceSection({
           <StyleLines />
         </div>
         <div className="cursor-pointer  flex justify-center mt-10">
-          <a
-            href="/pricing"
+          <Link
+            href="/support"
             className="text-xs font-code font-bold tracking-wider uppercase border-b "
           >
             پشتیبانی و مشاوره
-          </a>
+          </Link>
         </div>
       </div>
     </Section>

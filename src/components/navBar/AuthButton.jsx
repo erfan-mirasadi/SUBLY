@@ -25,7 +25,7 @@ export default function AuthButton() {
         </Link>
       ) : (
         <Link
-          href="/login"
+          href={`/login?returnUrl=${encodeURIComponent(pathname)}`}
           className=" bg-[#0E0C15]/90 px-4 py-2 rounded-lg text-white font-vazirmatn cursor-pointer"
         >
           ورود

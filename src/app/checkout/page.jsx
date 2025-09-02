@@ -26,7 +26,7 @@ function OrderPage() {
   // Redirect if not authenticated
   useEffect(() => {
     if (!userLoading && !user) {
-      router.push("/login");
+      router.push(`/login?returnUrl=${encodeURIComponent("/checkout")}`);
     }
   }, [user, userLoading, router]);
 

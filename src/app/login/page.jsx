@@ -4,7 +4,7 @@ import Accordion from "@/src/components/Accardion";
 import { useState } from "react";
 import Button from "@/src/components/Button";
 import Timer from "@/src/components/ui/Timer";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSendOtp, useVerifyOtp } from "@/src/hooks/mutate/auth";
 import {
   useCartQuery,
@@ -38,6 +38,8 @@ export default function LoginPage() {
   const { mutate, isPending } = useSendOtp();
   const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOtp();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl") || "/";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,7 +68,7 @@ export default function LoginPage() {
                 },
               });
             }
-            router.replace("/");
+            router.replace(returnUrl);
           },
         }
       );

@@ -6,6 +6,7 @@ import HeroSection from "./HeroSection";
 // import SecondSection from "./SecondSection";
 // import ThirdSection from "./ThirdSection";
 import PriceSection from "./PriceSection";
+import ProductInfo from "./ProductInfo";
 
 export default async function ProductPlanPage({ params, searchParams }) {
   const { slug } = await params;
@@ -15,6 +16,7 @@ export default async function ProductPlanPage({ params, searchParams }) {
   }
   const products = await getProductsQuery();
   const data = products?.find((p) => p.slug === slug);
+
   // Extract all available plans for this product
   // const allPlanTitles = Array.from(
   //   new Set(
@@ -40,6 +42,8 @@ export default async function ProductPlanPage({ params, searchParams }) {
       {/* <SecondSection product={data} /> */}
       {/* <ThirdSection /> */}
       <PriceSection params={slug} data={data} plan={plan} />
+
+      <ProductInfo data={data} plan={plan} />
     </Section>
   );
 }
