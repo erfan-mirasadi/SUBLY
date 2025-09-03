@@ -151,17 +151,18 @@ export async function updateCartItemQuantity(cart_item_id, quantity) {
   return data;
 }
 
-// پاک کردن تمام سبد خرید یک کاربر
-// export async function clearCart(user_id) {
-//   const { error } = await supabase
-//     .from("cart_items")
-//     .delete()
-//     .eq("user_id", user_id);
+// Clear all cart items for a user
+export async function clearCart(user_id) {
+  const { error } = await supabase
+    .from("cart_items")
+    .delete()
+    .eq("user_id", user_id);
 
-//   if (error) {
-//     console.error("Error clearing cart:", error);
-//     throw new Error("خطا در پاک کردن سبد خرید");
-//   }
+  if (error) {
+    console.error("Error clearing cart:", error);
+    throw new Error("خطا در پاک کردن سبد خرید");
+  }
+}
 
 //   return true;
 // }

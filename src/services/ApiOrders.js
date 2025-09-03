@@ -3,6 +3,7 @@ import {
   getCurrenciesQuery,
   convertCartItems,
 } from "../hooks/query/currencies";
+import { clearCart } from "./ApiCartItmes";
 
 // Fetch cart items with details and convert prices to Iranian Rial
 export async function fetchCartWithDetails(user_id) {
@@ -39,7 +40,12 @@ export async function fetchCartWithDetails(user_id) {
 }
 
 // Create new order with converted prices (in Iranian Rial)
-export async function createOrder(user_id, cartItems) {
+export async function createOrder(
+  user_id,
+  cartItems,
+  itemAccountInfo = {},
+  telegramInfo = ""
+) {
   if (!cartItems || cartItems.length === 0) {
     throw new Error("سبد خرید خالی است");
   }
@@ -62,12 +68,19 @@ export async function createOrder(user_id, cartItems) {
     const discount_price = plan?.discount_price ?? 0;
     const total_price = (unit_price - discount_price) * quantity;
 
+    // Get accountInfo for this item
+    const accountInfo = itemAccountInfo[item.id] || {};
+
     return {
       plan_id: plan?.id,
       quantity,
       unit_price,
       discount_price,
       total_price,
+      // اضافه کردن accountInfo - نام درست ستون‌ها
+      user_name: accountInfo.username || null,
+      password: accountInfo.password || null,
+      description: accountInfo.description || null,
     };
   });
 
@@ -89,6 +102,7 @@ export async function createOrder(user_id, cartItems) {
         (acc, i) => acc + i.discount_price * i.quantity,
         0
       ),
+      telegram_info: telegramInfo || null,
     })
     .select()
     .single();
@@ -111,6 +125,18 @@ export async function createOrder(user_id, cartItems) {
 
   if (itemsError) {
     throw new Error("خطا در افزودن آیتم‌های سفارش: " + itemsError.message);
+  }
+
+  // Clear user's cart after successful order creation
+  // This ensures the cart is empty after payment completion
+  try {
+    await clearCart(user_id);
+  } catch (clearError) {
+    // Don't fail the order if cart clearing fails, just log the error
+    console.error(
+      "Warning: Failed to clear cart after order creation:",
+      clearError
+    );
   }
 
   return orderData;
