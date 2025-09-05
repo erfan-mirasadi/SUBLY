@@ -6,7 +6,7 @@ export default function HeroContent() {
       <h1 className="text-5xl mb-5 font-vazirmatn">
         <div className="md:inline">خرید اشتراک سریع و ارزان</div>
         <div className="block md:inline">
-          <span className="inline-flex font-grotesk relative mx-4.5 mr-11 scale-200 justify-center translate-y-3 md:mr-11 md:scale-200 md:translate-y-8">
+          <span className="inline-flex font-grotesk relative mx-4.5 mr-11 scale-200 justify-center translate-y-3 md:mr-11 md:scale-200 md:translate-y-8.5">
             <Image
               src="/hero/logo1.png"
               alt="SABLY"
