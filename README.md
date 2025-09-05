@@ -1,14 +1,14 @@
-# SUBLY - Subscription Management Platform
+# SABLY - Subscription Management Platform
 
 <div align="center">
-  <img src="public/hero/robot.jpg" alt="Subly Logo" width="200"/>
+  <img src="/hero/logo1.png" alt="SABLY Logo" width="400" height="400"/>
   <br/>
   <p><strong>Modern subscription management platform built with Next.js</strong></p>
 </div>
 
 ## 📋 Overview
 
-SUBLY is a modern e-commerce platform specializing in digital subscription management. The platform enables users to discover, purchase, and manage digital subscriptions for popular services like Apple Music, Spotify, YouTube, Nuke, and other entertainment platforms. Built with a mobile-first approach and featuring a comprehensive shopping cart system with secure OTP-based authentication.
+SABLY is a modern e-commerce platform specializing in digital subscription management. The platform enables users to discover, purchase, and manage digital subscriptions for popular services like Apple Music, Spotify, YouTube, Nuke, and other entertainment platforms. Built with a mobile-first approach and featuring a comprehensive shopping cart system with secure OTP-based authentication.
 
 ### 🎯 Key Features
 
@@ -91,7 +91,7 @@ sub-ly/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/erfanmirasadi/SUBLY
+    git clone https://github.com/erfanmirasadi/SUBLY
    cd sub-ly
    ```
 
@@ -198,7 +198,7 @@ Main navigation with cart integration:
 - **Responsive Design** - Desktop and mobile layouts
 - **Cart Icon** - Shows item count with animation
 - **Authentication** - Login/logout buttons
-- **Company Branding** - SUBLY logo and styling
+- **Company Branding** - SABLY logo and styling
 
 #### `DropdownNavigator.jsx`
 
@@ -600,7 +600,7 @@ For support and questions:
 
 <div align="center">
   <p>Built with ❤️ using Next.js and Supabase</p>
-  <p><strong>SUBLY - Modern Subscription Management Platform</strong></p>
+  <p><strong>SABLY - Modern Subscription Management Platform</strong></p>
 </div>
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,

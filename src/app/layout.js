@@ -6,17 +6,54 @@ import NavItem from "../components/navBar/NavItem";
 import DropdownNavigator from "../components/navBar/DropdownNavigator";
 import { navigation } from "../lib/staticData";
 import { Toaster } from "sonner";
+import { Vazirmatn } from "next/font/google";
+
+const vazirmatn = Vazirmatn({
+  subsets: ["arabic"],
+  weight: ["400", "500", "700"],
+  display: "swap",
+});
 
 export const metadata = {
-  title: "SABLY",
-  description: "Digital subscription",
+  title: "سابلی",
+  applicationName: "سابلی",
+  description: "پلتفرم مدیریت اشتراک‌های دیجیتال",
+  keywords: [
+    "اشتراک دیجیتال",
+    "سابلی",
+    "خرید اشتراک",
+    "Apple Music",
+    "Spotify",
+    "YouTube",
+  ],
+  icons: {
+    icon: "/hero/logo1.png",
+    shortcut: "/hero/logo1.png",
+    apple: "/hero/logo1.png",
+  },
+  openGraph: {
+    title: "سابلی",
+    description: "پلتفرم مدیریت اشتراک‌های دیجیتال",
+    images: [
+      { url: "/hero/logo1.png", width: 1024, height: 1024, alt: "سابلی" },
+    ],
+    locale: "fa_IR",
+    siteName: "سابلی",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "سابلی",
+    description: "پلتفرم مدیریت اشتراک‌های دیجیتال",
+    images: ["/hero/logo1.png"],
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html dir="rtl" lang="fa">
       <body
-        className="flex justify-start flex-col min-h-screen"
+        className={`${vazirmatn.className} flex justify-start flex-col min-h-screen`}
         cz-shortcut-listen="true"
         suppressHydrationWarning
       >

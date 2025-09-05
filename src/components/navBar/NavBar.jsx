@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import CartIcon from "./CartIcon";
 import Menu from "./Menu";
 import NavbarContainer from "./NavbarContainer";
@@ -13,9 +14,16 @@ export default function NavBar({ children }) {
         <Menu />
         <Link
           href="/"
-          className="flex justify-center font-grotesk font-bold text-2xl items-center md:justify-start ml-[2px]"
+          className="flex justify-center font-grotesk font-bold text-2xl scale-210 items-center md:justify-start ml-[2px]"
         >
-          SABLY
+          <Image
+            src="/hero/logo1.png"
+            alt="SABLY logo"
+            width={600}
+            height={600}
+            className="h-8 w-12"
+            priority
+          />
         </Link>
         <div className="items-center gap-4 text-xs font-grotesk hidden md:flex">
           {children}

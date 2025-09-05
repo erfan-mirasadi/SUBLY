@@ -29,8 +29,14 @@ function RoadMapCircle({ apps }) {
     <div className="relative flex w-[350px] aspect-square border border-[#252134] rounded-full scale:75 md:scale-100 mx-auto lg:right-1/3">
       <div className="flex w-60 aspect-square m-auto border border-[#252134] rounded-full">
         <div className="w-24 aspect-square m-auto p-[3px] bg-conic-gradient rounded-full">
-          <div className="flex items-center justify-center w-full h-full bg-[#0E0C15] rounded-full font-grotesk font-bold text-xl">
-            SABLY
+          <div className="flex items-center justify-center w-full h-full bg-[#0E0C15] rounded-full">
+            <Image
+              src="/hero/logo1.png"
+              alt="SABLY"
+              width={400}
+              height={400}
+              className="w-25 h-25"
+            />
           </div>
         </div>
       </div>
