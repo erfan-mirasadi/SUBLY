@@ -94,10 +94,10 @@ export default function SupportPage() {
                   <div>
                     <div className="text-sm opacity-60">ایمیل</div>
                     <a
-                      href="mailto:subly@support"
+                      href="mailto:sably@support"
                       className="text-lg font-bold"
                     >
-                      subly@support
+                      sably@support
                     </a>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default function SupportPage() {
 
           {/* <footer className="mt-8 text-center opacity-70">
             <p className="mb-2">همراه شما در مسیر خرید هوشمندانه</p>
-            <p className="text-sm">سوشال: @subly_support</p>
+            <p className="text-sm">سوشال: @sably_support</p>
           </footer> */}
         </div>
       </div>

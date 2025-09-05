@@ -93,7 +93,7 @@ export default function LoginPage() {
             className="hover:text-gray-400 duration-300 transition-all hover:scale-110 cursor-pointer"
             href="/"
           >
-            SUBLY
+            SABLY
           </Link>
         </h1>
 

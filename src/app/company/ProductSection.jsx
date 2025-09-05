@@ -13,12 +13,9 @@ import { toPersianNumbers } from "@/src/lib/persianNumbers";
 function ProductSection({ item }) {
   return (
     <div className=" mx-auto px-5 md:px-10 lg:px-15 xl:max-w-[87.5rem] md:pb-10 ">
-      <Heading
-        tag="Ready to get started"
-        title="What APPLE has in their pocket"
-      />
+      <Heading tag="سابلی" title="تمام محصولات" />
 
-      <div className="relative grid gap-6 md:grid-cols-2 md:gap-4 md:pb-[7rem]">
+      <div className="relative grid gap-6 md:grid-cols-2 md:gap-4 md:pb-[14rem]">
         {item.map((item) => {
           // Check if any product plan is available
           const hasAvailablePlans =
@@ -68,12 +65,12 @@ function ProductSection({ item }) {
             <Link
               href={`/products/${item.slug}`}
               className={
-                `cursor-pointer md:flex even:md:translate-y-[7rem] p-0.25 rounded-[2.5rem] ` +
+                `cursor-pointer even:md:translate-y-[7rem] p-0.25 rounded-[2.5rem] ` +
                 (colorful ? "bg-conic-gradient" : "bg-[#252134]")
               }
               key={item.id}
             >
-              <div className="relative p-8 bg-[#0E0C15] rounded-[2.4375rem] overflow-hidden xl:p-15">
+              <div className="relative p-8 bg-[#0E0C15] rounded-[2.4375rem] overflow-hidden xl:p-15 h-full">
                 <div className="absolute top-0 left-0 max-w-full">
                   <Image
                     className="w-full"

@@ -18,7 +18,7 @@
 //   const handleAddToCart = async () => {
 //     if (!isAvailable) return;
 
-//     const userId = localStorage.getItem("subly_user_id");
+//     const userId = localStorage.getItem("sably_user_id");
 //     if (!userId) {
 //       // Handle user not logged in
 //       return;

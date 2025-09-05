@@ -13,7 +13,7 @@ function SignoutButton() {
 
   useEffect(() => {
     if (!isAuth) {
-      const token = localStorage.getItem("subly_access_token");
+      const token = localStorage.getItem("sably_access_token");
       if (token) {
         setIsAuth(true);
       }

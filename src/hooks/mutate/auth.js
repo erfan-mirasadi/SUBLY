@@ -95,8 +95,8 @@ export function useVerifyOtp() {
       }
 
       // ✅ ذخیره JWT
-      localStorage.setItem("subly_access_token", finalSession.access_token);
-      localStorage.setItem("subly_user_id", finalSession.user.id);
+      localStorage.setItem("sably_access_token", finalSession.access_token);
+      localStorage.setItem("sably_user_id", finalSession.user.id);
 
       return {
         ...result,
@@ -114,8 +114,8 @@ export function useLogout() {
   return useMutation({
     mutationFn: async () => {
       // clear local storage
-      localStorage.removeItem("subly_access_token");
-      localStorage.removeItem("subly_user_id");
+      localStorage.removeItem("sably_access_token");
+      localStorage.removeItem("sably_user_id");
 
       // sign out from Supabase Auth
       const { error } = await supabase.auth.signOut();

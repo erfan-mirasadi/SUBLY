@@ -14,7 +14,7 @@ export default function CartIcon() {
   const isLoggedIn = !!id;
 
   useEffect(() => {
-    const userId = localStorage.getItem("subly_user_id");
+    const userId = localStorage.getItem("sably_user_id");
     setId(userId);
     setIsMounted(true);
 
@@ -27,7 +27,7 @@ export default function CartIcon() {
   // شنود تغییرات login/logout
   useEffect(() => {
     const handleStorageChange = () => {
-      const newUserId = localStorage.getItem("subly_user_id");
+      const newUserId = localStorage.getItem("sably_user_id");
       if (newUserId !== id) {
         setId(newUserId);
         if (newUserId) {

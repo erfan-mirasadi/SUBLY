@@ -8,7 +8,7 @@ export default function HeroContent() {
         خرید اشتراک سریع و ارزان
         {/* <br /> */}
         <span className="inline-block font-grotesk relative mx-4.5 mt-7">
-          SUBLY
+          SABLY
           <Image
             src="/hero/curve.png"
             alt="curve"

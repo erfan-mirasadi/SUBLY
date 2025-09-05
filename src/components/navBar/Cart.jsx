@@ -30,7 +30,7 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
 
   const getUserId = () =>
     typeof window !== "undefined"
-      ? localStorage.getItem("subly_user_id")
+      ? localStorage.getItem("sably_user_id")
       : null;
 
   // تشخیص اینکه کاربر لاگین هست یا نه

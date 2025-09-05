@@ -8,7 +8,7 @@ import { navigation } from "../lib/staticData";
 import { Toaster } from "sonner";
 
 export const metadata = {
-  title: "SUBLY",
+  title: "SABLY",
   description: "Digital subscription",
 };
 

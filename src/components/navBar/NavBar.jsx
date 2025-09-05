@@ -15,7 +15,7 @@ export default function NavBar({ children }) {
           href="/"
           className="flex justify-center font-grotesk font-bold text-2xl items-center md:justify-start ml-[2px]"
         >
-          SUBLY
+          SABLY
         </Link>
         <div className="items-center gap-4 text-xs font-grotesk hidden md:flex">
           {children}

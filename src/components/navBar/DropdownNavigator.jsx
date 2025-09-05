@@ -43,7 +43,7 @@ export default function DropdownNavigator({ children, item }) {
         <span className="z-20">{children}</span>
       </NavItem>
       <div
-        className={` hidden md:block fixed left-0 top-[50px] shadow-lg p-10 shadow-white/10 duration-300 transition-all ease-in-out w-[100vw] min-h-[200px] origin-top bg-[#0E0C15]/90 ${
+        className={` hidden md:block fixed left-0 top-[50px] shadow-lg p-10 shadow-white/10 duration-300 transition-all ease-in-out w-[100vw] origin-top bg-[#0E0C15]/90 font-vazirmatn ${
           isHovered
             ? "visible opacity-100 scale-y-100"
             : "invisible opacity-0 scale-y-0"
@@ -55,14 +55,18 @@ export default function DropdownNavigator({ children, item }) {
               {isLoadingCategories && <Spinner />}
               {isErrorCategories && <div>خطا در دریافت دسته‌بندی‌ها</div>}
               {!isLoadingCategories && categories?.length > 0 && (
-                <ul className="grid grid-cols-3 gap-4">
+                <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
                   {categories.map((cat) => (
                     <li key={cat.id}>
                       <Link
                         href={`/category/${cat.slug}`}
-                        className="block px-4 py-2 rounded-md hover:bg-white/5 transition-colors font-vazirmatn"
+                        className="group block p-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all duration-300"
                       >
-                        {cat.title}
+                        <div className="text-center">
+                          <span className="font-medium text-base text-white/70 group-hover:text-white transition-colors">
+                            {cat.title}
+                          </span>
+                        </div>
                       </Link>
                     </li>
                   ))}
@@ -76,14 +80,18 @@ export default function DropdownNavigator({ children, item }) {
               {isLoadingCompanies && <Spinner />}
               {isErrorCompanies && <div>خطا در دریافت شرکت‌ها</div>}
               {!isLoadingCompanies && companies?.length > 0 && (
-                <ul className="grid grid-cols-3 gap-4">
+                <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
                   {companies.map((co) => (
                     <li key={co.id}>
                       <Link
                         href={`/company/${co.slug}`}
-                        className="block px-4 py-2 rounded-md hover:bg-white/5 transition-colors"
+                        className="group block p-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all duration-300"
                       >
-                        {co.title}
+                        <div className="text-center">
+                          <span className="font-medium text-base text-white/70 group-hover:text-white transition-colors">
+                            {co.title}
+                          </span>
+                        </div>
                       </Link>
                     </li>
                   ))}

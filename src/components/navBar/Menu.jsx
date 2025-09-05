@@ -180,7 +180,7 @@ export default function Menu() {
                     {!isLoadingCategories &&
                       !isErrorCategories &&
                       categories?.length > 0 && (
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-4">
                           {categories.map((cat) => (
                             <Link
                               key={cat.id}
@@ -189,9 +189,10 @@ export default function Menu() {
                                 setSecondMenuOpen(false);
                                 setIsOpen(false);
                               }}
+                              className="group block p-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all duration-300"
                             >
-                              <div className="bg-white/10 rounded-lg p-3 text-center hover:bg-white/20 transition-colors cursor-pointer">
-                                <span className="text-white text-sm">
+                              <div className="text-center">
+                                <span className="font-medium text-base text-white/70 group-hover:text-white transition-colors">
                                   {cat.title}
                                 </span>
                               </div>
@@ -216,7 +217,7 @@ export default function Menu() {
                     {!isLoadingCompanies &&
                       !isErrorCompanies &&
                       companies?.length > 0 && (
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-4">
                           {companies.map((co) => (
                             <Link
                               key={co.id}
@@ -225,9 +226,10 @@ export default function Menu() {
                                 setSecondMenuOpen(false);
                                 setIsOpen(false);
                               }}
+                              className="group block p-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all duration-300"
                             >
-                              <div className="bg-white/10 rounded-lg p-3 text-center hover:bg-white/20 transition-colors cursor-pointer">
-                                <span className="text-white text-sm">
+                              <div className="text-center">
+                                <span className="font-medium text-base text-white/70 group-hover:text-white transition-colors">
                                   {co.title}
                                 </span>
                               </div>

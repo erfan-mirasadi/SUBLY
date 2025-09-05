@@ -105,7 +105,7 @@ export default async function ProductPlanPage({ params, searchParams }) {
 //   const planTitle = plan.charAt(0).toUpperCase() + plan.slice(1);
 
 //   return {
-//     title: `SUBLY | ${data.title} - ${planTitle} Plan  `,
+//     title: `SABLY | ${data.title} - ${planTitle} Plan  `,
 //     description: `Get ${data.title} with ${planTitle} plan. ${
 //       data.caption || data.description || ""
 //     }`,

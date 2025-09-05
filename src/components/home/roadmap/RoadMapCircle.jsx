@@ -30,7 +30,7 @@ function RoadMapCircle({ apps }) {
       <div className="flex w-60 aspect-square m-auto border border-[#252134] rounded-full">
         <div className="w-24 aspect-square m-auto p-[3px] bg-conic-gradient rounded-full">
           <div className="flex items-center justify-center w-full h-full bg-[#0E0C15] rounded-full font-grotesk font-bold text-xl">
-            SUBLY
+            SABLY
           </div>
         </div>
       </div>

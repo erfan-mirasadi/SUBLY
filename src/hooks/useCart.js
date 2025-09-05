@@ -1,7 +1,7 @@
 // import { useState, useRef } from "react";
 
 // // Local storage key for cart items
-// const CART_STORAGE_KEY = "subly_cart_items";
+// const CART_STORAGE_KEY = "sably_cart_items";
 
 // // Global sync flag to prevent multiple syncs
 // let syncInProgress = false;

@@ -56,6 +56,6 @@ export default function NotFound() {
 }
 
 export const metadata = {
-  title: "SUBLY | صفحه پیدا نشد",
+  title: "SABLY | صفحه پیدا نشد",
   description: "صفحه‌ای که دنبالش هستید پیدا نشد.",
 };

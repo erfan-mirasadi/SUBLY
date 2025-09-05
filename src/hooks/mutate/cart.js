@@ -11,7 +11,7 @@ import { getCurrenciesQuery, convertCartItems } from "../query/currencies";
 
 const getUserId = () => {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("subly_user_id");
+  return localStorage.getItem("sably_user_id");
 };
 
 const getLocalCartItems = (key) => {

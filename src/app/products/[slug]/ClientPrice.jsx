@@ -61,7 +61,7 @@ export default function ClientPrice({ productEntry, plan }) {
   // Check if product is in cart
   const authToken =
     typeof window !== "undefined"
-      ? localStorage.getItem("subly_access_token")
+      ? localStorage.getItem("sably_access_token")
       : null;
   const isLoggedIn = !!authToken;
 
@@ -95,7 +95,7 @@ export default function ClientPrice({ productEntry, plan }) {
   const handleAddToCart = () => {
     const authToken =
       typeof window !== "undefined"
-        ? localStorage.getItem("subly_access_token")
+        ? localStorage.getItem("sably_access_token")
         : null;
     if (authToken) {
       // User is logged in - add to server
@@ -103,7 +103,7 @@ export default function ClientPrice({ productEntry, plan }) {
         id: planDetail?.id,
         user_id:
           typeof window !== "undefined"
-            ? localStorage.getItem("subly_user_id")
+            ? localStorage.getItem("sably_user_id")
             : null,
         quantity: 1,
       });
@@ -120,7 +120,7 @@ export default function ClientPrice({ productEntry, plan }) {
         id: planDetail?.id,
         user_id:
           typeof window !== "undefined"
-            ? localStorage.getItem("subly_user_id")
+            ? localStorage.getItem("sably_user_id")
             : null,
         quantity: 1,
       });

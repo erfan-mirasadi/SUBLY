@@ -7,7 +7,7 @@ export const useGetCurrentUser = () => {
     queryKey: ["getUser"],
     queryFn: async () => {
       if (typeof window === "undefined") return null;
-      const userId = localStorage.getItem("subly_user_id");
+      const userId = localStorage.getItem("sably_user_id");
       if (!userId) throw new Error("User ID not found");
       const { data, error } = await supabase
         .from("users")
@@ -30,7 +30,7 @@ export const useUpdateUser = () => {
       if (typeof window === "undefined")
         throw new Error("Window not available");
 
-      const userId = localStorage.getItem("subly_user_id");
+      const userId = localStorage.getItem("sably_user_id");
       if (!userId) throw new Error("User ID not found");
 
       const { data, error } = await supabase
