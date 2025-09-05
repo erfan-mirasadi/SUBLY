@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import icon1 from "@/public/hero/icon-01.svg";
-import icon2 from "@/public/hero/icon-02.svg";
-import icon3 from "@/public/hero/icon-03.svg";
-import icon4 from "@/public/hero/icon-04.svg";
+// import icon1 from "@/public/hero/icon-01.svg";
+// import icon2 from "@/public/hero/icon-02.svg";
+// import icon3 from "@/public/hero/icon-03.svg";
+// import icon4 from "@/public/hero/icon-04.svg";
 import HeroContent from "./HeroContent";
 import HeroImage from "./HeroImage";
 import HeroBackground from "./HeroBackground";
@@ -12,7 +12,7 @@ import CompanyLogos from "./CompanyLogos";
 import Section from "../../section/Section";
 
 // Icons for the parallax effect
-const heroIcons = [icon1, icon2, icon3, icon4];
+// const heroIcons = [icon1, icon2, icon3, icon4];
 
 function Hero() {
   const parallaxRef = useRef(null);
@@ -33,7 +33,7 @@ function Hero() {
         <HeroContent />
 
         {/* Main hero image with frame and notifications */}
-        <HeroImage heroIcons={heroIcons} />
+        <HeroImage />
 
         {/* Background elements and decorations */}
         <HeroBackground parallaxRef={parallaxRef} />

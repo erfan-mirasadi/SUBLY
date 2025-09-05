@@ -1,7 +1,7 @@
 # SABLY - Subscription Management Platform
 
 <div align="center">
-  <img src="/hero/logo1.png" alt="SABLY Logo" width="400" height="400"/>
+  <img src="/hero/logo1.png" alt="SABLY Logo" width="400"/>
   <br/>
   <p><strong>Modern subscription management platform built with Next.js</strong></p>
 </div>
