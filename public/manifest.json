@@ -1,0 +1,58 @@
+{
+  "name": "سابلی",
+  "short_name": "سابلی",
+  "description": "تمام اشتراک‌هایتان را در یک جا مدیریت کنید",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "fa",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/hero/logo1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/hero/logo1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/hero/logo1.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "محصولات",
+      "short_name": "محصولات",
+      "description": "مشاهده تمام محصولات",
+      "url": "/products",
+      "icons": [
+        {
+          "src": "/hero/logo1.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "پروفایل",
+      "short_name": "پروفایل",
+      "description": "مشاهده پروفایل شما",
+      "url": "/profile",
+      "icons": [
+        {
+          "src": "/hero/logo1.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

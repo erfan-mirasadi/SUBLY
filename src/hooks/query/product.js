@@ -23,9 +23,9 @@ export const getProductsQuery = Object.assign(
 export const getProductCategoriesQuery = Object.assign(
   async function getProductCategoriesQuery() {
     const categories = [
-      { id: 33, title: "AI" },
-      { id: 30, title: "MEDIA" },
-      { id: 31, title: "Social Media" },
+      { id: 33, title: "هوش مصنوعی" },
+      { id: 30, title: "فیلم و سریال" },
+      // { id: 31, title: "رسانه‌های اجتماعی" },
     ];
 
     const currencyMap = await getCurrenciesQuery();

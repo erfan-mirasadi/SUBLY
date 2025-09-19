@@ -8,7 +8,7 @@ export default function NavbarContainer({ children }) {
     <>
       {!isLoginPage && (
         <div
-          className={`fixed top-0 left-0 w-full z-50 border-b border-[#252134] bg-[#0E0C15]/90`}
+          className={`fixed top-0 left-0 w-full z-50 border-b border-[#252134] bg-[#0E0C15]/90 backdrop-blur-xs`}
         >
           {children}
         </div>

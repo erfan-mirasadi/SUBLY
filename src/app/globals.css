@@ -42,8 +42,8 @@
 /* Variables */
 /* Variables */
 
-*{
-  a{
+* {
+  a {
     text-decoration: none;
   }
 }
@@ -286,5 +286,16 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fade-scale {
+  0% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }

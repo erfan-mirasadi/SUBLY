@@ -15,6 +15,7 @@ const vazirmatn = Vazirmatn({
 });
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "https://sably.ir"),
   title: "سابلی",
   applicationName: "سابلی",
   description: "پلتفرم مدیریت اشتراک‌های دیجیتال",
@@ -26,10 +27,25 @@ export const metadata = {
     "Spotify",
     "YouTube",
   ],
+  manifest: "/manifest.json",
   icons: {
     icon: "/hero/logo1.png",
     shortcut: "/hero/logo1.png",
     apple: "/hero/logo1.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "سابلی",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
   },
   openGraph: {
     title: "سابلی",
