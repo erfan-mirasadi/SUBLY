@@ -221,14 +221,6 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 - **Environment Variables** - Sensitive data protection
 - **Supabase RLS** - Row-level security policies
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
 ### Development Guidelines
 
 - Use **TypeScript** for new components when possible
